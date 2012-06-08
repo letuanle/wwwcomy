@@ -1,4 +1,4 @@
-package udp;
+package test.udp;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

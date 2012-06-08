@@ -1,4 +1,4 @@
-package tcp;
+package test.tcp;
 
 import java.io.*;
 import java.net.*;

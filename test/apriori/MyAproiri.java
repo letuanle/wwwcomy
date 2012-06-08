@@ -1,8 +1,8 @@
 package test.apriori;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 /**
  * @author Liuxn
@@ -23,7 +23,7 @@ public class MyAproiri {
 	/**
 	 * 原始数据项,事务数据tranData应当由itemData构成
 	 */
-	private TreeSet<String> itemData;
+	private HashSet<String> itemData;
 
 	/**
 	 * 支持度
@@ -45,7 +45,7 @@ public class MyAproiri {
 		this(data, calcItemData(data), s, c);
 	}
 
-	public MyAproiri(String[][] data, TreeSet<String> itemData, double s,
+	public MyAproiri(String[][] data, HashSet<String> itemData, double s,
 			double c) {
 		if (s > 1)
 			s = 1.0;
@@ -70,14 +70,22 @@ public class MyAproiri {
 		// System.out.println(myAproiri.getTranData());
 		System.out.println(myAproiri.getTranDataSize());
 		// 1st Step
-		HashMap<TreeSet<String>, Integer> result = new HashMap<TreeSet<String>, Integer>();
+		HashMap<HashSet<String>, Integer> result = new HashMap<HashSet<String>, Integer>();
 		AproiriUtil.stat(myAproiri.getItemData(), myAproiri.getTranData(),
 				result);
 		System.out.println("****Step1:****");
-		for (TreeSet<String> key : result.keySet())
+		for (HashSet<String> key : result.keySet())
 			System.out.println("key:" + key + " - value:" + result.get(key));
 		System.out.println("****Step2:****");
-		AproiriUtil.dataSelection(result, 0.1, myAproiri.getTranDataSize());
+		HashMap<HashSet<String>, Integer> result1 = AproiriUtil.dataSelection(
+				result, 0.08, myAproiri.getTranDataSize());
+		System.out.println(result1);
+		System.out.println("****Step3:****");
+		HashMap<HashSet<String>, Integer> result2 = AproiriUtil
+				.calcNextCandidateData(result1, 2);
+		System.out.println(result2);
+		// AproiriUtil.calcNextCandidateData(
+		// AproiriUtil.calcNextCandidateData(result, 2), 3);
 	}
 
 	/**
@@ -86,8 +94,8 @@ public class MyAproiri {
 	 * @param tranData
 	 * @return
 	 */
-	public static TreeSet<String> calcItemData(String[][] tranData) {
-		TreeSet<String> result = new TreeSet<String>();
+	public static HashSet<String> calcItemData(String[][] tranData) {
+		HashSet<String> result = new HashSet<String>();
 		for (String a[] : tranData) {
 			for (String c : a)
 				result.add(String.valueOf(c));
@@ -119,11 +127,11 @@ public class MyAproiri {
 		this.confidence = confidence;
 	}
 
-	public void setItemData(TreeSet<String> itemData) {
+	public void setItemData(HashSet<String> itemData) {
 		this.itemData = itemData;
 	}
 
-	public TreeSet<String> getItemData() {
+	public HashSet<String> getItemData() {
 		return itemData;
 	}
 

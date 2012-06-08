@@ -43,7 +43,7 @@ public class stringTest {
 		b.add("2");
 		b.add("3");
 
-		HashSet<String> c = new HashSet(CollectionUtils.union(a, b));
+		HashSet<String> c = new HashSet(CollectionUtils.disjunction(a, b));
 		System.out.println(c);
 	}
 

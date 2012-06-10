@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 
 public class TestAwtObserver extends Frame {
 
+	private static final long serialVersionUID = -5307941059351954681L;
+
 	public void launch() {
 		Button b = new Button();
 		b.addActionListener(new ActionListener() {

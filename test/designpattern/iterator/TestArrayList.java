@@ -38,6 +38,7 @@ public class TestArrayList<E> implements TestCollection<E> {
 		index++;
 	}
 
+	@SuppressWarnings("unchecked")
 	public E get(int index) {
 		return (E) container[index];
 	}
@@ -58,6 +59,7 @@ public class TestArrayList<E> implements TestCollection<E> {
 		return tmp;
 	}
 
+	@SuppressWarnings("hiding")
 	private class TAIterator<E> implements Iterator<E> {
 		private int indexIt;
 
@@ -70,6 +72,7 @@ public class TestArrayList<E> implements TestCollection<E> {
 			return indexIt < index;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public E next() {
 			return (E) get(indexIt++);

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class StackTest {
-	private static final Character CCC = 127;
+	// private static final Character CCC = 127;
 
 	public static void main(String[] args) throws Exception {
 
@@ -21,6 +21,7 @@ public class StackTest {
 		System.out.println(l1.size());
 	}
 
+	@SuppressWarnings("unused")
 	private static void testStack() {
 		Stack<String> stack1 = new Stack<String>();
 		stack1.push("1");

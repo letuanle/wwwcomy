@@ -10,10 +10,12 @@ public class TestProgram {
 		System.out.println(num.intValue());
 	}
 
+	@SuppressWarnings("unused")
 	private static void invoke(Object obj) {
 		System.out.println("Object");
 	}
 
+	@SuppressWarnings("unused")
 	private static void invoke(int[] nums) {
 		System.out.println("Arrays");
 	}

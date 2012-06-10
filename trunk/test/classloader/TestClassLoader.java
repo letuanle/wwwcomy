@@ -7,16 +7,16 @@ public class TestClassLoader extends ClassLoader {
 	public static void main(String[] args) throws ClassNotFoundException {
 
 		TestClassLoader loader = new TestClassLoader();
-//		try {
-//			loader.findClass("stringTest");
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();123123123123
-//		}
-		Class c = loader.loadClass("stringTest");
+		// try {
+		// loader.findClass("stringTest");
+		// } catch (ClassNotFoundException e) {
+		// e.printStackTrace();123123123123
+		// }
+		Class<?> c = loader.loadClass("stringTest");
 		System.out.println("Class c's loader: " + c.getClassLoader());
 	}
 
-	public Class loadClass(String name) throws ClassNotFoundException {
+	public Class<?> loadClass(String name) throws ClassNotFoundException {
 		System.out.println("i am called.");
 		return super.loadClass(name);
 	}

@@ -2,7 +2,12 @@ package test.apriori;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.TreeMap;
+
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
 
 /**
  * @author Liuxn
@@ -23,7 +28,7 @@ public class MyAproiri {
 	/**
 	 * 原始数据项,事务数据tranData应当由itemData构成
 	 */
-	private HashSet<String> itemData;
+	private Set<HashSet<String>> itemData;
 
 	/**
 	 * 支持度
@@ -45,7 +50,7 @@ public class MyAproiri {
 		this(data, calcItemData(data), s, c);
 	}
 
-	public MyAproiri(String[][] data, HashSet<String> itemData, double s,
+	public MyAproiri(String[][] data, Set<HashSet<String>> itemData, double s,
 			double c) {
 		if (s > 1)
 			s = 1.0;
@@ -61,21 +66,18 @@ public class MyAproiri {
 	}
 
 	public static void main(String[] args) {
-
+		Monitor test = MonitorFactory.start("test1");
+		test.start();
 		String[][] data = new String[][] { { "1", "2", "5" }, { "2", "4" },
 				{ "2", "3" }, { "1", "2", "4" }, { "1", "3" }, { "2", "3" },
 				{ "1", "3" }, { "1", "2", "3", "5" }, { "1", "2", "3" } };
 		MyAproiri myAproiri = new MyAproiri(data);
 		System.out.println(myAproiri.getItemData());
-		// System.out.println(myAproiri.getTranData());
 		System.out.println(myAproiri.getTranDataSize());
-		// 1st Step
-		HashMap<HashSet<String>, Integer> result = new HashMap<HashSet<String>, Integer>();
-		AproiriUtil.stat(myAproiri.getItemData(), myAproiri.getTranData(),
-				result);
 		System.out.println("****Step1:****");
-		for (HashSet<String> key : result.keySet())
-			System.out.println("key:" + key + " - value:" + result.get(key));
+		HashMap<HashSet<String>, Integer> result = AproiriUtil.stat(
+				myAproiri.getItemData(), myAproiri.getTranData());
+		System.out.println(result);
 		System.out.println("****Step2:****");
 		HashMap<HashSet<String>, Integer> result1 = AproiriUtil.dataSelection(
 				result, 0.08, myAproiri.getTranDataSize());
@@ -84,8 +86,33 @@ public class MyAproiri {
 		HashMap<HashSet<String>, Integer> result2 = AproiriUtil
 				.calcNextCandidateData(result1, 2);
 		System.out.println(result2);
-		// AproiriUtil.calcNextCandidateData(
-		// AproiriUtil.calcNextCandidateData(result, 2), 3);
+		System.out.println("****Step4:****");
+		HashMap<HashSet<String>, Integer> result3 = AproiriUtil.stat(
+				result2.keySet(), myAproiri.getTranData());
+		System.out.println(result3);
+		System.out.println("****Step5:****");
+		HashMap<HashSet<String>, Integer> result4 = AproiriUtil.dataSelection(
+				result3, 0.08, myAproiri.getTranDataSize());
+		System.out.println(result4);
+		System.out.println("****Step6:****");
+		HashMap<HashSet<String>, Integer> result5 = AproiriUtil
+				.calcNextCandidateData(result4, 3);
+		System.out.println(result5);
+		System.out.println("****Step7:****");
+		HashMap<HashSet<String>, Integer> result6 = AproiriUtil.stat(
+				result5.keySet(), myAproiri.getTranData());
+		System.out.println(result6);
+		System.out.println("****Step8:****");
+		HashMap<HashSet<String>, Integer> result7 = AproiriUtil.dataSelection(
+				result6, 0.08, myAproiri.getTranDataSize());
+		System.out.println(result7);
+		System.out.println("****Step9:****");
+		HashMap<HashSet<String>, Integer> result8 = AproiriUtil
+				.calcNextCandidateData(result7, 3);
+		System.out.println(result8);
+
+		test.stop();
+		System.out.println("共耗时: " + test);
 	}
 
 	/**
@@ -94,7 +121,30 @@ public class MyAproiri {
 	 * @param tranData
 	 * @return
 	 */
-	public static HashSet<String> calcItemData(String[][] tranData) {
+	public static Set<HashSet<String>> calcItemData(String[][] tranData) {
+		HashSet<String> tmp = new HashSet<String>();
+		Set<HashSet<String>> result = new HashSet<HashSet<String>>();
+		for (String a[] : tranData) {
+			for (String c : a)
+				tmp.add(String.valueOf(c));
+		}
+		Iterator<String> i = tmp.iterator();
+		while (i.hasNext()) {
+			HashSet<String> h = new HashSet<String>();
+			h.add(i.next());
+			result.add(h);
+		}
+		return result;
+	}
+
+	/**
+	 * 统计出现次数
+	 * 
+	 * @param tranData
+	 * @return
+	 */
+	public static HashSet<String> gatherItemTimes(String[][] tranData,
+			Set<HashSet<String>> keys) {
 		HashSet<String> result = new HashSet<String>();
 		for (String a[] : tranData) {
 			for (String c : a)
@@ -127,11 +177,11 @@ public class MyAproiri {
 		this.confidence = confidence;
 	}
 
-	public void setItemData(HashSet<String> itemData) {
+	public void setItemData(Set<HashSet<String>> itemData) {
 		this.itemData = itemData;
 	}
 
-	public HashSet<String> getItemData() {
+	public Set<HashSet<String>> getItemData() {
 		return itemData;
 	}
 

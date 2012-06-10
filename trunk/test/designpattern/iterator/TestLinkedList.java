@@ -48,6 +48,7 @@ public class TestLinkedList<E> implements TestCollection<E> {
 		return size;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public E get(int index) {
 		if (index == size - 1)
@@ -75,6 +76,7 @@ public class TestLinkedList<E> implements TestCollection<E> {
 		return new TLIterator<E>();
 	}
 
+	@SuppressWarnings("hiding")
 	class TLIterator<E> implements Iterator<E> {
 
 		private Node curNode;
@@ -88,6 +90,7 @@ public class TestLinkedList<E> implements TestCollection<E> {
 			return (first != null && curNode.nextNode != null);
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public E next() {
 			if (curNode == first) {

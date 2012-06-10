@@ -35,6 +35,7 @@ class Button {
 }
 
 class ActionEvent {
+	@SuppressWarnings("unused")
 	private Object src;
 
 	public long getWhen() {

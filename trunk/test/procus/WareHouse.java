@@ -4,7 +4,7 @@ import java.util.*;
 
 public class WareHouse {
 	private int max = 100;
-	private List warehouse = new LinkedList();
+	private List<Object> warehouse = new LinkedList<Object>();
 
 	public int getSize() {
 		return warehouse.size();

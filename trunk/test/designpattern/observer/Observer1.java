@@ -49,10 +49,6 @@ public class Observer1 {
 	}
 
 	class TestEvent {
-		private long time;
-		private String loc;
-		private Object src;
-
 		TestEvent() {
 		}
 	}

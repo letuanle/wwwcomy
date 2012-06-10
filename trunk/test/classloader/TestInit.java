@@ -59,7 +59,7 @@ class g {
 }
 
 /**
- * ¾²Ì¬³ÉÔ±ÏÈ³õÊ¼»¯
+ * ï¿½ï¿½Ì¬ï¿½ï¿½Ô±ï¿½È³ï¿½Ê¼ï¿½ï¿½
  * 
  * @author boke
  * 
@@ -77,11 +77,11 @@ public class TestInit extends g {
 
 	public static void main(String[] args) {
 		System.out.println("inMain");
-		c c = new c();
+		new c();
 		System.out.println("afterC");
-		g g = new g();
+		new g();
 		d.td();
-		TestInit t = new TestInit();
+		new TestInit();
 	}
 
 	static b b = new b();

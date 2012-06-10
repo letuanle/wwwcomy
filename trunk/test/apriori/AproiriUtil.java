@@ -1,5 +1,6 @@
 package test.apriori;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -19,24 +20,24 @@ public class AproiriUtil {
 	 * @param data
 	 * @param result
 	 */
-	public static void stat(HashSet<String> itemData, String[][] tranData,
-			HashMap<HashSet<String>, Integer> result) {
-		for (String item : itemData) {
-			HashSet<String> h = new HashSet<String>();
-			h.add(item);
-			result.put(h, 0);
+	public static HashMap<HashSet<String>, Integer> stat(
+			Set<HashSet<String>> itemData, String[][] tranData) {
+		HashMap<HashSet<String>, Integer> result = new HashMap<HashSet<String>, Integer>();
+		for (HashSet<String> item : itemData) {
+			result.put(item, 0);
 		}
 		for (int i = 0; i < tranData.length; i++) {
-			for (int j = 0; j < tranData[i].length; j++) {
-				if (itemData.contains(tranData[i][j])) {
-					HashSet<String> h = new HashSet<String>();
-					h.add(tranData[i][j]);
-					result.put(h, result.get(h) + 1);
+			HashSet<String> h = new HashSet<String>(Arrays.asList(tranData[i]));
+			Iterator<HashSet<String>> keyI = result.keySet().iterator();
+			while (keyI.hasNext()) {
+				HashSet<String> next = keyI.next();
+				if (CollectionUtils.intersection(next, h).size() == next.size()) {
+					result.put(next, result.get(next) + 1);
 				}
 			}
 		}
-		// for (String key : result.keySet())
-		// System.out.println("key:" + key + " - value:" + result.get(key));
+		return result;
+		// System.out.println(result);
 	}
 
 	/**
@@ -56,8 +57,6 @@ public class AproiriUtil {
 			HashSet<String> key = i.next();
 			if ((data.get(key).doubleValue() / tranDataSize) < support)
 				i.remove();
-			// else
-			// System.out.println("key:" + key + " - value:" + data.get(key));
 		}
 		return data;
 	}
@@ -86,7 +85,6 @@ public class AproiriUtil {
 			}
 			i.remove();
 		}
-		// System.out.println(result);
 		return result;
 	}
 }

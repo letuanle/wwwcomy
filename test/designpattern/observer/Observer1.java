@@ -48,6 +48,10 @@ public class Observer1 {
 		}
 	}
 
+	interface actionListener {
+		void actionPerform(TestEvent t);
+	}
+
 	class TestEvent {
 		TestEvent() {
 		}
@@ -64,9 +68,4 @@ public class Observer1 {
 			System.out.println("hug the Child");
 		}
 	}
-
-	interface actionListener {
-		void actionPerform(TestEvent t);
-	}
-
 }

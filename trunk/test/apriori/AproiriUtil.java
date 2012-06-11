@@ -1,10 +1,12 @@
 package test.apriori;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -37,7 +39,6 @@ public class AproiriUtil {
 			}
 		}
 		return result;
-		// System.out.println(result);
 	}
 
 	/**
@@ -61,6 +62,13 @@ public class AproiriUtil {
 		return data;
 	}
 
+	/**
+	 * 由频繁项集生成下一次的候选项集
+	 * 
+	 * @param lastResult
+	 * @param time
+	 * @return
+	 */
 	public static HashMap<HashSet<String>, Integer> calcNextCandidateData(
 			HashMap<HashSet<String>, Integer> lastResult, int time) {
 		HashMap<HashSet<String>, Integer> result = new HashMap<HashSet<String>, Integer>();
@@ -84,6 +92,58 @@ public class AproiriUtil {
 				}
 			}
 			i.remove();
+		}
+		return result;
+	}
+
+	/**
+	 * 求出从0到集合子集数目（这里为16）之间的数的二进制形式，存放在数组result中
+	 * 
+	 * @param set
+	 * @return
+	 */
+	public static String[] getBinaryValue(Set<String> set) {
+		int size = set.size();
+		int m = (int) Math.pow(2, size) - 1;
+		String[] result = new String[m + 1];
+		for (int i = m; i > -1; i--) {
+			StringBuffer sb = new StringBuffer(Integer.toBinaryString(i));
+			int length = sb.length();
+			if (length < size) {
+				for (int j = 0; j < size - length; j++) {
+					sb.insert(0, "0");
+				}
+			}
+			result[i] = sb.toString();
+		}
+		return result;
+	}
+
+	/**
+	 * 根据二进制字符串生成子集
+	 * 
+	 * @param set
+	 * @return
+	 */
+	public static ArrayList<Set<String>> getSubset(Set<String> set) {
+		ArrayList<Set<String>> result = new ArrayList<Set<String>>();
+		// 把集合元素放入数组中，方便存取
+		String[] items = new String[set.size()];
+		int i = 0;
+		for (String item : set) {
+			items[i++] = item;
+		}
+		// 调用二进制字符串生成函数
+		String[] binaryValue = getBinaryValue(set);
+		// 根据二进制字符串取集合元素构成子集
+		for (int j = 0; j < binaryValue.length; j++) {
+			String value = binaryValue[j];
+			TreeSet<String> subset = new TreeSet<String>();
+			for (int k = 0; k < value.length(); k++) {
+				if (value.charAt(k) == '1')
+					subset.add(items[k]);
+			}
+			result.add(subset);
 		}
 		return result;
 	}

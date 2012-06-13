@@ -6,7 +6,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -87,10 +86,10 @@ public class NetClient {
 			}
 		}
 
+		@SuppressWarnings("unused")
 		public void parse(DatagramPacket dp) {
 			ByteArrayInputStream bais = new ByteArrayInputStream(b, 0,
 					dp.getLength());
-			DataInputStream dis = new DataInputStream(bais);
 		}
 	}
 

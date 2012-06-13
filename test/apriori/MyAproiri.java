@@ -69,9 +69,10 @@ public class MyAproiri {
 		if (c > 1)
 			c = 1.0;
 		this.tranData = data;
-		for (String[] a : data) {
-			tranDataSize += a.length;
-		}
+		tranDataSize = data.length;
+		// for (String[] a : data) {
+		// tranDataSize += a.length;
+		// }
 		this.itemData = itemData;
 		this.support = s;
 		this.confidence = c;
@@ -79,10 +80,13 @@ public class MyAproiri {
 
 	public static void main(String[] args) {
 		long start = System.currentTimeMillis();
-		String[][] data = new String[][] { { "1", "2", "5" }, { "2", "4" },
-				{ "2", "3" }, { "1", "2", "4" }, { "1", "3" }, { "2", "3" },
-				{ "1", "3" }, { "1", "2", "3", "5" }, { "1", "2", "3" } };
-		MyAproiri myAproiri = new MyAproiri(data);
+		// String[][] data = new String[][] { { "1", "2", "5" }, { "2", "4" },
+		// { "2", "3" }, { "1", "2", "4" }, { "1", "3" }, { "2", "3" },
+		// { "1", "3" }, { "1", "2", "3", "5" }, { "1", "2", "3" } };
+		String[][] data = new String[][] { { "k", "a", "d", "b" },
+				{ "d", "a", "c", "e", "b" }, { "c", "a", "b", "e" },
+				{ "b", "a", "d" } };
+		MyAproiri myAproiri = new MyAproiri(data,0.6,0.8);
 		System.out.println(myAproiri.getItemData());
 		System.out.println(myAproiri.getTranDataSize());
 		// System.out.println("****Step1统计:****");

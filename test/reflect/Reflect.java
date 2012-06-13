@@ -58,7 +58,7 @@ public class Reflect {
 	 * @throws Throwable
 	 */
 	public static void main(String[] args) throws Throwable {
-		Car car1 = new Car("����", 100);
+		Car car1 = new Car("aa", 100);
 		car1.introduce();
 		Car car2 = getCar();
 		car2.introduce();

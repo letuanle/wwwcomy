@@ -7,6 +7,7 @@ public class Explode {
 	int x, y;
 	boolean isAlive = true;
 
+	@SuppressWarnings("unused")
 	private WarFrame mf;
 
 	public Explode(int x, int y, WarFrame mf) {

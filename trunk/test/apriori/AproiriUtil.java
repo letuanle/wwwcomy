@@ -35,6 +35,7 @@ public class AproiriUtil {
 				HashSet<String> next = keyI.next();
 				if (CollectionUtils.intersection(next, h).size() == next.size()) {
 					result.put(next, result.get(next) + 1);
+					continue;
 				}
 			}
 		}

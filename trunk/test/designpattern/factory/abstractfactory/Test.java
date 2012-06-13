@@ -17,7 +17,7 @@ public class Test {
 
 		BeanFactory f = new ClassPathApplicationContext(
 				"applicationContext.xml");
-		moveable m = (moveable) f.getBean("v2");
+		moveable m = (moveable) f.getBean("v");
 		m.run();
 	}
 }

@@ -1,9 +1,6 @@
 package test.designpattern.factory.abstractfactory;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -51,7 +48,6 @@ public class ClassPathApplicationContext implements BeanFactory {
 			Document document = sr.read(this.getClass().getClassLoader()
 					.getResourceAsStream(this.fileName));
 			List l = document.selectNodes("/beans/bean");
-			System.out.println(l.size());
 			Iterator j = l.iterator();
 			while (j.hasNext()) {
 				Element n = (Element) j.next();

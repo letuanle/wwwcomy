@@ -1,13 +1,10 @@
 package test.json;
 
 import java.io.FileWriter;
-import java.util.HashSet;
-
-import org.apache.commons.collections.CollectionUtils;
+import java.nio.charset.Charset;
 
 public class stringTest {
 
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
 		// String a,b,c;
 		// Pattern pattern =
@@ -29,17 +26,7 @@ public class stringTest {
 		// if (i < 0 && Math.abs(i) == i)
 		// System.out.println(Math.abs(i) + "It is " + i);
 
-		HashSet<String> a = new HashSet<String>();
-		a.add("1");
-		a.add("3");
-
-		HashSet<String> b = new HashSet<String>();
-		b.add("2");
-		b.add("3");
-
-		@SuppressWarnings("rawtypes")
-		HashSet<String> c = new HashSet(CollectionUtils.intersection(a, b));
-		System.out.println(c);
+		System.out.println(Charset.defaultCharset().name());
 	}
 
 	public static void test() {

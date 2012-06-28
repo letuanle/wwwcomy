@@ -17,8 +17,6 @@ public class ClassPathApplicationContext implements BeanFactory {
 
 	private String fileName;
 
-	private Document d;
-
 	Map<String, String> map = new HashMap<String, String>();
 
 	private String id;

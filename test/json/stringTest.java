@@ -1,5 +1,7 @@
 package test.json;
 
+import java.awt.Color;
+import java.awt.Frame;
 import java.io.FileWriter;
 import java.nio.charset.Charset;
 
@@ -25,7 +27,10 @@ public class stringTest {
 		// int i = Integer.MIN_VALUE;
 		// if (i < 0 && Math.abs(i) == i)
 		// System.out.println(Math.abs(i) + "It is " + i);
-
+		Frame f = new Frame();
+		f.setBounds(50, 50, 100, 100);
+		f.setBackground(Color.blue);
+		f.setVisible(true);
 		System.out.println(Charset.defaultCharset().name());
 	}
 

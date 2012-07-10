@@ -4,13 +4,13 @@ import java.lang.reflect.Method;
 import java.util.Random;
 
 public class TimeProxy_Y implements InvocationHandler {
-	Movable m;
+	Object m;
 
-	public Movable getM() {
+	public Object getM() {
 		return m;
 	}
 
-	public void setM(Movable m) {
+	public void setM(Object m) {
 		this.m = m;
 	}
 

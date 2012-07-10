@@ -40,14 +40,14 @@ public class Proxy {
 
 		String src = "package test.compiler;" + rt
 				+ "import java.lang.reflect.Method;" + rt
-				+ "public class $Proxy1 implements " + infce.getName() + "{"
-				+ rt + "    public $Proxy1(InvocationHandler h) {" + rt
+				+ "public class Proxy1 implements " + infce.getName() + "{"
+				+ rt + "    public Proxy1(InvocationHandler h) {" + rt
 				+ "        this.h = h;" + rt + "    }" + rt +
 
 				"    test.compiler.InvocationHandler h;" + rt +
 
 				methodStr + "}";
-		String fileName = "src/test/compiler/$Proxy1.java";
+		String fileName = "src/test/compiler/Proxy1.java";
 		File f = new File(fileName);
 		FileWriter fw = new FileWriter(f);
 		fw.write(src);
@@ -65,9 +65,10 @@ public class Proxy {
 		fileMgr.close();
 
 		// load into memory and create an instance
-		URL[] urls = new URL[] { new URL("file:/" + "src/") };
+		URL[] urls = new URL[] { new URL("file:/"
+				+ System.getProperty("user.dir") + "/src/") };
 		URLClassLoader ul = new URLClassLoader(urls);
-		Class c = ul.loadClass("test.compiler.$Proxy1");
+		Class c = ul.loadClass("test.compiler.Proxy1");
 		System.out.println(c);
 
 		Constructor ctr = c.getConstructor(InvocationHandler.class);

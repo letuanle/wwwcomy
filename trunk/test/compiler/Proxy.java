@@ -30,9 +30,11 @@ public class Proxy {
 		 */
 		for (Method m : methods) {
 			methodStr += "@Override" + rt + "public void " + m.getName()
-					+ "() {" + rt + "    try {" + rt + "    Method md = "
-					+ infce.getName() + ".class.getMethod(\"" + m.getName()
-					+ "\");" + rt + "    h.invoke(this, md);" + rt
+					+ "() {" + rt 
+					+ "    try {" + rt 
+					+ "    Method md = " + infce.getName() + ".class.getMethod(\"" + m.getName()
+					+ "\");" + rt
+					+ "    h.invoke(this, md);" + rt
 					+ "    }catch(Exception e) {e.printStackTrace();}" + rt +
 
 					"}";
@@ -42,7 +44,8 @@ public class Proxy {
 				+ "import java.lang.reflect.Method;" + rt
 				+ "public class Proxy1 implements " + infce.getName() + "{"
 				+ rt + "    public Proxy1(InvocationHandler h) {" + rt
-				+ "        this.h = h;" + rt + "    }" + rt +
+				+ "        this.h = h;" + rt
+				+ "    }" + rt +
 
 				"    test.compiler.InvocationHandler h;" + rt +
 

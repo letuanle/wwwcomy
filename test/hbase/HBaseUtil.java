@@ -1,6 +1,7 @@
 package test.hbase;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,105 +22,89 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class TestHBase {
+public class HBaseUtil {
 
 	private static Configuration conf = null;
 
 	static {
 		Configuration HBASE_CONFIG = new Configuration();
 		// 与hbase/conf/hbase-site.xml中hbase.zookeeper.quorum配置的值相同
-		HBASE_CONFIG.set("hbase.zookeeper.quorum", "1.1.7.63");
+		HBASE_CONFIG.set("hbase.zookeeper.quorum", "1.1.7.66");
 		// 与hbase/conf/hbase-site.xml中hbase.zookeeper.property.clientPort配置的值相同
 		HBASE_CONFIG.set("hbase.zookeeper.property.clientPort", "2181");
 		conf = HBaseConfiguration.create(HBASE_CONFIG);
 	}
 
 	public static void main(String[] agrs) throws Exception {
-		testPutStudentObject();
+		// Env env = new Env("clientid", "test");
+		// putObject("test1", "row1", env);
+		// Env env2 = (Env) getObject("test1", "row1");
+		// System.out.println(env2);
+		// Student s = testGetStudentObject("studentObj", "row2");
 
-		Student s = testGetStudentObject("studentObj", "row2");
-
-		System.out.println("Start output:");
-		System.out.println("id=" + s.getId());
-		System.out.println("name=" + s.getName());
-		System.out.println("gender=" + s.isGender());
-		System.out.println("Read complete");
+		// System.out.println("Start output:");
+		// System.out.println("id=" + s.getId());
+		// System.out.println("name=" + s.getName());
+		// System.out.println("gender=" + s.isGender());
+		// System.out.println("Read complete");
 		// testStudentString();
 	}
 
-	private static void testPutStudentObject() {
+	public static void putObject(String tableName, String rowKey,
+			Serializable obj) {
 		try {
-			String tablename = "studentObj";
-			String[] familys = { "value" };
-			TestHBase.creatTable(tablename, familys);
-			Student s1 = new Student();
-			s1.setName("NameWhole");
-			s1.setGender(true);
-			s1.setId(555);
-
+			if(conf==null){
+				Configuration HBASE_CONFIG = new Configuration();
+				// 与hbase/conf/hbase-site.xml中hbase.zookeeper.quorum配置的值相同
+				HBASE_CONFIG.set("hbase.zookeeper.quorum", "1.1.7.66");
+				// 与hbase/conf/hbase-site.xml中hbase.zookeeper.property.clientPort配置的值相同
+				HBASE_CONFIG.set("hbase.zookeeper.property.clientPort", "2181");
+				conf = HBaseConfiguration.create(HBASE_CONFIG);
+			}
+			String[] familys = { "columnFamily" };
+			creatTable(tableName, familys);
+			HTable table = null;
 			try {
-				HTable table = new HTable(conf, tablename);
-				Put put = new Put(Bytes.toBytes("row2"));
-				// put.add(Bytes.toBytes("value"), Bytes.toBytes(""),
-				// TestBytes.changeObjectToBytes(s1));
-				put.add(Bytes.toBytes("value"), Bytes.toBytes(""),
-						TestBytes.changeToBytes(s1));
+				table = new HTable(conf, tableName);
+				Put put = new Put(Bytes.toBytes(rowKey));
+				put.add(Bytes.toBytes("columnFamily"), Bytes.toBytes("ENV"),
+						TestBytes.changeToBytes(obj));
 				table.put(put);
-				System.out.println("insert recored name1 to table " + tablename
+				System.out.println("insert recored name1 to table " + tableName
 						+ " ok.");
 			} catch (IOException e) {
 				e.printStackTrace();
+			} finally {
+				if (table != null)
+					table.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static Student testGetStudentObject(String tableName, String rowKey)
+	public static Serializable getObject(String tableName, String rowKey)
 			throws Exception {
-		HTable table = new HTable(conf, tableName);
-		Get get = new Get(rowKey.getBytes());
-		Result rs = table.get(get);
-		Student tmp = null;
-		for (KeyValue kv : rs.raw()) {
-			System.out.print(new String(kv.getRow()) + " ");
-			System.out.print(new String(kv.getFamily()) + ":");
-			System.out.print(new String(kv.getQualifier()) + " ");
-			System.out.print(kv.getTimestamp() + " ");
-			// tmp = TestBytes.changeBytesToObject(kv.getValue());
-			tmp = (Student) TestBytes.changeToObject(kv.getValue());
-			System.out.println(tmp);
-		}
-		return tmp;
-	}
-
-	private static void testStudentString() {
+		HTable table = null;
+		Serializable tmp = null;
 		try {
-			String tablename = "student";
-			String[] familys = { "id", "name", "score" };
-			TestHBase.creatTable(tablename, familys);
-
-			// add record zkb
-			// TestHBase.addRecord(tablename,"row1","id","","095832");
-			// TestHBase.addRecord(tablename,"row2","name","","zmac");
-			// TestHBase.addRecord(tablename,"row3","score","math","97");
-			// TestHBase.addRecord(tablename,"row4","score","chinese","87");
-			// TestHBase.addRecord(tablename,"row5","score","english","85");
-			// add record baoniu
-
-			System.out.println("===========get one record========");
-			TestHBase.getOneRecord(tablename, "2");
-
-			System.out.println("===========show all record========");
-			TestHBase.getAllRecord(tablename);
-
-			// System.out.println("===========del one record========");
-			// TestHBase.delRecord(tablename, "2");
-			TestHBase.getAllRecord(tablename);
-
+			table = new HTable(conf, tableName);
+			Get get = new Get(rowKey.getBytes());
+			Result rs = table.get(get);
+			for (KeyValue kv : rs.raw()) {
+				System.out.print(new String(kv.getRow()) + " ");
+				System.out.print(new String(kv.getFamily()) + ":");
+				System.out.print(new String(kv.getQualifier()) + " ");
+				System.out.print(kv.getTimestamp() + " ");
+				tmp = TestBytes.changeToObject(kv.getValue());
+				System.out.println(tmp);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			table.close();
 		}
+		return tmp;
 	}
 
 	public static void creatTable(String tableName, String[] familys)

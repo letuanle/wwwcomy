@@ -1,6 +1,7 @@
 package test.hbase;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,41 +29,69 @@ public class TestHBase {
 	static {
 		Configuration HBASE_CONFIG = new Configuration();
 		// 与hbase/conf/hbase-site.xml中hbase.zookeeper.quorum配置的值相同
-		HBASE_CONFIG.set("hbase.zookeeper.quorum", "1.1.7.44");
+		HBASE_CONFIG.set("hbase.zookeeper.quorum", "1.1.7.63");
 		// 与hbase/conf/hbase-site.xml中hbase.zookeeper.property.clientPort配置的值相同
 		HBASE_CONFIG.set("hbase.zookeeper.property.clientPort", "2181");
 		conf = HBaseConfiguration.create(HBASE_CONFIG);
 	}
 
-	public static void main(String[] agrs) {
-		testStudentObject();
+	public static void main(String[] agrs) throws Exception {
+		testPutStudentObject();
+
+		Student s = testGetStudentObject("studentObj", "row2");
+
+		System.out.println("Start output:");
+		System.out.println("id=" + s.getId());
+		System.out.println("name=" + s.getName());
+		System.out.println("gender=" + s.isGender());
+		System.out.println("Read complete");
 		// testStudentString();
 	}
 
-	private static void testStudentObject() {
+	private static void testPutStudentObject() {
 		try {
 			String tablename = "studentObj";
 			String[] familys = { "value" };
 			TestHBase.creatTable(tablename, familys);
-//			TestHBase.addRecord(tablename, "row1", "id", "", "095832");
 			Student s1 = new Student();
-			s1.setName("Name1");
-			s1.setGender(false);
-			s1.setId(12);
+			s1.setName("NameWhole");
+			s1.setGender(true);
+			s1.setId(555);
 
 			try {
 				HTable table = new HTable(conf, tablename);
-				Put put = new Put(Bytes.toBytes("s1"));
-				put.add(Bytes.toBytes("row1"), null, null);
+				Put put = new Put(Bytes.toBytes("row2"));
+				// put.add(Bytes.toBytes("value"), Bytes.toBytes(""),
+				// TestBytes.changeObjectToBytes(s1));
+				put.add(Bytes.toBytes("value"), Bytes.toBytes(""),
+						TestBytes.changeToBytes(s1));
 				table.put(put);
-				System.out.println("insert recored name1 to table "
-						+ tablename + " ok.");
+				System.out.println("insert recored name1 to table " + tablename
+						+ " ok.");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static Student testGetStudentObject(String tableName, String rowKey)
+			throws Exception {
+		HTable table = new HTable(conf, tableName);
+		Get get = new Get(rowKey.getBytes());
+		Result rs = table.get(get);
+		Student tmp = null;
+		for (KeyValue kv : rs.raw()) {
+			System.out.print(new String(kv.getRow()) + " ");
+			System.out.print(new String(kv.getFamily()) + ":");
+			System.out.print(new String(kv.getQualifier()) + " ");
+			System.out.print(kv.getTimestamp() + " ");
+			// tmp = TestBytes.changeBytesToObject(kv.getValue());
+			tmp = TestBytes.changeToObject(kv.getValue());
+			System.out.println(tmp);
+		}
+		return tmp;
 	}
 
 	private static void testStudentString() {

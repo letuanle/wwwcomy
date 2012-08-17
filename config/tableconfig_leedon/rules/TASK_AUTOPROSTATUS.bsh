@@ -1,0 +1,14 @@
+void autoChangeProStatus() throws Throwable {
+
+	DBManager dbm = context.getDBM();
+	//30天以内自动变为即将过期
+	String sql1 = "update T_WM_PRO set STATUS=2 where ID in (select distinct(PRODUCTID) from T_WM_SDBCONPRODUCT where now()>=VALIDATE_DAY and now()<=VALIDATE_END and datediff(VALIDATE_END,now())<=30 and BILL_STATUS='audit')";
+	dbm.executeUpdate(sql1,null);
+	//30天以外为生效
+	String sql2 = "update T_WM_PRO set STATUS=0 where ID in (select distinct(PRODUCTID) from T_WM_SDBCONPRODUCT where now()>=VALIDATE_DAY and now()<=VALIDATE_END and datediff(VALIDATE_END,now())>30 and BILL_STATUS='audit')";
+	dbm.executeUpdate(sql2,null);
+	//不在范围内则过期
+	String sql3 = "update T_WM_PRO set STATUS=1 where ID not in (select distinct(PRODUCTID) from T_WM_SDBCONPRODUCT where now()>=VALIDATE_DAY and now()<=VALIDATE_END and BILL_STATUS='audit')";
+	dbm.executeUpdate(sql3,null);
+}
+autoChangeProStatus();

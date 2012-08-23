@@ -40,7 +40,7 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PRO_COUNT" description="发生数量" javaType="bigDecimal">
-			<component type="text" readOnly="true" numberGrouping="true" summaryRenderer="summaryRendererCOUNT"/>
+			<component type="text" readOnly="true" summaryType="sum" numberGrouping="true" summaryRenderer="summaryRendererCOUNT"/>
 			<queryCondition type="blurMatching"/>
 			<listColumn noedit="false" noquery="false" width="60"/>
 		</field>
@@ -126,7 +126,7 @@
 		<pluginInterceptor methodName="initDB" pluginName="initDB" type="before"><![CDATA[
 create or replace view V_WM_STOCK1 as 
 	(
-		select 1 as BT,concat("RK",t_1.ID) as ID,t_1.HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,t_1.PRO_NAME,
+		select 1 as BT,concat("RK",t_1.ID) as ID,(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN t_1.HEADID ELSE t_2.IN_NO END) as HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,t_1.PRO_NAME,
 		t_3.IN_PRICE as PRO_IN_PRICE,t_1.PRO_COUNT,
 		t_1.PRO_COUNT*t_1.PRO_IN_PRICE as ALL_IN_COST, 0 as PRO_OUT_PRICE,0 as ALL_OUT_COST,
 		t_2.BILL_STATUS,t_1.PRO_WH AS WAREWHERE,t_3.WHOWNER,t_3.WAREHOUSE,t_3.SUPPLIER,
@@ -139,12 +139,12 @@ create or replace view V_WM_STOCK1 as
 	)
 	union
 	(
-		select (CASE WHEN t_2.OUT_TYPE='consign' THEN -1 WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE -99 END) as BT,
+		select (CASE WHEN t_2.OUT_TYPE='consign' THEN -1 WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE -1 END) as BT,
 		concat("CK",t_1.ID) as ID,t_1.HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,t_1.PRO_NAME,
 		t_3.IN_PRICE as PRO_IN_PRICE,t_1.PRO_COUNT,
 		0 as ALL_IN_COST,
 		t_1.PRO_OUT_PRICE,
-		(CASE WHEN t_2.OUT_TYPE='consign' THEN t_1.PRO_COUNT*t_1.PRO_OUT_PRICE WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE -99 END) as ALL_OUT_COST,
+		(CASE WHEN t_2.OUT_TYPE='consign' THEN t_1.PRO_COUNT*t_1.PRO_OUT_PRICE WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE  t_1.PRO_COUNT*t_1.PRO_OUT_PRICE END) as ALL_OUT_COST,
 		t_1.BILL_STATUS,t_1.PRO_WH AS WAREWHERE,t_3.WHOWNER,t_3.WAREHOUSE,t_3.SUPPLIER,
 		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN  t_4.AUDIT_TIME ELSE t_2.AUDIT_TIME END )as WM_DATE,
 		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN  1 ELSE -1 END) as YK ,

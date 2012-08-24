@@ -11,13 +11,17 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PRODUCTID" description="EDP商品" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="combo" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="PRO_NAME,PRO_WMCODE,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_OUT_PRICE" parameter="{&amp;WMINID=}&amp;If(IsEmpty(Get(HEADID)),-1,Get(HEADID))"/>
+			<component type="combo" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="PRO_NAME,PRO_WMCODE,SUPP_CODE,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_OUT_PRICE" parameter="{&amp;WMINID=}&amp;If(IsEmpty(Get(HEADID)),-1,Get(HEADID))"/>
 			<listColumn noedit="false" noquery="false" width="170"/>
 			<!-- ,PRO_OUT_PRICE,PRO_PACKING,PRO_PACKING_NAME -->
 		</field>
 		<field name="PRO_NAME" description="商品名称" displayOnly="true" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="NAME"/>
 			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="true" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="true" displayReferenceField="SUPP_CODE"/>
+			<listColumn noedit="false" noquery="false" width="90"/>
 		</field>
 		<field name="PRO_WMCODE" description="货号" displayOnly="true" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="WMCODE"/>
@@ -30,6 +34,10 @@
 		<field name="PRO_COUNT" description="入库数量" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="false" summaryType="sum"/>
 			<listColumn noedit="false" noquery="false" width="65"/>
+		</field>
+		<field name="BATCH" description="批次" javaType="bigDecimal">
+			<component type="text" readOnly="false"/>
+			<listColumn noedit="false" noquery="false" width="60"/>
 		</field>
 		<field name="INPACK_COUNT" description="箱数" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="false" summaryType="sum"/>
@@ -101,7 +109,7 @@
 			<queryCondition type="equal"/>
 		</field>
 		<field name="PRODUCTID" description="EDP商品" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="combo" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="PRO_NAME,PRO_WMCODE,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_OUT_PRICE" parameter="{&amp;WMOUTID=}&amp;If(IsEmpty(Get(HEADID)),-1,Get(HEADID))"/>
+			<component type="combo" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="PRO_NAME,PRO_WMCODE,SUPP_CODE,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_OUT_PRICE" parameter="{&amp;WMOUTID=}&amp;If(IsEmpty(Get(HEADID)),-1,Get(HEADID))"/>
 			<listColumn noedit="false" noquery="false" width="170"/>
 			<!-- ,PRO_PACKING,PRO_PACKING_NAME -->
 		</field>
@@ -112,6 +120,10 @@
 		<field name="PRO_WMCODE" description="货号" displayOnly="true" javaType="string" lazyLoad="false">
 			<component type="hidden" readOnly="true" displayReferenceField="WMCODE"/>
 			<listColumn noedit="false" noquery="false" width="60"/>
+		</field>
+		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="true" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="true" displayReferenceField="SUPP_CODE"/>
+			<listColumn noedit="false" noquery="false" width="90"/>
 		</field>
 		<field name="PRO_WH" description="仓位" javaType="string">
 			<component type="richSelect" readOnly="false" displayReferenceField="CODE" referenceField="ID" referenceTable="T_DIC_WAREWHERE" parameter="{&amp;GRID=1}"/>

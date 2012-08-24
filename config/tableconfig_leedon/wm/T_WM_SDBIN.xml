@@ -51,14 +51,14 @@
 		</field>
 		<!-- -->
 		<field name="SUBGRID2" javaType="string" description="应入库明细" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,CONTRACT_CODE,PRODUCTID,PRO_NAME,PRO_COUNT,IN_COUNT,PRO_PACKINGNUM,PRO_CAPACITYNUM,PRO_WEIGHTNUM,IN_PRICE,OUT_PRICE,All_COST,All_WEIGHTNUM,All_CAPACITYNUM,PRO_PRE,REMAINDER_NUM,MARKETABLE" referenceField="HEADID" referenceTable="T_WM_SDBINPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,CONTRACT_CODE,PRODUCTID,PRO_NAME,SUPP_CODE,PRO_COUNT,IN_COUNT,PRO_PACKINGNUM,PRO_CAPACITYNUM,PRO_WEIGHTNUM,IN_PRICE,OUT_PRICE,All_COST,All_WEIGHTNUM,All_CAPACITYNUM,PRO_PRE,REMAINDER_NUM,MARKETABLE" referenceField="HEADID" referenceTable="T_WM_SDBINPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<!-- displayReferenceField="PRO_CODE" action="alert(get(ID))" -->
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
 		<!-- "ID,HEADID,PRODUCTID,CODE,PRE_COUNT,PRE_PACKING,PRO_PACKING_NAME,IN_TIME,IN_TYPE,PRO_COUNT,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_MEMO" -->
 		<field name="PRODUCTID" description="入库EDP商品" displayOnly="true" javaType="string" lazyLoad="false">
-			<component type="combo" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="HIDDEN_CODE,PRO_PACKINGNUM,PRO_CAPACITYNUM,PRO_WEIGHTNUM,HIDDEN_WMCODE" parameter="{&amp;WMINID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="combo" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="HIDDEN_CODE,PRO_PACKINGNUM,SUPP_CODE,PRO_CAPACITYNUM,PRO_WEIGHTNUM,HIDDEN_WMCODE" parameter="{&amp;WMINID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<listColumn noedit="false" noquery="true"/>
 			<!-- ,PRO_PACKING,PRO_PACKING_NAME -->
 		</field>
@@ -71,7 +71,7 @@
 			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="TEST1" description="预入库" displayOnly="true" javaType="string" lazyLoad="false">
-			<component type="button" readOnly="false" colspan="1" action="test1()"/>
+			<component type="button" readOnly="false" colspan="1" action="testPreBtn()"/>
 			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="TEST2" description="明细入库" displayOnly="true" javaType="string" lazyLoad="false">
@@ -79,14 +79,14 @@
 			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="SUBGRID1" javaType="string" description="入库预处理" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:300;toolbar:no;treecol:CODE;leafcol:ISLEAF;pidcol:PARENTID;" displayReferenceField="ID,HEADID,PARENTID,PRODUCTID,CODE,PRO_WMCODE,PRO_COUNT,INPACK_NUM,IN_TIME,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_OUT_PRICE,REM_PRE" referenceField="HEADID" referenceTable="T_WM_SDBWAREWHERE" parameter="{&amp;PARENTID=-1}" action=""/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:300;toolbar:no;treecol:CODE;leafcol:ISLEAF;pidcol:PARENTID;" displayReferenceField="ID,HEADID,PARENTID,PRODUCTID,SUPP_CODE,CODE,PRO_WMCODE,PRO_COUNT,INPACK_NUM,IN_TIME,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_OUT_PRICE,REM_PRE" referenceField="HEADID" referenceTable="T_WM_SDBWAREWHERE" parameter="{&amp;PARENTID=-1}" action=""/>
 			<!--  PRO_IN_COST, &amp;If(IsEmpty(Get(WAREHOUSE)),-1,Get(WAREHOUSE))  -999 {&amp;HEADID=}&amp;Get(WAREHOUSE)&amp;{&amp;PARENTID=-1}-->
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
 		<!-- "ID,HEADID,PRODUCTID,PRO_WH,PRE_COUNT,PRE_PACKING,PRO_PACKING_NAME,IN_TIME,IN_TYPE,PRO_COUNT,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_IN_COST,PRO_MEMO" -->
 		<field name="SUBGRID" javaType="string" description="实际入库明细" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,PRODUCTID,PRO_NAME,PRO_WMCODE,PRO_WH,PRO_COUNT,INPACK_COUNT,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,ALL_IN_COST,PRO_OUT_PRICE,ALL_OUT_COST" referenceField="HEADID" referenceTable="T_WM_INDETAIL" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,PRODUCTID,PRO_NAME,SUPP_CODE,PRO_WMCODE,PRO_WH,PRO_COUNT,BATCH,INPACK_COUNT,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,ALL_IN_COST,PRO_OUT_PRICE,ALL_OUT_COST" referenceField="HEADID" referenceTable="T_WM_INDETAIL" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<!-- displayReferenceField="PRO_CODE" action="alert(get(ID))" action="If(Get(BILL_STATUS)={audit},SetVisible({audit},false,{saveAll},false),SetVisible({audit},true,{saveAll},true))" -->
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
@@ -116,6 +116,10 @@
 		</field>
 		<field name="HIDDEN_CODE" description="hidden商品编号" displayOnly="true" javaType="string" lazyLoad="false">
 			<component type="hidden" readOnly="true" displayReferenceField="CODE"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="SUPP_CODE" description="hidden供应商自有货号编号" displayOnly="true" javaType="string" lazyLoad="false">
+			<component type="hidden" readOnly="true" displayReferenceField="SUPP_CODE"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PRO_PACKINGNUM" description="hidden每箱个数" displayOnly="true" javaType="bigDecimal" lazyLoad="false">

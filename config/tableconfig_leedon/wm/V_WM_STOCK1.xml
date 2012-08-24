@@ -11,7 +11,7 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PRODUCTID" description="EDP商品名" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="combo" readOnly="true" colspan="1" displayReferenceField="NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="PRO_WMCODE,PRO_NAME,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE"/>
+			<component type="combo" readOnly="true" colspan="1" displayReferenceField="NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="PRO_WMCODE,PRO_NAME,SUPP_CODE,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE"/>
 			<queryCondition type="equal"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
@@ -21,6 +21,10 @@
 		</field>
 		<field name="PRO_WMCODE" description="EDP商品编号" displayOnly="true" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true" colspan="1" displayReferenceField="WMCODE"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="true" javaType="string">
+			<component type="text" readOnly="true" displayReferenceField="SUPP_CODE"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PRO_CAPACITYNUM" description="单位体积" displayOnly="true" javaType="bigDecimal" lazyLoad="false">
@@ -127,6 +131,7 @@
 create or replace view V_WM_STOCK1 as 
 	(
 		select 1 as BT,concat("RK",t_1.ID) as ID,(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN t_1.HEADID ELSE t_2.IN_NO END) as HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,t_1.PRO_NAME,
+		t_3.SUPP_CODE,
 		t_3.IN_PRICE as PRO_IN_PRICE,t_1.PRO_COUNT,
 		t_1.PRO_COUNT*t_1.PRO_IN_PRICE as ALL_IN_COST, 0 as PRO_OUT_PRICE,0 as ALL_OUT_COST,
 		t_2.BILL_STATUS,t_1.PRO_WH AS WAREWHERE,t_3.WHOWNER,t_3.WAREHOUSE,t_3.SUPPLIER,
@@ -141,7 +146,7 @@ create or replace view V_WM_STOCK1 as
 	(
 		select (CASE WHEN t_2.OUT_TYPE='consign' THEN -1 WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE -1 END) as BT,
 		concat("CK",t_1.ID) as ID,t_1.HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,t_1.PRO_NAME,
-		t_3.IN_PRICE as PRO_IN_PRICE,t_1.PRO_COUNT,
+		t_3.SUPP_CODE,t_3.IN_PRICE as PRO_IN_PRICE,t_1.PRO_COUNT,
 		0 as ALL_IN_COST,
 		t_1.PRO_OUT_PRICE,
 		(CASE WHEN t_2.OUT_TYPE='consign' THEN t_1.PRO_COUNT*t_1.PRO_OUT_PRICE WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE  t_1.PRO_COUNT*t_1.PRO_OUT_PRICE END) as ALL_OUT_COST,

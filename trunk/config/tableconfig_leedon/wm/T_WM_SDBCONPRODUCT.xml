@@ -7,7 +7,7 @@
 			<queryCondition type="equal"/>
 		</field>
 		<field name="PRODUCTID" description="EDP商品" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="richSelect" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="PRO_NAME,PRO_CODE,SPEC,ZDKC,PRO_CAPACITYNUM,MODEL,PRO_WEIGHTNUM,P_24,PRO_PACKINGNUM,MARKETABLE,PRO_IN_PRICE,PRO_OUT_PRICE" parameter="{&amp;__SUPPLIER=}&amp;If(IsEmpty(GetHeadValue(SHIP_SUPPLIER)),{-1},GetHeadValue(SHIP_SUPPLIER))"/>
+			<component type="richSelect" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="PRO_NAME,SUPP_CODE,PRO_CODE,SPEC,ZDKC,PRO_CAPACITYNUM,MODEL,PRO_WEIGHTNUM,P_24,PRO_PACKINGNUM,MARKETABLE,PRO_IN_PRICE,PRO_OUT_PRICE" parameter="{&amp;__SUPPLIER=}&amp;If(IsEmpty(GetHeadValue(SHIP_SUPPLIER)),{-1},GetHeadValue(SHIP_SUPPLIER))"/>
 			<!-- parameter="{&amp;MARKETABLE=true}" -->
 			<queryCondition type="blurMatching"/>
 			<listColumn noedit="false" noquery="false" width="170" style="sortName:__PRODUCTID__CODE"/>
@@ -17,6 +17,10 @@
 		<field name="PRO_NAME" description="商品名称" displayOnly="false" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="NAME"/>
 			<listColumn noedit="false" noquery="false" width="95"/>
+		</field>
+		<field name="SUPP_CODE" description="供应商自有货号" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="false" displayReferenceField="SUPP_CODE"/>
+			<listColumn noedit="false" noquery="false" width="90"/>
 		</field>
 		<field name="PRO_CODE" description="商品编号" displayOnly="false" javaType="string" lazyLoad="false">
 			<component type="hidden" readOnly="true" colspan="1" displayReferenceField="CODE" />

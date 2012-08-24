@@ -9,7 +9,7 @@
 			<queryCondition type="equal"/>
 		</field>
 		<field name="PRODUCTID" description="EDP商品" javaType="string" >
-			<component type="combo" readOnly="false" colspan="1" displayReferenceField="WMCODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="WMCODE,NAME,PACKING_NUM,WAREHOUSE" />
+			<component type="combo" readOnly="false" colspan="1" displayReferenceField="WMCODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="WMCODE,NAME,SUPP_CODE,PACKING_NUM,WAREHOUSE" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PRODUCT_ID" description="SDB商品ID" javaType="string" >
@@ -24,17 +24,21 @@
 			<component type="text" readOnly="true" displayReferenceField="WMCODE"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
+		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="true" javaType="string">
+			<component type="text" readOnly="true" displayReferenceField="SUPP_CODE"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
 		<field name="PRE" description=" " displayOnly="true" javaType="string" lazyLoad="false">
-			<component type="button" readOnly="true" renderer="renderPre"/>
+			<component type="button" readOnly="true" renderer="renderPre" /><!-- -->
 			<listColumn noedit="false" noquery="false" width="70"/>
 		</field>
 		<field name="AUDIT" description=" " displayOnly="true" javaType="string" lazyLoad="false">
-			<component type="button" readOnly="true" renderer="renderAudit"/>
-			<listColumn noedit="false" noquery="false" width="70"/>
+			<component type="button" readOnly="true"/><!--renderer="renderAudit" -->
+			<listColumn noedit="true" noquery="true" width="70"/>
 		</field>
 		<field name="UNAUDIT" description=" " displayOnly="true" javaType="string" lazyLoad="false">
-			<component type="button" readOnly="true" renderer="renderUnAudit"/>
-			<listColumn noedit="false" noquery="false" width="70"/>
+			<component type="button" readOnly="true"/><!--renderer="renderUnAudit" -->
+			<listColumn noedit="true" noquery="true" width="70"/>
 		</field>
 		<field name="OUT_COUNT" description="应出库数量" javaType="bigDecimal">
 			<component type="text" readOnly="false"/>

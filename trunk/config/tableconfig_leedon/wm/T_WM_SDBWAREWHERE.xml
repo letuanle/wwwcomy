@@ -23,6 +23,10 @@
 			<listColumn noedit="false" noquery="false"/>
 			<!-- PRO_PACKING,PRO_PACKING_NAME, -->
 		</field>
+		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="true" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="true" />
+			<listColumn noedit="false" noquery="false" width="90"/>
+		</field>
 		<field name="PRO_COUNT" description="数量" displayOnly="true" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="false" action="Set(PRO_IN_COST,Get(PRO_COUNT)*Get(PRO_IN_PRICE))+Set(PRO_OUT_COST,Get(PRO_COUNT)*Get(PRO_OUT_PRICE))"/>
 			<listColumn noedit="false" noquery="false"/>

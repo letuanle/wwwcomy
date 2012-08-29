@@ -21,7 +21,7 @@
 		</field>
 		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="true" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="SUPP_CODE"/>
-			<listColumn noedit="false" noquery="false" width="90"/>
+			<listColumn noedit="false" noquery="false" />
 		</field>
 		<field name="PRO_WMCODE" description="货号" displayOnly="true" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="WMCODE"/>

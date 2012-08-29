@@ -67,6 +67,7 @@ function testRem(rowIndex) {
 		item1.set('PRO_WMCODE', $('HIDDEN_WMCODE').value);
 		item1.set('PRO_CAPACITYNUM', $('PRO_CAPACITYNUM').value);
 		item1.set('PRO_WEIGHTNUM', $('PRO_WEIGHTNUM').value);
+		item1.set('SUPP_CODE', $('SUPP_CODE').value);
 		if(!Ext.isEmpty(item1.get('PRO_IN_PRICE')))
 			return;
 		item1.set('PRO_IN_PRICE', $('PRO_IN_PRICE').value);
@@ -86,6 +87,7 @@ function testRem(rowIndex) {
 	item.set('PRO_WEIGHTNUM', $('PRO_WEIGHTNUM').value);
 	item.set('PRO_IN_PRICE', $('PRO_IN_PRICE').value);
 	item.set('PRO_OUT_PRICE', $('PRO_OUT_PRICE').value);
+	item.set('SUPP_CODE', $('SUPP_CODE').value);
 }
 
 //明细中的按钮

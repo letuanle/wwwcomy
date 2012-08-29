@@ -19,9 +19,9 @@ void checkStock() {
 				t = Integer.valueOf(result[0][0]);
 				String proWmcode = result[0][1];
 				if(transCount>t)
-					throw new Warning("审批失败,商品 '"+proWmcode+"' 库存不足, 仓位ID:"+WHID+", 移库数量:"+transCount+", 现有仓位库存:"+t);
+					throw new Warning("审批失败,商品 '"+proWmcode+"' 库存不足, 仓位ID:"+WHID+", 出库数量:"+transCount+", 现有仓位库存:"+t);
 			}else{
-				throw new Warning("审批失败,商品无库存, 仓位:"+WHID+", 移库数量:"+transCount);
+				throw new Warning("审批失败,商品无库存, 仓位:"+WHID+", 出库数量:"+transCount);
 			}
 		}
 	}

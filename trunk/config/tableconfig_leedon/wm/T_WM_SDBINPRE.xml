@@ -36,6 +36,10 @@
 			<component type="text" readOnly="true" displayReferenceField="SUPP_CODE"/>
 			<listColumn noedit="false" noquery="false" width="90"/>
 		</field>
+		<field name="BATCH" description="批次" javaType="bigDecimal">
+			<component type="text" readOnly="false"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
 		<field name="PRO_COUNT" description="应入库数量" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="false" summaryType="sum" action="Set(All_WEIGHTNUM,Get(PRO_COUNT)*Get(PRO_WEIGHTNUM)/1000)
 			+Set(All_CAPACITYNUM,Get(PRO_COUNT)*Get(PRO_CAPACITYNUM))

@@ -51,7 +51,7 @@
 		</field>
 		<!-- -->
 		<field name="SUBGRID2" javaType="string" description="应入库明细" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,CONTRACT_CODE,PRODUCTID,PRO_NAME,SUPP_CODE,PRO_COUNT,IN_COUNT,PRO_PACKINGNUM,PRO_CAPACITYNUM,PRO_WEIGHTNUM,IN_PRICE,OUT_PRICE,All_COST,All_WEIGHTNUM,All_CAPACITYNUM,PRO_PRE,REMAINDER_NUM,MARKETABLE" referenceField="HEADID" referenceTable="T_WM_SDBINPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,CONTRACT_CODE,PRODUCTID,PRO_NAME,BATCH,SUPP_CODE,PRO_COUNT,IN_COUNT,PRO_PACKINGNUM,PRO_CAPACITYNUM,PRO_WEIGHTNUM,IN_PRICE,OUT_PRICE,All_COST,All_WEIGHTNUM,All_CAPACITYNUM,PRO_PRE,REMAINDER_NUM,MARKETABLE" referenceField="HEADID" referenceTable="T_WM_SDBINPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<!-- displayReferenceField="PRO_CODE" action="alert(get(ID))" -->
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
@@ -196,8 +196,9 @@
 					});
 					$$('div#__helper')[0].update('当前单据状态:'+c.getRawValue());
 				}
-			})()
+			})();
 		]]></javascript>
+		
 		<!-- 
 		<javascript hostPage="query"><![CDATA[
 		]]></javascript>
@@ -231,7 +232,7 @@
 			" pluginName="audit" type="before"/>
 		<!-- -->
 		<pluginOperation name="select" oprName="批量新增" hostPage="edit" tblevel="1" action="ShowQueryWin(T_WM_SDBCONPRODUCT,{&amp;GRID=1})+brk()"/>
-		<pluginOperation name="saveAll" oprName="保存A" hostPage="edit" tblevel="1" img="save" action="if(checkineq()=1,Save({},{},{SUBGRID2},{SUBGRID}),true)+brk()"/>
+		<pluginOperation name="saveAll" oprName="保存A" hostPage="edit" tblevel="1" img="save" action="if(checkblank(),if(checkineq()=1,Save({},{},{SUBGRID2},{SUBGRID}),true),if(Confirm({应入库明细的批次不为空，请确认是否要保存?  如果未修改过'应入库明细',请直接点击确定.}),if(checkineq()=1,Save({},{},{SUBGRID2},{SUBGRID}),true),true))+brk()"/>
 		<pluginOperation name="audit" oprName="入库审批" hostPage="edit" tblevel="1" img="settings" action="If(Confirm({确认审批后,不可恢复,确认审批?}),If(IsEmpty(Get(IMAGE)),Warning({货物质检报告不能为空})+brk(),Save({},{audit},{SUBGRID})),true)+brk()"/>
 		<Operation queryPageDelete="false" save="false" saveAndAdd="false" saveAndAddCopy="false"/>
 		<!-- -->

@@ -154,12 +154,10 @@
 			<pluggedFilter><![CDATA[
 			]]></pluggedFilter>
 		</queryFilter> -->
-		<!--
-		<javascript hostPage="edit"><![CDATA[
-		]]></javascript> -->
-		<!-- -->
+		
 		<pluginInterceptor methodName="exp" parameter="If(IsEmpty(GetPara(HEADID)),Warning({参数错误}),true)" pluginName="query" type="after"/>
 		<pluginInterceptor methodName="exp" parameter="If(InRole(sp),HidFlds(IN_COUNT,PRO_PRE),true)" pluginName="grid" type="after"/>
+		<pluginInterceptor methodName="bsh" parameter="T_WM_SDBINPRE.bsh" pluginName="save"/>
 		<!--pluginInterceptor methodName="exp" parameter="Set(PRO_WEIGHTNUM,10)" pluginName="new" type="after"/
 		<pluginInterceptor methodName="exp" parameter="If(InRole(user,sp),HidFlds(IN_COUNT,PRO_PACKINGNUM,PRO_PRE,PRO_IN),HidFlds(IN_COUNT))" pluginName="grid" type="before"/>
 		-->

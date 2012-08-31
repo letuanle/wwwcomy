@@ -6,15 +6,15 @@
 			<component type="richSelect" readOnly="true" displayReferenceField="CODE" referenceField="ID" referenceTable="T_WM_SDBCONTRACT"/>
 			<queryCondition type="equal"/>
 		</field>
-		<field name="PRODUCTID" description="EDP商品" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="richSelect" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="PRO_NAME,SUPP_CODE,PRO_CODE,SPEC,ZDKC,PRO_CAPACITYNUM,MODEL,PRO_WEIGHTNUM,P_24,PRO_PACKINGNUM,MARKETABLE,PRO_IN_PRICE,PRO_OUT_PRICE" parameter="{&amp;__SUPPLIER=}&amp;If(IsEmpty(GetHeadValue(SHIP_SUPPLIER)),{-1},GetHeadValue(SHIP_SUPPLIER))"/>
+		<field name="PRODUCTID" description="EDP商品" javaType="string">
+			<component type="combo" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="PRO_NAME,SUPP_CODE,PRO_CODE,SPEC,ZDKC,PRO_CAPACITYNUM,MODEL,PRO_WEIGHTNUM,P_24,PRO_PACKINGNUM,MARKETABLE,PRO_IN_PRICE,PRO_OUT_PRICE" parameter="{&amp;__SUPPLIER=}&amp;If(IsEmpty(GetHeadValue(SHIP_SUPPLIER)),{-1},GetHeadValue(SHIP_SUPPLIER))"/>
 			<!-- parameter="{&amp;MARKETABLE=true}" -->
 			<queryCondition type="blurMatching"/>
 			<listColumn noedit="false" noquery="false" width="170" style="sortName:__PRODUCTID__CODE"/>
 			<!-- <component type="text" readOnly="false" /> -->
 			<!-- colspan="1" displayReferenceField="NAME" referenceField="ID" referenceTable="T_DIC_PRODUCT" associatedFields="PRO_CODE,PRO_SPEC,PRO_MODEL,PRO_IN_PRICE,PRO_OUT_PRICE"-->
 		</field>
-		<field name="PRO_NAME" description="商品名称" displayOnly="false" javaType="string" lazyLoad="false">
+		<field name="PRO_NAME" description="商品名称" javaType="string">
 			<component type="text" readOnly="true" displayReferenceField="NAME"/>
 			<listColumn noedit="false" noquery="false" width="95"/>
 		</field>

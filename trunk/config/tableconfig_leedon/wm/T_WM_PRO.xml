@@ -44,6 +44,10 @@
 			<component type="text" readOnly="true"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
+		<field name="LATEST_BATCH" description="最新批次" displayOnly="false" javaType="bigDecimal">
+			<component type="text" readOnly="true"/>
+			<listColumn noedit="true" noquery="true"/>
+		</field>
 		<field name="EDPMODEL" description="材质" displayOnly="false" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true"/>
 			<listColumn noedit="false" noquery="false"/>

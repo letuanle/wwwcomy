@@ -1,0 +1,11 @@
+
+void genBatch() throws Throwable {
+	DBManager dbm = context.getDBM();
+	String ID = form.get("ID");
+	String PRODUCTID = form.get("PRODUCTID");
+	String HEADID = form.get("HEADID");
+	String sql = "select max(BATCH) from T_WM_SDBINPRE where PRODUCTID=1"+PRODUCTID;
+	String[][] rs = dbm.getResultStrArray(sql, 1, null);
+	String maxBatch =  rs[0][0];
+}
+genBatch();

@@ -372,6 +372,30 @@ Hy.UIFunction.checkineq=function() {
 	}
 	return 1;
 }
+
+Hy.UIFunction.checkblank=function() {//BATCH
+	var preGridStore=Ext.getCmp('SUBGRID2').getStore();
+	preGridStore.each(function(item){
+		if(!Ext.isEmpty(item.get("BATCH")))
+			return false;
+	});
+	return true;
+}
+		
+// in T_WM_SDBINPRE(Not used)
+Hy.UIFunction.setbatch=function(){
+	var oDate = new Date();
+	var y = (""+oDate.getFullYear());
+	var month = oDate.getMonth() + 1;
+	if (month <= 9)
+		month = "0" + month
+	var day = oDate.getDate();
+	if (day <= 9)
+		day = "0" + day;
+	var sDate = y + month + day+"01";
+	Hy.eval("set(BATCH,"+sDate+")");
+}
+
 Ext.onReady(function(){
 	try {
 		if ($('ID')!=null && $('ID').value=='-1')

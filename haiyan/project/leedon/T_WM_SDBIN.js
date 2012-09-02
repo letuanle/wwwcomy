@@ -98,10 +98,12 @@ function testPre(rowIndex) {
 	var proCount=selModel.selections.items[0].get('PRO_COUNT');
 	var proID=selModel.selections.items[0].get('PRODUCTID');
 	var suppCode=selModel.selections.items[0].get('SUPP_CODE');
+	var batch=selModel.selections.items[0].get('BATCH');
 	var numPerBox=selModel.selections.items[0].get('PRO_PACKINGNUM');
 	var contractID=selModel.selections.items[0].get('CONTRACTID');
 	var inPrice=selModel.selections.items[0].get('IN_PRICE');
 	var outPrice=selModel.selections.items[0].get('OUT_PRICE');
+	$('REMAINDER_NUM').value=0;
 	if (Hy.isEmpty(proCount) || Hy.isEmpty(proID) || proCount == 0) {
 		alert('Product and Count needed!');
 		return;
@@ -115,6 +117,7 @@ function testPre(rowIndex) {
 			item.set('PRODUCTID', "");
 			item.set('__PRODUCTID__NAME', "");
 			item.set('SUPP_CODE', "");
+			item.set('BATCH', "");
 			item.set('PRO_COUNT', "");
 			item.set('INPACK_NUM',"")
 			item.set('PRO_WMCODE', "");
@@ -123,6 +126,11 @@ function testPre(rowIndex) {
 			item.set('PRO_IN_PRICE', "");
 			item.set('PRO_IN_PRICE', "");
 		});
+
+	$('BATCH').value="";
+	$('PRO_IN_PRICE').value="";
+	$('PRO_OUT_PRICE').value="";
+	$('SUPP_CODE').value="";
 	Hy.UICache['WMLIST']=[];
 	if (Ext.getCmp('SUBGRID1'))
 		Ext.getCmp('SUBGRID1').getSelectionModel().selections.each(function(item) {
@@ -148,6 +156,7 @@ function testPre(rowIndex) {
 			//item.set('__PRODUCTID__NAME', $('__PRODUCTID__NAME').value);
 			item.set('__PRODUCTID__NAME', $('__PRODUCTID__CODE').value);
 			item.set('SUPP_CODE', suppCode);
+			item.set('BATCH', batch);
 			item.set('PRO_COUNT', a);
 			item.set('INPACK_NUM',a/numPerBox)
 			item.set('PRO_WMCODE', $('HIDDEN_WMCODE').value);
@@ -205,19 +214,36 @@ Hy.UIFunction.testprebtn=function() {
 	var xiangShu=Math.floor(proCount / numPerBox);
 	var yushu=proCount % numPerBox;
 	$('REMAINDER_NUM').value=yushu;
+	$('BATCH').value="";
+	$('PRO_IN_PRICE').value="";
+	$('PRO_OUT_PRICE').value="";
+	$('SUPP_CODE').value="";
 	Hy.UIExp.eval("setValue(PRO_COUNT,"+proCount+")+setValue(XIANSHU,"+xiangShu+")");
+	//这里要到应入库明细里面去查一下对应商品的出入库价格和批次
+	Ext.getCmp('SUBGRID2').getStore().each(function(item){
+		if(item.get("PRODUCTID")==proID){
+			var inPrice=item.get("IN_PRICE");
+			var outPrice=item.get("OUT_PRICE");
+			var batch=item.get("BATCH");
+			
+			Hy.UIExp.eval("setValue(PRO_IN_PRICE,"+inPrice+")+setValue(PRO_OUT_PRICE,"+outPrice+")");
+			Hy.UIExp.eval("setValue(BATCH,"+batch+")");
+		}
+	});
 	Hy.setValue("PRODUCTID",proID,null,true,function(){
 		$('REMAINDER_NUM').value=0;
 		var a=Math.floor($('XIANSHU').value/Hy.UICache['WMLIST'].length)*numPerBox;
 		Hy.UICache['WMLIST'].each(function(item) {
 			if (item.get('CODE').length<6)
 				return;
+			
 			item.set('PRODUCTID', $('PRODUCTID').value);
 			//item.set('__PRODUCTID__NAME', $('__PRODUCTID__NAME').value);
 			item.set('SUPP_CODE', $('SUPP_CODE').value);
+			item.set('BATCH', $('BATCH').value);
 			item.set('__PRODUCTID__NAME', $('__PRODUCTID__CODE').value);
 			item.set('PRO_COUNT', a);
-			item.set('INPACK_NUM',a/numPerBox)
+			item.set('INPACK_NUM',a/numPerBox);
 			item.set('PRO_WMCODE', $('HIDDEN_WMCODE').value);
 			item.set('PRO_CAPACITYNUM', $('PRO_CAPACITYNUM').value);
 			item.set('PRO_WEIGHTNUM', $('PRO_WEIGHTNUM').value);
@@ -230,7 +256,7 @@ Hy.UIFunction.testprebtn=function() {
 			Hy.msg(null, 'Eccess:'+s);
 			$('REMAINDER_NUM').value=s;
 		}
-		Hy.msg(null, '<font color="red">此按钮不会自动填写入库明细的价格，请手动填写或使用应入库明细中的按钮进行操作。</font>');
+//		Hy.msg(null, '<font color="red">此按钮不会自动填写入库明细的价格，请手动填写或使用应入库明细中的按钮进行操作。</font>');
 	});
 }
 //明细入库
@@ -254,6 +280,7 @@ Hy.UIFunction.test2=function(rowIndex) {
 				, __PRODUCTID__NAME: item.get('__PRODUCTID__NAME')
 				, PRO_NAME: item.get('__PRODUCTID__NAME')
 				, SUPP_CODE: item.get('SUPP_CODE')
+				, BATCH: item.get('BATCH')
 				, PRO_WH: item.get('ID')
 				, __PRO_WH__CODE: item.get('CODE')
 				, PRO_COUNT: item.get('PRO_COUNT')
@@ -278,6 +305,7 @@ Hy.UIFunction.test2=function(rowIndex) {
 				item.set('PRODUCTID', "");
 				item.set('__PRODUCTID__NAME', "");
 				item.set('SUPP_CODE', "");
+				item.set('BATCH', "");
 				item.set('PRO_COUNT', "");
 				item.set('INPACK_NUM',"")
 				item.set('PRO_WMCODE', "");
@@ -375,11 +403,12 @@ Hy.UIFunction.checkineq=function() {
 
 Hy.UIFunction.checkblank=function() {//BATCH
 	var preGridStore=Ext.getCmp('SUBGRID2').getStore();
+	var allEmpty=true;
 	preGridStore.each(function(item){
 		if(!Ext.isEmpty(item.get("BATCH")))
-			return false;
+			allEmpty=false;
 	});
-	return true;
+	return allEmpty;
 }
 		
 // in T_WM_SDBINPRE(Not used)

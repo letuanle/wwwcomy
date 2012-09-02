@@ -1,4 +1,4 @@
-﻿
+﻿//应出库明细中的预处理
 function testPre(rowIndex) {
 	var selModel = Ext.getCmp('SUBGRID').getSelectionModel();
 	selModel.clearSelections();
@@ -11,6 +11,8 @@ function testPre(rowIndex) {
 		Ext.getCmp('SUBGRID2').onStoreLoad();
 	}
 }
+
+//应出库明细审批
 function testAudit(rowIndex, p) {
 	p=p||"audit";
 	var selModel = Ext.getCmp('SUBGRID').getSelectionModel();
@@ -25,6 +27,8 @@ function testAudit(rowIndex, p) {
 		}
 	});
 }
+
+//明细出库按钮
 Hy.UIFunction.testout = function() {
 	var g = Ext.getCmp('SUBGRID1');
 	var selModel = Ext.getCmp('SUBGRID2').getSelectionModel();
@@ -47,6 +51,7 @@ Hy.UIFunction.testout = function() {
 			, PRODUCTID: item.get('PRODUCTID')
 			, __PRODUCTID__CODE: item.get('__PRODUCTID__CODE')
 			, SUPP_CODE: item.get('SUPP_CODE')
+			, BATCH: item.get('BATCH')
 			, PRO_WH: item.get('WAREWHERE')
 			, __PRO_WH__CODE: item.get('__WAREWHERE__CODE')
 			, PRO_COUNT: count

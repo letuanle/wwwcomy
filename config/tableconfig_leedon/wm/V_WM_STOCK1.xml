@@ -20,7 +20,7 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PRO_WMCODE" description="EDP商品编号" displayOnly="true" javaType="string" lazyLoad="false">
-			<component type="text" readOnly="true" colspan="1" displayReferenceField="WMCODE"/>
+			<component type="text" readOnly="true" displayReferenceField="WMCODE"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="true" javaType="string">
@@ -142,7 +142,7 @@ create or replace view V_WM_STOCK1 as
 		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN  t_4.AUDIT_TIME ELSE t_2.AUDIT_TIME END )as WM_DATE,
 		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN  1 ELSE -1 END) as YK ,
 		t_1.BATCH,
-		1 as STOCKCHANGE,1 as FINANCECHANGE
+		1 as STOCKCHANGE,0 as FINANCECHANGE
 		from (T_WM_INDETAIL t_1 left join T_WM_SDBIN t_2 on t_1.HEADID=t_2.ID) left join V_WM_SDBPRODUCT t_3 on t_3.ID=t_1.PRODUCTID
 		left join t_wm_stocktrans t_4 on t_1.headID=concat("YK",t_4.id)
 		where t_2.BILL_STATUS='audit' or t_1.headID=concat("YK",t_4.id)

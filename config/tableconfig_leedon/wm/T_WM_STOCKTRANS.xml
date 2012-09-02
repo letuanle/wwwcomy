@@ -21,7 +21,7 @@
 		</field>
 		
 		<field name="SUBGRID" javaType="string" description="移库明细" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;" displayReferenceField="ID,HEADID,PRO_WH,PRODUCTID,PRO_COUNT,TO_WH,PRO_NAME,PRO_IN_PRICE,PRO_OUT_PRICE" referenceField="HEADID" referenceTable="T_WM_TRANSDETAIL" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;" displayReferenceField="ID,HEADID,PRO_WH,PRODUCTID,SUPP_CODE,BATCH,PRO_COUNT,TO_WH,PRO_NAME,PRO_IN_PRICE,PRO_OUT_PRICE" referenceField="HEADID" referenceTable="T_WM_TRANSDETAIL" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
@@ -75,7 +75,7 @@
 		<pluginInterceptor methodName="exp" parameter="
 			If(IsEmpty(Get(ID)),Set(ID,GetNewID()),true)
 			+SetCreate(BILL_STATUS,{init},WAREHOUSE,GetUser(WAREHOUSEID),__WAREHOUSE__NAME,GetUser(WAREHOUSENAME))
-			+If(Get(BILL_STATUS)={audit},DisBtns(select,save,audit,saveAll),true)
+			+If(Get(BILL_STATUS)={audit},DisBtns(select,save,audit,saveAll)+DisFlds(SUBGRID),true)
 			" pluginName="edit" type="after"/>
 			
 		<pluginInterceptor methodName="exp" parameter="
@@ -88,7 +88,7 @@
 		<pluginInterceptor methodName="exp" parameter="
 			Set(BILL_STATUS,{audit})
 			+SetCreateTime(AUDIT_TIME,{yyyy-MM-dd HH:mm:ss})
-			+If(Get(BILL_STATUS)={audit},DisBtns(select,save,audit,saveAll),true)
+			+If(Get(BILL_STATUS)={audit},DisBtns(select,save,audit,saveAll)+DisFlds(SUBGRID),true)
 			+bsh(T_WM_STOCKTRANS.bsh)
 			" pluginName="audit" type="before"/>
 			

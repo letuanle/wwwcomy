@@ -79,7 +79,7 @@
 			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="SUBGRID1" javaType="string" description="入库预处理" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:300;toolbar:no;treecol:CODE;leafcol:ISLEAF;pidcol:PARENTID;" displayReferenceField="ID,HEADID,PARENTID,PRODUCTID,SUPP_CODE,CODE,PRO_WMCODE,PRO_COUNT,INPACK_NUM,IN_TIME,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_OUT_PRICE,REM_PRE" referenceField="HEADID" referenceTable="T_WM_SDBWAREWHERE" parameter="{&amp;PARENTID=-1}" action=""/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:300;toolbar:no;treecol:CODE;leafcol:ISLEAF;pidcol:PARENTID;" displayReferenceField="ID,HEADID,PARENTID,PRODUCTID,SUPP_CODE,BATCH,CODE,PRO_WMCODE,PRO_COUNT,INPACK_NUM,IN_TIME,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_OUT_PRICE,REM_PRE" referenceField="HEADID" referenceTable="T_WM_SDBWAREWHERE" parameter="{&amp;PARENTID=-1}" action=""/>
 			<!--  PRO_IN_COST, &amp;If(IsEmpty(Get(WAREHOUSE)),-1,Get(WAREHOUSE))  -999 {&amp;HEADID=}&amp;Get(WAREHOUSE)&amp;{&amp;PARENTID=-1}-->
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
@@ -120,6 +120,10 @@
 		</field>
 		<field name="SUPP_CODE" description="hidden供应商自有货号编号" displayOnly="true" javaType="string" lazyLoad="false">
 			<component type="hidden" readOnly="true" displayReferenceField="SUPP_CODE"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="BATCH" description="hidden批次" displayOnly="true" javaType="string">
+			<component type="text" readOnly="true" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PRO_PACKINGNUM" description="hidden每箱个数" displayOnly="true" javaType="bigDecimal" lazyLoad="false">
@@ -232,7 +236,7 @@
 			" pluginName="audit" type="before"/>
 		<!-- -->
 		<pluginOperation name="select" oprName="批量新增" hostPage="edit" tblevel="1" action="ShowQueryWin(T_WM_SDBCONPRODUCT,{&amp;GRID=1})+brk()"/>
-		<pluginOperation name="saveAll" oprName="保存A" hostPage="edit" tblevel="1" img="save" action="if(checkblank(),if(checkineq()=1,Save({},{},{SUBGRID2},{SUBGRID}),true),if(Confirm({应入库明细的批次不为空，请确认是否要保存?  如果未修改过'应入库明细',请直接点击确定.}),if(checkineq()=1,Save({},{},{SUBGRID2},{SUBGRID}),true),true))+brk()"/>
+		<pluginOperation name="saveAll" oprName="保存A" hostPage="edit" tblevel="1" img="save" action="if(checkblank(),if(checkineq()=1,Save({},{},{SUBGRID2},{SUBGRID}),true),if(Confirm({应入库明细的批次不为空，请确认输入格式是否符合'YYMMDD两位数字'格式? 如果未修改过'应入库明细',请直接点击确定.}),if(checkineq()=1,Save({},{},{SUBGRID2},{SUBGRID}),true),true))+brk()"/>
 		<pluginOperation name="audit" oprName="入库审批" hostPage="edit" tblevel="1" img="settings" action="If(Confirm({确认审批后,不可恢复,确认审批?}),If(IsEmpty(Get(IMAGE)),Warning({货物质检报告不能为空})+brk(),Save({},{audit},{SUBGRID})),true)+brk()"/>
 		<Operation queryPageDelete="false" save="false" saveAndAdd="false" saveAndAddCopy="false"/>
 		<!-- -->

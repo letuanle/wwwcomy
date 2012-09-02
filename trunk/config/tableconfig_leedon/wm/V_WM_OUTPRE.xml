@@ -48,6 +48,22 @@
 			<component type="text" readOnly="false"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
+		<field name="IN_PRICE" description="进货单价" displayOnly="false" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="false"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="OUT_PRICE" description="EDP销售单价" displayOnly="false" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="true"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="PRO_COUNT" description="数量" javaType="bigDecimal">
+			<component type="text" readOnly="false"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="OUT_ALL_PRICE" description="EDP销售总价" displayOnly="false" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="true" />
+			<listColumn noedit="false" noquery="false"/>
+		</field>
 		<field name="PACKING_NUM" description="每箱个数" displayOnly="true" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true" colspan="1" displayReferenceField="PACKING_NUM"/>
 			<listColumn noedit="false" noquery="false"/>
@@ -58,22 +74,6 @@
 		</field>
 		<field name="WEIGHTNUM" description="每箱重量(g)" displayOnly="false" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true" />
-			<listColumn noedit="false" noquery="false"/>
-		</field>
-		<field name="IN_PRICE" description="进货单价" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="text" readOnly="false"/>
-			<listColumn noedit="false" noquery="false"/>
-		</field>
-		<field name="OUT_PRICE" description="EDP销售单价" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="text" readOnly="false"/>
-			<listColumn noedit="false" noquery="false"/>
-		</field>
-		<field name="PRO_COUNT" description="数量" javaType="bigDecimal">
-			<component type="text" readOnly="false"/>
-			<listColumn noedit="false" noquery="false"/>
-		</field>
-		<field name="OUT_ALL_PRICE" description="EDP销售总价" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="text" readOnly="false" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		

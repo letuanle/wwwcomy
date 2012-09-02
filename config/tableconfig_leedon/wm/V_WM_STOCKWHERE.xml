@@ -44,7 +44,7 @@
 		</field>
 		<field name="OUT_COUNT" description="出库数" javaType="bigDecimal" displayOnly="true">
 			<component type="text" readOnly="false" numberGrouping="true"/>
-			<listColumn noedit="false" noquery="false"/>
+			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="PRO_IN_PRICE" description="参考进价" displayOnly="false" javaType="bigDecimal" lazyLoad="false">
 			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3"/>

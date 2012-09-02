@@ -64,11 +64,19 @@
 	cataUrl : 'query.do?__opr_data=T_WM_STOCKTRANS',
 	leaf : true
 }, {
-	text : 'WM_EDP库存汇总(按仓库)',
+	text : '库存汇总(按仓库)',
 	cataUrl : 'view.do?__opr_data=V_WM_STOCK3',
 	leaf : true
 }, {
-	text : 'WM_EDP库存汇总(按仓位)',
+	text : '库存汇总(按仓位)',
+	cataUrl : 'view.do?__opr_data=V_WM_STOCKWHERE',
+	leaf : true
+}, {
+	text : '库存汇总(按仓位,包括批次信息)',
+	cataUrl : 'view.do?__opr_data=V_WM_STOCKWHEREBATCH',
+	leaf : true
+}, {
+	text : '所有出入库明细(包括批次信息)',
 	cataUrl : 'view.do?__opr_data=V_WM_STOCK1',
 	leaf : true
 }, {

@@ -23,9 +23,13 @@
 			<listColumn noedit="false" noquery="false"/>
 			<!-- PRO_PACKING,PRO_PACKING_NAME, -->
 		</field>
-		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="true" javaType="string" lazyLoad="false">
+		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="true" javaType="string">
 			<component type="text" readOnly="true" />
-			<listColumn noedit="false" noquery="false" width="90"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="BATCH" description="批次" displayOnly="true" javaType="bigDecimal">
+			<component type="text" readOnly="true"/>
+			<listColumn noedit="false" noquery="false" width="60"/>
 		</field>
 		<field name="PRO_COUNT" description="数量" displayOnly="true" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="false" action="Set(PRO_IN_COST,Get(PRO_COUNT)*Get(PRO_IN_PRICE))+Set(PRO_OUT_COST,Get(PRO_COUNT)*Get(PRO_OUT_PRICE))"/>
@@ -65,11 +69,11 @@
 		</field>
 		<field name="PRO_CAPACITYNUM" description="单位体积" displayOnly="true" javaType="bigDecimal" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="CAPACITYNUM" maxFractionDigit="3" minFractionDigit="3"/>
-			<listColumn noedit="false" noquery="false"/>
+			<listColumn noedit="false" noquery="false" width="75"/>
 		</field>
 		<field name="PRO_WEIGHTNUM" description="单位重量" displayOnly="true" javaType="bigDecimal" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="WEIGHTNUM" maxFractionDigit="3" minFractionDigit="3"/>
-			<listColumn noedit="false" noquery="false"/>
+			<listColumn noedit="false" noquery="false" width="75"/>
 		</field>
 		<field name="PRO_IN_PRICE" description="进货单价" displayOnly="true" javaType="bigDecimal" lazyLoad="false">
 			<component type="hidden" readOnly="true" displayReferenceField="IN_PRICE" action="Set(PRO_IN_COST,Get(PRO_COUNT)*Get(PRO_IN_PRICE))" maxFractionDigit="3" minFractionDigit="3"/>

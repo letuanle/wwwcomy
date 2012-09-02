@@ -27,6 +27,10 @@
 			<component type="text" readOnly="true" displayReferenceField="SUPP_CODE"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
+		<field name="BATCH" description="批次" displayOnly="false" javaType="string">
+			<component type="text" readOnly="true"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
 		<field name="PRO_CAPACITYNUM" description="单位体积" displayOnly="true" javaType="bigDecimal" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="CAPACITYNUM" maxFractionDigit="3" minFractionDigit="3"/>
 			<listColumn noedit="false" noquery="true"/>
@@ -137,6 +141,7 @@ create or replace view V_WM_STOCK1 as
 		t_2.BILL_STATUS,t_1.PRO_WH AS WAREWHERE,t_3.WHOWNER,t_3.WAREHOUSE,t_3.SUPPLIER,
 		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN  t_4.AUDIT_TIME ELSE t_2.AUDIT_TIME END )as WM_DATE,
 		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN  1 ELSE -1 END) as YK ,
+		t_1.BATCH,
 		1 as STOCKCHANGE,1 as FINANCECHANGE
 		from (T_WM_INDETAIL t_1 left join T_WM_SDBIN t_2 on t_1.HEADID=t_2.ID) left join V_WM_SDBPRODUCT t_3 on t_3.ID=t_1.PRODUCTID
 		left join t_wm_stocktrans t_4 on t_1.headID=concat("YK",t_4.id)
@@ -153,6 +158,7 @@ create or replace view V_WM_STOCK1 as
 		t_1.BILL_STATUS,t_1.PRO_WH AS WAREWHERE,t_3.WHOWNER,t_3.WAREHOUSE,t_3.SUPPLIER,
 		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN  t_4.AUDIT_TIME ELSE t_2.AUDIT_TIME END )as WM_DATE,
 		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN  1 ELSE -1 END) as YK ,
+		t_1.BATCH,
 		-1 as STOCKCHANGE,
 		(CASE WHEN t_2.OUT_TYPE='consign' THEN 1 WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE 0 END) as FINANCECHANGE
 		

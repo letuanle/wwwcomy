@@ -6,11 +6,12 @@ public class FiveOut {
 		int[] array = new int[8];
 		for (int i = 0; i < 8; i++)
 			array[i] = i + 1;
-		int index = cycleOut(array, 5);
+		int index = new FiveOut().cycleOut(array, 5);
 		System.out.println("最后剩下的小孩" + index);
 	}
 
-	private static int cycleOut(int[] array, int i) {
+	
+	int cycleOut(int[] array, int i) {
 		int re = 0;
 		int step1 = 1;
 		int step2 = 0;
@@ -32,12 +33,6 @@ public class FiveOut {
 			last = array[step2];
 			step2++;
 		}
-//		for (int t = 0; t < 100; t++) {
-//			if (array[t] > 0) {
-//				re = array[t];
-//				System.out.println(re);
-//			}
-//		}
 		return re;
 	}
 

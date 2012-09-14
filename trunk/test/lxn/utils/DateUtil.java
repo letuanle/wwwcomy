@@ -10,8 +10,6 @@ import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import com.haiyan.genmis.util.DebugUtil;
-
 public class DateUtil implements Serializable {
 
 	/**
@@ -68,11 +66,9 @@ public class DateUtil implements Serializable {
 	 * @param second
 	 * @throws Throwable
 	 */
-	public DateUtil(int year, int month, int day, int hour, int minute,
-			int second) throws Throwable {
+	public DateUtil(int year, int month, int day, int hour, int minute, int second) throws Throwable {
 		if (!isValid(year, month, day, hour, minute, second)) {
-			throw new Exception("DateUtil(" + year + "," + month + "," + day
-					+ "," + hour + "," + minute + "," + second + "):无效的日期格式");
+			throw new Exception("DateUtil(" + year + "," + month + "," + day + "," + hour + "," + minute + "," + second + "):无效的日期格式");
 		} else {
 			m_year = year;
 			m_month = month;
@@ -179,8 +175,7 @@ public class DateUtil implements Serializable {
 			return false;
 		}
 		DateUtil d = (DateUtil) v;
-		return m_year == d.m_year && m_month == d.m_month && m_day == d.m_day
-				&& m_hour == d.m_hour && m_minute == d.m_minute
+		return m_year == d.m_year && m_month == d.m_month && m_day == d.m_day && m_hour == d.m_hour && m_minute == d.m_minute
 				&& m_second == d.m_second;
 	}
 
@@ -285,12 +280,9 @@ public class DateUtil implements Serializable {
 	 * @return String
 	 */
 	public String getDateString() {
-		String affMonth = m_month >= 10 ? String.valueOf(m_month) : "0"
-				+ String.valueOf(m_month);
-		String affDay = m_day >= 10 ? String.valueOf(m_day) : "0"
-				+ String.valueOf(m_day);
-		return String.valueOf(m_year) + DATE_DIVISION + affMonth
-				+ DATE_DIVISION + affDay;
+		String affMonth = m_month >= 10 ? String.valueOf(m_month) : "0" + String.valueOf(m_month);
+		String affDay = m_day >= 10 ? String.valueOf(m_day) : "0" + String.valueOf(m_day);
+		return String.valueOf(m_year) + DATE_DIVISION + affMonth + DATE_DIVISION + affDay;
 	}
 
 	/**
@@ -298,10 +290,8 @@ public class DateUtil implements Serializable {
 	 */
 	public String getDateStringNew() {
 		//
-		String affMonth = m_month >= 10 ? String.valueOf(m_month) : "0"
-				+ String.valueOf(m_month);
-		String affDay = m_day >= 10 ? String.valueOf(m_day) : "0"
-				+ String.valueOf(m_day);
+		String affMonth = m_month >= 10 ? String.valueOf(m_month) : "0" + String.valueOf(m_month);
+		String affDay = m_day >= 10 ? String.valueOf(m_day) : "0" + String.valueOf(m_day);
 		return String.valueOf(m_year) + affMonth + affDay;
 	}
 
@@ -309,19 +299,13 @@ public class DateUtil implements Serializable {
 	 * @return String
 	 */
 	public String getFullString() {
-		String affMonth = m_month >= 10 ? String.valueOf(m_month) : "0"
-				+ String.valueOf(m_month);
-		String affDay = m_day >= 10 ? String.valueOf(m_day) : "0"
-				+ String.valueOf(m_day);
-		String affHour = m_hour >= 10 ? String.valueOf(m_hour) : "0"
-				+ String.valueOf(m_hour);
-		String affMinute = m_minute >= 10 ? String.valueOf(m_minute) : "0"
-				+ String.valueOf(m_minute);
-		String affSecond = m_second >= 10 ? String.valueOf(m_second) : "0"
-				+ String.valueOf(m_second);
-		return String.valueOf(m_year) + DATE_DIVISION + affMonth
-				+ DATE_DIVISION + affDay + DATE_TIME_DIVISION + affHour
-				+ TIME_DIVISION + affMinute + TIME_DIVISION + affSecond;
+		String affMonth = m_month >= 10 ? String.valueOf(m_month) : "0" + String.valueOf(m_month);
+		String affDay = m_day >= 10 ? String.valueOf(m_day) : "0" + String.valueOf(m_day);
+		String affHour = m_hour >= 10 ? String.valueOf(m_hour) : "0" + String.valueOf(m_hour);
+		String affMinute = m_minute >= 10 ? String.valueOf(m_minute) : "0" + String.valueOf(m_minute);
+		String affSecond = m_second >= 10 ? String.valueOf(m_second) : "0" + String.valueOf(m_second);
+		return String.valueOf(m_year) + DATE_DIVISION + affMonth + DATE_DIVISION + affDay + DATE_TIME_DIVISION + affHour + TIME_DIVISION
+				+ affMinute + TIME_DIVISION + affSecond;
 	}
 
 	// /**
@@ -363,8 +347,7 @@ public class DateUtil implements Serializable {
 	 * @return String
 	 * @throws Throwable
 	 */
-	public static String getStringValueNew(java.util.Date date)
-			throws Throwable {
+	public static String getStringValueNew(java.util.Date date) throws Throwable {
 		// SimpleDateFormat formatter = getDateFormat("yyyy-MM-dd HH:mm:ss");
 		// return formatter.format(date);
 		return getDateFormatStr(date, "yyyy-MM-dd HH:mm:ss");
@@ -443,13 +426,11 @@ public class DateUtil implements Serializable {
 	 */
 	public DateUtil getRealMonthEnd() throws Throwable {
 		DateUtil r = getMonthStart();
-		if (r.getMonth() == 1 || r.getMonth() == 3 || r.getMonth() == 5
-				|| r.getMonth() == 7 || r.getMonth() == 8 || r.getMonth() == 10
+		if (r.getMonth() == 1 || r.getMonth() == 3 || r.getMonth() == 5 || r.getMonth() == 7 || r.getMonth() == 8 || r.getMonth() == 10
 				|| r.getMonth() == 12) {
 			r.advanceDays(30);
 		}
-		if (r.getMonth() == 4 || r.getMonth() == 6 || r.getMonth() == 9
-				|| r.getMonth() == 11) {
+		if (r.getMonth() == 4 || r.getMonth() == 6 || r.getMonth() == 9 || r.getMonth() == 11) {
 			r.advanceDays(29);
 		}
 		if (r.getMonth() == 2) {
@@ -523,12 +504,9 @@ public class DateUtil implements Serializable {
 	 */
 	public String getTimeString() {
 		//
-		String affHour = m_hour >= 10 ? String.valueOf(m_hour) : "0"
-				+ String.valueOf(m_hour);
-		String affMinute = m_minute >= 10 ? String.valueOf(m_minute) : "0"
-				+ String.valueOf(m_minute);
-		String affSecond = m_second >= 10 ? String.valueOf(m_second) : "0"
-				+ String.valueOf(m_second);
+		String affHour = m_hour >= 10 ? String.valueOf(m_hour) : "0" + String.valueOf(m_hour);
+		String affMinute = m_minute >= 10 ? String.valueOf(m_minute) : "0" + String.valueOf(m_minute);
+		String affSecond = m_second >= 10 ? String.valueOf(m_second) : "0" + String.valueOf(m_second);
 		return affHour + TIME_DIVISION + affMinute + TIME_DIVISION + affSecond;
 	}
 
@@ -601,10 +579,8 @@ public class DateUtil implements Serializable {
 	 * @param second
 	 * @return boolean
 	 */
-	public static boolean isValid(int year, int month, int day, int hour,
-			int minute, int second) {
-		if (hour < 0 || hour > 23 || minute < 0 || minute > 59 || second < 0
-				|| second > 59) {
+	public static boolean isValid(int year, int month, int day, int hour, int minute, int second) {
+		if (hour < 0 || hour > 23 || minute < 0 || minute > 59 || second < 0 || second > 59) {
 			return false;
 		}
 		if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31) {
@@ -665,9 +641,7 @@ public class DateUtil implements Serializable {
 			jy--;
 			jm += 13;
 		}
-		int jul = (int) (Math.floor(365.25D * (double) jy)
-				+ Math.floor(30.600100000000001D * (double) jm)
-				+ (double) m_day + 1720995D);
+		int jul = (int) (Math.floor(365.25D * (double) jy) + Math.floor(30.600100000000001D * (double) jm) + (double) m_day + 1720995D);
 		int IGREG = 0x8fc1d;
 		if (m_day + 31 * (m_month + 12 * m_year) >= IGREG) {
 			int ja = (int) (0.01D * (double) jy);
@@ -722,8 +696,7 @@ public class DateUtil implements Serializable {
 	 * @return int
 	 * @throws Throwable
 	 */
-	public static int between(java.util.Date sd, java.util.Date ed)
-			throws Throwable {
+	public static int between(java.util.Date sd, java.util.Date ed) throws Throwable {
 		DateUtil sd1 = new DateUtil(sd);
 		DateUtil ed1 = new DateUtil(ed);
 		return ed1.toJulian() - sd1.toJulian();
@@ -880,8 +853,7 @@ public class DateUtil implements Serializable {
 		return new SimpleDateFormat(format).format(date);
 	}
 
-	private static java.util.Date getDateParse(String sDate, String format)
-			throws Throwable {
+	private static java.util.Date getDateParse(String sDate, String format) throws Throwable {
 		if (sDate.endsWith("Z")) { // 有TZ的格式偏移24小时
 			sDate = StringUtil.replaceAll(sDate.substring(0, sDate.length() - 1), "T", " ");
 			java.util.Date d = new SimpleDateFormat(format).parse(sDate);
@@ -967,8 +939,7 @@ public class DateUtil implements Serializable {
 		// return new SimpleDateFormat(dateStyle).format(new java.util.Date());
 	}
 
-	public static Integer[] getMonthBetween(Integer lFirstMonth,
-			Integer lStartMonth) {
+	public static Integer[] getMonthBetween(Integer lFirstMonth, Integer lStartMonth) {
 		// '##BD 取得启用前一个月份和启用月份之间的所有月份
 		// '##PD lFirstMonth 第一个月份
 		// '##PD lStartMonth 启用月份
@@ -1100,18 +1071,17 @@ public class DateUtil implements Serializable {
 	public static void main(String[] args) {
 		try {
 			System.out.println(format("2009-12-04", "yy-dd-MM"));
-			java.util.Date date2 = new java.util.Date();
-			DebugUtil.debug(date2.toString());
-			DebugUtil.debug("Sun Jan 04 00:00:00 CST 2009".indexOf(" "));
+			// DebugUtil.debug(date2.toString());
+			// DebugUtil.debug("Sun Jan 04 00:00:00 CST 2009".indexOf(" "));
 			// DebugUtil.debug(">date:"
 			// + new SimpleDateFormat().getCalendar().
 			// .parse("Tuesday, April 12, 2009 AD"));
 			// if (1 == 1)
 			// return;
 			// //
-			String sDate = "2007-01-01 12:40:30";
+			// String sDate = "2007-01-01 12:40:30";
 			// DebugUtil.debug(getDate(aa, "yyyy-MM-dd"));
-			java.util.Date date = getDate(sDate, "yyyy-MM-dd HH:mm:ss");
+			// java.util.Date date = getDate(sDate, "yyyy-MM-dd HH:mm:ss");
 			// DebugUtil.debug("--" + getDateFormat("yyyy-MM-dd").format(date));
 			// String timeStr = "2007-09-29-00.00.00";
 			// String dateStyle = "yyyy-MM-dd-HH.MM.SS";
@@ -1119,18 +1089,18 @@ public class DateUtil implements Serializable {
 			// timeStr = "2007-09-29";
 			// dateStyle = "yyyy-MM-dd";
 			// DebugUtil.debug(getDateString(timeStr, dateStyle));
-			DebugUtil.debug(getCurrDate());
-			DebugUtil.debug(getCurrTime());
-			DebugUtil.debug(getCurrTimeStr("yyyy-MM-dd HH.mm.ss"));
-			//
-			DebugUtil.debug(format(date, "yyyy-MM-dd HH:mm:ss"));
-			DebugUtil.debug(format(date, "yyyy-MM-dd"));
-			DebugUtil.debug(format(date, "yy-MM-dd"));
-			DebugUtil.debug(format(date, "yyyyMMdd"));
-			DebugUtil.debug(format(date, "yyMMdd"));
-			DebugUtil.debug(format(date, "MM-DD"));
-			DebugUtil.debug(format(date, "MMDD"));
-		} catch (ParseException e) {
+			// DebugUtil.debug(getCurrDate());
+			// DebugUtil.debug(getCurrTime());
+			// DebugUtil.debug(getCurrTimeStr("yyyy-MM-dd HH.mm.ss"));
+			// //
+			// DebugUtil.debug(format(date, "yyyy-MM-dd HH:mm:ss"));
+			// DebugUtil.debug(format(date, "yyyy-MM-dd"));
+			// DebugUtil.debug(format(date, "yy-MM-dd"));
+			// DebugUtil.debug(format(date, "yyyyMMdd"));
+			// DebugUtil.debug(format(date, "yyMMdd"));
+			// DebugUtil.debug(format(date, "MM-DD"));
+			// DebugUtil.debug(format(date, "MMDD"));
+		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 	}
@@ -1147,8 +1117,7 @@ public class DateUtil implements Serializable {
 	 * @param endDate
 	 * @return
 	 */
-	public static int getIntervalMonths(java.sql.Date startDate,
-			java.sql.Date endDate) {
+	public static int getIntervalMonths(java.sql.Date startDate, java.sql.Date endDate) {
 		Calendar start = Calendar.getInstance();
 		start.setTime(startDate);
 		Calendar end = Calendar.getInstance();
@@ -1157,8 +1126,7 @@ public class DateUtil implements Serializable {
 		int startYear = start.get(Calendar.YEAR);
 		int endMonth = end.get(Calendar.MONTH);
 		int endYear = end.get(Calendar.YEAR);
-		int interval = (endYear * 12 + endMonth)
-				- (startYear * 12 + startMonth);
+		int interval = (endYear * 12 + endMonth) - (startYear * 12 + startMonth);
 		return interval;
 	}
 
@@ -1186,8 +1154,7 @@ public class DateUtil implements Serializable {
 		return LMonthToFMonth(FMonthToLMonth(nCurMonth) + nCycle);
 	}
 
-	public static java.util.Date dateAdd(String interval, int num,
-			java.util.Date date) {
+	public static java.util.Date dateAdd(String interval, int num, java.util.Date date) {
 
 		Calendar start = Calendar.getInstance();
 		start.setTime(date);
@@ -1206,8 +1173,7 @@ public class DateUtil implements Serializable {
 			field = Calendar.WEEK_OF_YEAR;
 		else if (interval.equalsIgnoreCase("y"))
 			field = Calendar.DAY_OF_YEAR;
-		else if (interval.equalsIgnoreCase("m")
-				|| interval.equalsIgnoreCase("mm"))
+		else if (interval.equalsIgnoreCase("m") || interval.equalsIgnoreCase("mm"))
 			field = Calendar.MONTH;
 		else if (interval.equalsIgnoreCase("yyyy"))
 			field = Calendar.YEAR;
@@ -1215,7 +1181,7 @@ public class DateUtil implements Serializable {
 			field = Calendar.MONTH;
 			num = num * 3;
 		} else {
-			DebugUtil.error("dateAdd" + interval + "not impl");
+			// DebugUtil.error("dateAdd" + interval + "not impl");
 		}
 		start.add(field, num);
 		return start.getTime();
@@ -1236,14 +1202,12 @@ public class DateUtil implements Serializable {
 		return cale.getTime();
 	}
 
-	public static java.util.Date getDate(int year, int month, int date,
-			int hour, int min, int sec) {
+	public static java.util.Date getDate(int year, int month, int date, int hour, int min, int sec) {
 
 		return getDate(getDate(year, month, date), hour, min, sec);
 	}
 
-	public static java.util.Date getDate(java.util.Date d, int hour, int min,
-			int sec) {
+	public static java.util.Date getDate(java.util.Date d, int hour, int min, int sec) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(d);
 		c.set(Calendar.HOUR_OF_DAY, hour);
@@ -1264,8 +1228,7 @@ public class DateUtil implements Serializable {
 		cale.clear();
 		cale.set(Calendar.YEAR, year);
 		cale.set(Calendar.MONTH, month - 1);
-		cale.set(Calendar.DAY_OF_MONTH,
-				cale.getActualMaximum(Calendar.DAY_OF_MONTH));
+		cale.set(Calendar.DAY_OF_MONTH, cale.getActualMaximum(Calendar.DAY_OF_MONTH));
 		return cale.getTime();
 	}
 
@@ -1281,8 +1244,7 @@ public class DateUtil implements Serializable {
 		cale.clear();
 		cale.set(Calendar.YEAR, year);
 		cale.set(Calendar.MONTH, month - 1);
-		cale.set(Calendar.DAY_OF_MONTH,
-				cale.getActualMinimum(Calendar.DAY_OF_MONTH));
+		cale.set(Calendar.DAY_OF_MONTH, cale.getActualMinimum(Calendar.DAY_OF_MONTH));
 		return cale.getTime();
 	}
 
@@ -1294,5 +1256,44 @@ public class DateUtil implements Serializable {
 		time += millisecondsPerDay * days;
 		result.setTime(time);
 		return result;
+	}
+
+	/**
+	 * 计算两个日期之间相差的天数
+	 * 
+	 * @param smdate
+	 *            较小的时间
+	 * @param bdate
+	 *            较大的时间
+	 * @return 相差天数
+	 * @throws ParseException
+	 */
+	public static int daysBetween(Date smdate, Date bdate) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		smdate = (Date) sdf.parse(sdf.format(smdate));
+		bdate = (Date) sdf.parse(sdf.format(bdate));
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(smdate);
+		long time1 = cal.getTimeInMillis();
+		cal.setTime(bdate);
+		long time2 = cal.getTimeInMillis();
+		long between_days = (time2 - time1) / (1000 * 3600 * 24);
+
+		return Integer.parseInt(String.valueOf(between_days));
+	}
+
+	/**
+	 * 字符串的日期格式的计算
+	 */
+	public static int daysBetween(String smdate, String bdate) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(sdf.parse(smdate));
+		long time1 = cal.getTimeInMillis();
+		cal.setTime(sdf.parse(bdate));
+		long time2 = cal.getTimeInMillis();
+		long between_days = (time2 - time1) / (1000 * 3600 * 24);
+
+		return Integer.parseInt(String.valueOf(between_days));
 	}
 }

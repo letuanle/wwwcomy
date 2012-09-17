@@ -4,6 +4,9 @@
 		<id name="ITEM_ID" description="ITEM_ID" javaType="string">
 			<component type="hidden" url=""/>
 		</id>
+		<field name="ITEM_ID_PK" description="增加索引字段" javaType="bigDecimal">
+			<component type="readOnlyText"/>
+		</field>
 		<field name="ORDER_ID" description="ORDER_ID出库单号" javaType="string">
 			<component type="readOnlyText"/>
 			<queryCondition type="equal"/>
@@ -139,7 +142,7 @@
 		<pluginInterceptor methodName="initDB" pluginName="initDB" type="before"><![CDATA[
 create or replace view V_WM_OUTPRE as 
 	(
-		select t_1.HYVERSION,t_1.OUT_COUNT,'' as PRE,'' as AUDIT,t_1.OUT_RCOUNT,
+		select t_1.HYVERSION,t_1.OUT_COUNT,'' as PRE,'' as AUDIT,t_1.OUT_RCOUNT,t_2.ITEM_ID_PK,
 		t_1.All_CAPACITYNUM,t_1.All_WEIGHTNUM,t_1.BILL_STATUS,t_1.REMAINDER_NUM,
 		t_1.LOGISTICS_NAME,t_1.LOGISTICS_CODE,t_1.LOGISTICS_MEMO,
 		
@@ -147,11 +150,11 @@ create or replace view V_WM_OUTPRE as
 		
 		t_2.ITEM_ID,t_2.ORDER_ID,t_2.NAME,t_2.PRICE as OUT_PRICE,t_2.NUMS as PRO_COUNT,t_2.AMOUNT as OUT_ALL_PRICE
 		
-		from (SDB_ORDER_ITEMS t_2 left join V_WM_SDBPRODUCT t_3 on t_2.PRODUCT_ID=t_3.PRODUCT_ID) left join T_WM_OUTPREPART t_1 on t_1.ITEM_ID=t_2.ITEM_ID
+		from (SDB_ORDER_ITEMS t_2 left join V_WM_SDBPRODUCT t_3 on t_2.PRODUCT_ID=t_3.PRODUCT_ID) left join T_WM_OUTPREPART t_1 on t_1.ITEM_ID_PK=t_2.ITEM_ID
 	)
 	union
 	(
-		select t_2.HYVERSION,t_2.OUT_COUNT,'' as PRE,'' as AUDIT,t_2.OUT_RCOUNT,
+		select t_2.HYVERSION,t_2.OUT_COUNT,'' as PRE,'' as AUDIT,t_2.OUT_RCOUNT,0 as ITEM_ID_PK,
 		t_2.All_CAPACITYNUM,t_2.All_WEIGHTNUM,t_2.BILL_STATUS,t_2.REMAINDER_NUM,
 		t_2.LOGISTICS_NAME,t_2.LOGISTICS_CODE,t_2.LOGISTICS_MEMO,
 		
@@ -170,7 +173,7 @@ create or replace view V_WM_OUTPRE as
 		+If(Or(isEmpty(Get(ORDER_ID)),SubStr(Get(ORDER_ID),0,2)={CK}),true,DisFlds(PRODUCTID,OUT_PRICE,OUT_ALL_PRICE))
 			" pluginName="grid" />
 	
-		<pluginInterceptor methodName="exp" parameter="Save({T_WM_OUTPREPART},GetForm())" pluginName="saveView" />
+		<pluginInterceptor methodName="exp" parameter="if(SubStr(Get(ORDER_ID),0,2)={CK},Set(ITEM_ID_PK,0),Set(ITEM_ID_PK,get(ITEM_ID)))+Save({T_WM_OUTPREPART},GetForm())" pluginName="saveView" />
 		<pluginInterceptor methodName="exp" parameter="DBSQL({update T_WM_OUTDETAIL set BILL_STATUS='audit' where HEADID='}&amp;Get(ORDER_ID)&amp;{' and PRODUCTID='}&amp;Get(PRODUCTID)&amp;{'})" pluginName="audit" />
 		<pluginInterceptor methodName="exp" parameter="DBSQL({update T_WM_OUTDETAIL set BILL_STATUS='init' where HEADID='}&amp;Get(ORDER_ID)&amp;{' and PRODUCTID='}&amp;Get(PRODUCTID)&amp;{'})" pluginName="unaudit" />
 		<!-- -->

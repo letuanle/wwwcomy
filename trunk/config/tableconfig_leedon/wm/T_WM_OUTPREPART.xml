@@ -4,6 +4,9 @@
 		<id name="ITEM_ID" description="ITEM_ID" javaType="string">
 			<component type="hidden" url=""/>
 		</id>
+		<field name="ITEM_ID_PK" description="增加索引字段" javaType="bigDecimal">
+			<component type="readOnlyText"/>
+		</field>
 		<field name="ORDER_ID" description="ORDER_ID出库单号" javaType="string">
 			<component type="readOnlyText"/>
 			<queryCondition type="equal"/>

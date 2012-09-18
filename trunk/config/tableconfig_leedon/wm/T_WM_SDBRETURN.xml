@@ -31,7 +31,7 @@
 		</field>
 		<!-- -->
 		<field name="SUBGRID2" javaType="string" description="应退货明细" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,CONTRACT_CODE,PRODUCTID,PRO_NAME,BATCH,SUPP_CODE,PRO_COUNT,IN_COUNT,PRO_PACKINGNUM,PRO_CAPACITYNUM,PRO_WEIGHTNUM,IN_PRICE,OUT_PRICE,All_COST,All_WEIGHTNUM,All_CAPACITYNUM,PRO_PRE,REMAINDER_NUM,MARKETABLE" referenceField="HEADID" referenceTable="T_WM_SDBINPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,OUT_CODE,PRODUCTID,PRO_NAME,BATCH,SUPP_CODE,PRO_COUNT,IN_COUNT,PRO_PACKINGNUM,PRO_CAPACITYNUM,PRO_WEIGHTNUM,IN_PRICE,OUT_PRICE,All_COST,All_WEIGHTNUM,All_CAPACITYNUM,PRO_PRE,REMAINDER_NUM,MARKETABLE" referenceField="HEADID" referenceTable="T_WM_SDBRETURNPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>

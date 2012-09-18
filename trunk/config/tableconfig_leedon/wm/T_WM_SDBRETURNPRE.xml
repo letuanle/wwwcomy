@@ -6,10 +6,8 @@
 			<component type="readOnlyText"/>
 			<queryCondition type="equal"/>
 		</field>
-		<field name="CONTRACT_CODE" description="合同:商品号" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="combo" readOnly="false"  action="Set(All_WEIGHTNUM,Get(PRO_COUNT)*Get(PRO_WEIGHTNUM)/1000)
-			+Set(All_CAPACITYNUM,Get(PRO_COUNT)*Get(PRO_CAPACITYNUM))
-			+Set(All_COST,Get(PRO_COUNT)*Get(IN_PRICE))" displayReferenceField="CONTRACT_CODE" referenceField="ID" referenceTable="T_WM_SDBCONPRODUCT" associatedFields="PRODUCTID,PRO_NAME,SUPP_CODE,PRO_COUNT,PRO_PACKINGNUM,PRO_CAPACITYNUM,PRO_WEIGHTNUM,IN_PRICE,OUT_PRICE,MARKETABLE" parameter="{&amp;GRID=1}"/>
+		<field name="OUTPRE_CODE" description="订单:商品号" displayOnly="false" javaType="string" lazyLoad="false">
+			<component type="combo" readOnly="false" displayReferenceField="CONTRACT_CODE" referenceField="ID" referenceTable="V_WM_OUTPRE" associatedFields="PRODUCTID,PRO_NAME,SUPP_CODE,PRO_COUNT,PRO_PACKINGNUM,PRO_CAPACITYNUM,PRO_WEIGHTNUM,IN_PRICE,OUT_PRICE,MARKETABLE" parameter="{&amp;GRID=1}"/>
 			<listColumn noedit="false" noquery="false" width="155" style="sortName:__CONTRACT_CODE__CONTRACT_CODE"/>
 		</field>
 		<field name="PRODUCTID" description="EDP商品ID" displayOnly="false" javaType="string" lazyLoad="false">

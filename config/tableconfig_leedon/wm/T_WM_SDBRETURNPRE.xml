@@ -4,45 +4,88 @@
 		<id name="ID" javaType="string"/>
 		<field name="HEADID" description="退货单" javaType="string">
 			<component type="readOnlyText"/>
-			<queryCondition type="equal"/>
 		</field>
 		<field name="OUTPRE_CODE" description="订单:商品号" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="combo" readOnly="false" displayReferenceField="CONTRACT_CODE" referenceField="ID" referenceTable="V_WM_OUTPRE" associatedFields="PRODUCTID,PRO_NAME,SUPP_CODE,PRO_COUNT,PRO_PACKINGNUM,PRO_CAPACITYNUM,PRO_WEIGHTNUM,IN_PRICE,OUT_PRICE,MARKETABLE" parameter="{&amp;GRID=1}"/>
-			<listColumn noedit="false" noquery="false" width="155" style="sortName:__CONTRACT_CODE__CONTRACT_CODE"/>
+			<component type="combo" readOnly="false" displayReferenceField="OUT_CODE" referenceField="ITEM_ID" referenceTable="V_WM_OUTPRE" associatedFields="PRODUCTID,WMCODE,PRO_NAME,SUPP_CODE,OUT_COUNT,OUT_PRICE,IN_PRICE,OUT_ALL_PRICE" parameter="{&amp;RETURNPRE=1}"/>
+			<listColumn noedit="false" noquery="false" width="155" style="sortName:__OUTPRE_CODE__OUTPRE_CODE"/>
 		</field>
 		<field name="PRODUCTID" description="EDP商品ID" displayOnly="false" javaType="string" lazyLoad="false">
 			<component type="hidden" readOnly="true" displayReferenceField="PRODUCTID"/>
 			<listColumn noedit="false" noquery="false" width="75"/>
 		</field>
+		<field name="WMCODE" description="货号" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="true" displayReferenceField="WMCODE"/>
+			<listColumn noedit="false" noquery="false" width="70"/>
+		</field>
 		<field name="PRO_NAME" description="商品名称" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="text" readOnly="true" displayReferenceField="PRO_NAME"/>
-			<listColumn noedit="false" noquery="false" width="75"/>
+			<component type="text" readOnly="true" displayReferenceField="NAME"/>
+			<listColumn noedit="false" noquery="false" width="60"/>
 		</field>
-		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="true" javaType="string" lazyLoad="false">
+		<field name="SUPP_CODE" description="自有货号" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="SUPP_CODE"/>
-			<listColumn noedit="false" noquery="false" width="90"/>
+			<listColumn noedit="false" noquery="false" width="70"/>
 		</field>
-		<field name="BATCH" description="批次" javaType="bigDecimal">
-			<component type="text" readOnly="false"/>
+		<field name="RETURN_RCOUNT" description="实退货" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="false" />
+			<listColumn noedit="false" noquery="false" width="60"/>
+		</field>
+		<field name="RETURN_COUNT" description="退货数量" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="false" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
+			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
+			<listColumn noedit="false" noquery="false" width="65"/>
+		</field>
+		<field name="OUT_COUNT" description="销售数量" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="true" displayReferenceField="OUT_COUNT"/>
+			<listColumn noedit="false" noquery="false" width="65"/>
+		</field>
+		<field name="OUT_PRICE" description="EDP单价" javaType="string">
+			<component type="text" readOnly="true" displayReferenceField="OUT_PRICE"/>
+			<listColumn noedit="false" noquery="false" width="70"/>
+		</field>
+		<field name="IN_PRICE" description="供应商单价" javaType="string">
+			<component type="text" readOnly="true" displayReferenceField="IN_PRICE"/>
+			<listColumn noedit="false" noquery="false" width="85"/>
+		</field>
+		<field name="OUT_ALL_PRICE" description="EDP销售总价" javaType="string">
+			<component type="text" readOnly="true" displayReferenceField="OUT_ALL_PRICE"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="PRO_COUNT" description="应入库数量" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="false" summaryType="sum" action="Set(All_WEIGHTNUM,Get(PRO_COUNT)*Get(PRO_WEIGHTNUM)/1000)
-			+Set(All_CAPACITYNUM,Get(PRO_COUNT)*Get(PRO_CAPACITYNUM))
-			+Set(All_COST,Get(PRO_COUNT)*Get(IN_PRICE))" displayReferenceField="PRO_COUNT" />
-			<listColumn noedit="false" noquery="false" width="85"/>
+		<field name="EDP_RETURN_PRICE" description="EDP退货单价" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
+			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
+			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="IN_COUNT" description="应实入库数量" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="false" />
-			<listColumn noedit="false" noquery="false" width="85"/>
+		<field name="EDP_OTHERPRICE" description="EDP其他退额" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
+			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
+			<listColumn noedit="false" noquery="false" width="75"/>
+		</field>
+		<field name="SUP_RETURN_PRICE" description="供应商承担单价" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
+			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
+			<listColumn noedit="false" noquery="false" width="75"/>
+		</field>
+		<field name="SUP_OTHERPRICE" description="供应商其他退额" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
+			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="SUP_ALL_RETURNRPRICE" description="供应商总退款额" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3"/>
+			<listColumn noedit="false" noquery="false" width="75"/>
+		</field>
+		<field name="EDP_ALL_RETURNRPRICE" description="EDP总退款额" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3"/>
+			<listColumn noedit="false" noquery="false" width="75"/>
+		</field>
+		<!--
+		<field name="PRO_PRE" description="预处理" displayOnly="true" javaType="string">
+			<component type="text" readOnly="true" renderer="renderPRE"/>
+			<listColumn noedit="false" noquery="false" width="75"/>
 		</field>
 		<field name="PRO_PACKINGNUM" description="每箱数量" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="true" displayReferenceField="PRO_PACKINGNUM"/>
 			<listColumn noedit="false" noquery="false" width="65"/>
-		</field>
-		<field name="PRO_PRE" description="预处理" displayOnly="true" javaType="string">
-			<component type="text" readOnly="true" renderer="renderPRE"/>
-			<listColumn noedit="false" noquery="false" width="75"/>
 		</field>
 		<field name="PRO_CAPACITYNUM" description="每箱体积(m3)" displayOnly="false" javaType="bigDecimal" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="PRO_CAPACITYNUM" maxFractionDigit="3" minFractionDigit="3"/>
@@ -72,14 +115,8 @@
 			<component type="text" readOnly="true" summaryType="sum" maxFractionDigit="2" minFractionDigit="2"/>
 			<listColumn noedit="false" noquery="false" width="95"/>
 		</field>
-		<field name="REMAINDER_NUM" description="尾箱数量" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="true"/>
-			<listColumn noedit="false" noquery="false" width="65"/>
-		</field>
-		<field name="MARKETABLE" description="是否上架" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="hidden" readOnly="true" displayReferenceField="MARKETABLE"/>
-			<listColumn noedit="false" noquery="false"/>
-		</field><field name="PRO_MEMO" description="备注" javaType="string">
+		-->
+		<field name="PRO_MEMO" description="备注" javaType="string">
 			<component type="text"/>
 		</field>
 		<pluginInterceptor methodName="exp" parameter="If(IsEmpty(GetPara(HEADID)),Warning({参数错误}),true)" pluginName="query" type="after"/>

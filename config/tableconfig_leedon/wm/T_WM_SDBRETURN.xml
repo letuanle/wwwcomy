@@ -31,7 +31,7 @@
 		</field>
 		<!-- -->
 		<field name="SUBGRID2" javaType="string" description="应退货明细" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,OUT_CODE,PRODUCTID,PRO_NAME,BATCH,SUPP_CODE,PRO_COUNT,IN_COUNT,PRO_PACKINGNUM,PRO_CAPACITYNUM,PRO_WEIGHTNUM,IN_PRICE,OUT_PRICE,All_COST,All_WEIGHTNUM,All_CAPACITYNUM,PRO_PRE,REMAINDER_NUM,MARKETABLE" referenceField="HEADID" referenceTable="T_WM_SDBRETURNPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:960;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,OUTPRE_CODE,WMCODE,PRO_NAME,SUPP_CODE,RETURN_RCOUNT,RETURN_COUNT,OUT_COUNT,IN_PRICE,OUT_PRICE,OUT_ALL_PRICE,EDP_RETURN_PRICE,EDP_OTHERPRICE,SUP_RETURN_PRICE,SUP_OTHERPRICE,SUP_ALL_RETURNRPRICE,EDP_ALL_RETURNRPRICE" referenceField="HEADID" referenceTable="T_WM_SDBRETURNPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
@@ -56,7 +56,7 @@
 			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="SUBGRID1" javaType="string" description="退货预处理" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:300;toolbar:no;treecol:CODE;leafcol:ISLEAF;pidcol:PARENTID;" displayReferenceField="ID,HEADID,PARENTID,PRODUCTID,SUPP_CODE,BATCH,CODE,PRO_WMCODE,PRO_COUNT,INPACK_NUM,IN_TIME,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_OUT_PRICE,REM_PRE" referenceField="HEADID" referenceTable="T_WM_SDBWAREWHERE" parameter="{&amp;PARENTID=-1}" action=""/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:300;toolbar:no;treecol:CODE;leafcol:ISLEAF;pidcol:PARENTID;" displayReferenceField="ID,HEADID,PARENTID,PRODUCTID,SUPP_CODE,BATCH,CODE,PRO_WMCODE,PRO_COUNT,INPACK_NUM,IN_TIME,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_OUT_PRICE" referenceField="HEADID" referenceTable="T_WM_SDBWAREWHERE" parameter="{&amp;PARENTID=-1}" action=""/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
@@ -153,8 +153,9 @@
 			<disOperation name="audit"/>
 		</role>
 		<role name="admin boss manager wm pe ac"/>
-		<!-- -->
-		<javascript hostPage="edit" src="project/leedon/T_WM_SDBIN.js"><![CDATA[
+		<!-- 
+		-->
+		<javascript hostPage="edit" src="project/leedon/T_WM_SDBRETURN.js"><![CDATA[
 			(function() {
 				var c=Ext.getCmp('__BILL_STATUS__Option__');
 				if (c) {
@@ -165,7 +166,6 @@
 				}
 			})();
 		]]></javascript>
-		
 		<pluginInterceptor methodName="exp" parameter="
 			If(IsEmpty(Get(ID)),Set(ID,GetNewID()),true)
 			+SetPara(__one2oneID,Get(ID))
@@ -187,9 +187,8 @@
 			+If(Get(BILL_STATUS)={audit},DisBtns(select,saveAll,audit)+DisFlds(SUBGRID,SUBGRID2,IN_PRE_DATE,IN_DATE,IMAGE,WHOWNER,SHIP_ORGA,SHIP_NO,SHIP_CON)+HidFlds(SUBGRID1,TEST1,TEST2,TEST,XIANSHU,PRO_COUNT,PRODUCTID,REMAINDER_NUM),true)
 			" pluginName="audit" type="before"/>
 		<!-- -->
-		<pluginOperation name="select" oprName="批量新增" hostPage="edit" tblevel="1" action="ShowQueryWin(T_WM_SDBCONPRODUCT,{&amp;GRID=1})+brk()"/>
-		<pluginOperation name="saveAll" oprName="保存A" hostPage="edit" tblevel="1" img="save" action="if(checkblank(),if(checkineq()=1,Save({},{},{SUBGRID2},{SUBGRID}),true),if(Confirm({应入库明细的批次不为空，请确认输入格式是否符合'YYMMDD两位数字'格式? 如果未修改过'应入库明细',请直接点击确定.}),if(checkineq()=1,Save({},{},{SUBGRID2},{SUBGRID}),true),true))+brk()"/>
-		<pluginOperation name="audit" oprName="入库审批" hostPage="edit" tblevel="1" img="settings" action="If(Confirm({确认审批后,不可恢复,确认审批?}),If(IsEmpty(Get(IMAGE)),Warning({货物质检报告不能为空})+brk(),Save({},{audit},{SUBGRID})),true)+brk()"/>
+		<pluginOperation name="saveAll" oprName="保存A" hostPage="edit" tblevel="1" img="save" action="Save({},{},{SUBGRID2},{SUBGRID})+brk()"/>
+		<pluginOperation name="audit" oprName="退货审批" hostPage="edit" tblevel="1" img="settings" action="If(Confirm({确认审批后,不可恢复,确认审批?}),Save({},{audit},{SUBGRID}),true)+brk()"/>
 		<Operation queryPageDelete="false" save="false" saveAndAdd="false" saveAndAddCopy="false"/>
 		<!-- -->
 		<doc>

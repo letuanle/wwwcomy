@@ -8,11 +8,14 @@
 			<component type="readOnlyText"/>
 			<queryCondition type="equal"/>
 		</field>
+		<field name="OUT_CODE" description="出库:商品号" javaType="string">
+			<component type="readOnlyText"/>
+		</field>
 		<field name="ITEM_ID_PK" description="增加索引字段" javaType="bigDecimal">
 			<component type="readOnlyText"/>
 		</field>
 		<field name="PRODUCTID" description="EDP商品" javaType="string" >
-			<component type="combo" readOnly="false" displayReferenceField="WMCODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="WMCODE,NAME,SUPP_CODE,PACKING_NUM,WAREHOUSE" />
+			<component type="combo" readOnly="false" displayReferenceField="WMCODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="WMCODE,NAME,PACKING_NUM,WAREHOUSE" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PRODUCT_ID" description="SDB商品ID" javaType="string" >
@@ -27,8 +30,8 @@
 			<component type="text" readOnly="true" displayReferenceField="WMCODE"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="true" javaType="string">
-			<component type="text" readOnly="true" displayReferenceField="SUPP_CODE"/>
+		<field name="SUPP_CODE" description="供应商自有货号" javaType="string">
+			<component type="text" readOnly="true" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PRE" description=" " displayOnly="true" javaType="string" lazyLoad="false">
@@ -128,6 +131,9 @@
 		<queryFilter>
 			<pluggedFilter methodName="exp" parameter="{ and t_1.WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{' }"/>
 			<pluggedFilter methodName="exp" parameter="If(InRole(sp,wm),{ and t_1.SUPPLIER='}&amp;GetUser(SUPPLIER)&amp;{' },{})"/>
+			<!-- 退货时 实际出库数量应当大于0 -->
+			<pluggedFilter methodName="exp" parameter="If(IsEmpty(GetPara(RETURNPRE)),{},{ and t_1.OUT_COUNT>0})"/>
+			
 		</queryFilter>
 		<!-- -->
 		<role name="user sp">
@@ -139,7 +145,7 @@
 		<javascript hostPage="edit"><![CDATA[
 		]]></javascript>
 		-->
-		<!--select concat(CONVERT(t_2.ORDER_ID,char),':',t_3.WMCODE,'(' ,t_2.NAME,')') as OUT_CODE -->
+		<!-- -->
 		<pluginInterceptor methodName="initDB" pluginName="initDB" type="before"><![CDATA[
 create or replace view V_WM_OUTPRE as 
 	(
@@ -148,8 +154,10 @@ create or replace view V_WM_OUTPRE as
 		t_1.LOGISTICS_NAME,t_1.LOGISTICS_CODE,t_1.LOGISTICS_MEMO,
 		
 		t_3.PACKING_NUM,t_3.CAPACITYNUM,t_3.WEIGHTNUM,t_3.SUPPLIER,t_3.WAREHOUSE,t_3.WMCODE,t_3.IN_PRICE as IN_PRICE,t_3.ID as PRODUCTID,t_3.PRODUCT_ID as PRODUCT_ID,
+		t_3.SUPP_CODE,
 		
-		t_2.ITEM_ID,t_2.ORDER_ID,t_2.NAME,t_2.PRICE as OUT_PRICE,t_2.NUMS as PRO_COUNT,t_2.AMOUNT as OUT_ALL_PRICE
+		t_2.ITEM_ID,t_2.ORDER_ID,t_2.NAME,t_2.PRICE as OUT_PRICE,t_2.NUMS as PRO_COUNT,t_2.AMOUNT as OUT_ALL_PRICE,
+		concat(CONVERT(t_2.ORDER_ID,char),':',t_3.WMCODE,'(' ,t_2.NAME,')') as OUT_CODE
 		
 		from (SDB_ORDER_ITEMS t_2 left join V_WM_SDBPRODUCT t_3 on t_2.PRODUCT_ID=t_3.PRODUCT_ID) left join T_WM_OUTPREPART t_1 on t_1.ITEM_ID_PK=t_2.ITEM_ID
 	)
@@ -160,8 +168,10 @@ create or replace view V_WM_OUTPRE as
 		t_2.LOGISTICS_NAME,t_2.LOGISTICS_CODE,t_2.LOGISTICS_MEMO,
 		
 		t_3.PACKING_NUM,t_3.CAPACITYNUM,t_3.WEIGHTNUM,t_3.SUPPLIER,t_3.WAREHOUSE,t_3.WMCODE,t_3.IN_PRICE as IN_PRICE,t_3.ID as PRODUCTID,t_3.PRODUCT_ID as PRODUCT_ID,
+		t_3.SUPP_CODE,
 		
-		t_2.ITEM_ID,t_2.ORDER_ID,'' as NAME,'' as OUT_PRICE,'' as PRO_COUNT,'' as OUT_ALL_PRICE
+		t_2.ITEM_ID,t_2.ORDER_ID,'' as NAME,'' as OUT_PRICE,'' as PRO_COUNT,'' as OUT_ALL_PRICE,
+		concat(CONVERT(t_2.ORDER_ID,char),':',t_3.WMCODE,'(' ,t_3.NAME,')') as OUT_CODE
 		
 		from (T_WM_OUTPREPART t_2 left join V_WM_SDBPRODUCT t_3 on t_2.PRODUCTID=t_3.ID and t_2.ITEM_ID like "CKItem%")
 	)
@@ -171,7 +181,7 @@ create or replace view V_WM_OUTPRE as
 			" pluginName="edit" type="after"/>
 		<pluginInterceptor methodName="exp" parameter="
 			If(Get(BILL_STATUS)={audit},HidFlds(PRE,AUDIT,UNAUDIT)+DisFlds(OUT_COUNT,OUT_RCOUNT),true)
-		+If(Or(isEmpty(Get(ORDER_ID)),SubStr(Get(ORDER_ID),0,2)={CK}),true,DisFlds(PRODUCTID,OUT_PRICE,OUT_ALL_PRICE))
+			+If(Or(isEmpty(Get(ORDER_ID)),SubStr(Get(ORDER_ID),0,2)={CK}),true,DisFlds(PRODUCTID,OUT_PRICE,OUT_ALL_PRICE))
 			" pluginName="grid" />
 	
 		<pluginInterceptor methodName="exp" parameter="if(SubStr(Get(ORDER_ID),0,2)={CK},Set(ITEM_ID_PK,0),Set(ITEM_ID_PK,get(ITEM_ID)))+Save({T_WM_OUTPREPART},GetForm())" pluginName="saveView" />

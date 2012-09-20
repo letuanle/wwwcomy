@@ -119,6 +119,12 @@
 		<field name="PRO_MEMO" description="备注" javaType="string">
 			<component type="text"/>
 		</field>
+		<field name="BILL_STATUS" javaType="string" description="单据明细状态">
+			<component type="dropdown" readOnly="true">
+				<option displayName="待批" value="init"/>
+				<option displayName="审批确认" value="audit"/>
+			</component>
+		</field>
 		<pluginInterceptor methodName="exp" parameter="If(IsEmpty(GetPara(HEADID)),Warning({参数错误}),true)" pluginName="query" type="after"/>
 		<pluginInterceptor methodName="exp" parameter="If(InRole(sp),HidFlds(IN_COUNT,PRO_PRE),true)" pluginName="grid" type="after"/>
 	

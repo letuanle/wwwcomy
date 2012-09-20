@@ -6,8 +6,8 @@
 			<component type="readOnlyText"/>
 		</field>
 		<field name="OUTPRE_CODE" description="订单:商品号" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="combo" readOnly="false" displayReferenceField="OUT_CODE" referenceField="ITEM_ID" referenceTable="V_WM_OUTPRE" associatedFields="PRODUCTID,WMCODE,PRO_NAME,SUPP_CODE,OUT_COUNT,OUT_PRICE,IN_PRICE,OUT_ALL_PRICE" parameter="{&amp;RETURNPRE=1}"/>
-			<listColumn noedit="false" noquery="false" width="155" style="sortName:__OUTPRE_CODE__OUTPRE_CODE"/>
+			<component type="combo" readOnly="false" displayReferenceField="OUT_CODE" referenceField="OUT_CODE" referenceTable="V_WM_OUTPRE" associatedFields="PRODUCTID,WMCODE,PRO_NAME,SUPP_CODE,OUT_COUNT,OUT_PRICE,IN_PRICE,OUT_ALL_PRICE" parameter="{&amp;RETURNPRE=1}"/>
+			<listColumn noedit="false" noquery="false" width="155" style="sortName:__OUTPRE_CODE__OUT_CODE"/>
 		</field>
 		<field name="PRODUCTID" description="EDP商品ID" displayOnly="false" javaType="string" lazyLoad="false">
 			<component type="hidden" readOnly="true" displayReferenceField="PRODUCTID"/>
@@ -26,7 +26,7 @@
 			<listColumn noedit="false" noquery="false" width="70"/>
 		</field>
 		<field name="RETURN_RCOUNT" description="实退货" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="false" />
+			<component type="text" readOnly="false"/>
 			<listColumn noedit="false" noquery="false" width="60"/>
 		</field>
 		<field name="RETURN_COUNT" description="退货数量" javaType="bigDecimal" defaultValue="0">
@@ -58,12 +58,12 @@
 		<field name="EDP_OTHERPRICE" description="EDP其他退额" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
 			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
-			<listColumn noedit="false" noquery="false" width="75"/>
+			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SUP_RETURN_PRICE" description="供应商承担单价" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
 			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
-			<listColumn noedit="false" noquery="false" width="75"/>
+			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SUP_OTHERPRICE" description="供应商其他退额" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
@@ -72,11 +72,11 @@
 		</field>
 		<field name="SUP_ALL_RETURNRPRICE" description="供应商总退款额" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3"/>
-			<listColumn noedit="false" noquery="false" width="75"/>
+			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="EDP_ALL_RETURNRPRICE" description="EDP总退款额" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3"/>
-			<listColumn noedit="false" noquery="false" width="75"/>
+			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<!--
 		<field name="PRO_PRE" description="预处理" displayOnly="true" javaType="string">
@@ -127,6 +127,7 @@
 		</field>
 		<pluginInterceptor methodName="exp" parameter="If(IsEmpty(GetPara(HEADID)),Warning({参数错误}),true)" pluginName="query" type="after"/>
 		<pluginInterceptor methodName="exp" parameter="If(InRole(sp),HidFlds(IN_COUNT,PRO_PRE),true)" pluginName="grid" type="after"/>
+		<pluginInterceptor methodName="exp" parameter="Set(BILL_STATUS,{audit})+Save()" pluginName="audit" type="before"/>
 	
 		<Operation queryPageDelete="false" saveAndAdd="false" saveAndAddCopy="false" />
 	</table>

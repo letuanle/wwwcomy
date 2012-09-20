@@ -28,7 +28,7 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="BATCH" description="批次" displayOnly="true" javaType="bigDecimal">
-			<component type="text" readOnly="true"/>
+			<component type="text" readOnly="false"/>
 			<listColumn noedit="false" noquery="false" width="60"/>
 		</field>
 		<field name="PRO_COUNT" description="数量" displayOnly="true" javaType="bigDecimal" defaultValue="0">

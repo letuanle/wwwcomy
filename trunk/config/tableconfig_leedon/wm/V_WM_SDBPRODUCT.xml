@@ -173,6 +173,9 @@
 			<!-- 入库预处理的第二种选择 在应入库中选择产品 -->
 			<pluggedFilter methodName="exp" parameter="If(IsEmpty(GetPara(WMINID)),{},{ and t_1.ID in (select distinct(PRODUCTID) from T_WM_SDBINPRE where HEADID='}&amp;SQLSafe(GetPara(WMINID))&amp;{') })"/>
 			
+			<!-- 退货预处理的第二种选择 在应退货中选择产品 -->
+			<pluggedFilter methodName="exp" parameter="If(IsEmpty(GetPara(RETURNID)),{},{ and t_1.ID in (select distinct(PRODUCTID) from T_WM_SDBRETURNPRE where HEADID='}&amp;SQLSafe(GetPara(RETURNID))&amp;{') })"/>
+			
 			<!-- 移库时，商品应当在库存明细中有记录 -->
 			<pluggedFilter methodName="exp" parameter="If(IsEmpty(GetPara(__WHID)),{},{ and t_1.ID in (select distinct(PRODUCTID) from V_WM_STOCKWHERE where WAREWHERE='}&amp;SQLSafe(GetPara(__WHID))&amp;{') })"/>
 			<!-- 入库时必须是当前仓库 

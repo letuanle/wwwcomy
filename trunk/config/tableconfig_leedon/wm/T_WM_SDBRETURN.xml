@@ -36,7 +36,7 @@
 			<listColumn noquery="true"/>
 		</field>
 		<field name="PRODUCTID" description="退货商品" displayOnly="true" javaType="string" lazyLoad="false">
-			<component type="combo" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="HIDDEN_CODE,PRO_PACKINGNUM,SUPP_CODE,PRO_CAPACITYNUM,PRO_WEIGHTNUM,HIDDEN_WMCODE" parameter="{&amp;WMINID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="combo" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="HIDDEN_CODE,PRO_PACKINGNUM,SUPP_CODE,PRO_CAPACITYNUM,PRO_WEIGHTNUM,HIDDEN_WMCODE" parameter="{&amp;RETURNID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="PRO_COUNT" description="退货数量(个)" displayOnly="true" javaType="bigDecimal" defaultValue="0">
@@ -56,7 +56,7 @@
 			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="SUBGRID1" javaType="string" description="退货预处理" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:300;toolbar:no;treecol:CODE;leafcol:ISLEAF;pidcol:PARENTID;" displayReferenceField="ID,HEADID,PARENTID,PRODUCTID,SUPP_CODE,BATCH,CODE,PRO_WMCODE,PRO_COUNT,INPACK_NUM,IN_TIME,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,PRO_OUT_PRICE" referenceField="HEADID" referenceTable="T_WM_SDBWAREWHERE" parameter="{&amp;PARENTID=-1}" action=""/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:300;toolbar:no;treecol:CODE;leafcol:ISLEAF;pidcol:PARENTID;" displayReferenceField="ID,HEADID,PARENTID,PRODUCTID,SUPP_CODE,BATCH,CODE,PRO_WMCODE,PRO_COUNT,INPACK_NUM,IN_TIME,PRO_IN_PRICE,PRO_OUT_PRICE,REM_PRE" referenceField="HEADID" referenceTable="T_WM_SDBWAREWHERE" parameter="{&amp;PARENTID=-1}" action=""/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
@@ -97,7 +97,7 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="BATCH" description="hidden批次" displayOnly="true" javaType="string">
-			<component type="text" readOnly="true" />
+			<component type="hidden" readOnly="true" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PRO_PACKINGNUM" description="hidden每箱个数" displayOnly="true" javaType="bigDecimal" lazyLoad="false">
@@ -166,11 +166,9 @@
 		]]></javascript>
 		<pluginInterceptor methodName="exp" parameter="
 			If(IsEmpty(Get(ID)),Set(ID,GetNewID()),true)
-			+SetPara(__one2oneID,Get(ID))
 			+SetCreate(BILL_STATUS,{init},WAREHOUSE,GetUser(WAREHOUSEID),__WAREHOUSE__NAME,GetUser(WAREHOUSENAME))
 			+If(InRole(sp,wm),Set(SHIP_SUPPLIER,GetUser(SUPPLIER),__SHIP_SUPPLIER__NAME,GetUser(__SUPPLIER__NAME)),true)
 			+If(Get(BILL_STATUS)={audit},DisBtns(select,saveAll,audit)+DisFlds(SUBGRID,SUBGRID2,IN_PRE_DATE,IN_DATE,IMAGE,WHOWNER,SHIP_ORGA,SHIP_NO,SHIP_CON)+HidFlds(SUBGRID1,TEST1,TEST2,TEST,XIANSHU,PRO_COUNT,PRODUCTID,REMAINDER_NUM),true)
-			+SetDesForm()
 			" pluginName="edit" type="after"/>
 		<pluginInterceptor methodName="exp" parameter="
 			If(IsEmpty(Get(WAREHOUSE)),Warning({缺少必填项}),true)
@@ -184,7 +182,7 @@
 			+If(Get(BILL_STATUS)={audit},DisBtns(select,saveAll,audit)+DisFlds(SUBGRID,SUBGRID2,IN_PRE_DATE,IN_DATE,IMAGE,WHOWNER,SHIP_ORGA,SHIP_NO,SHIP_CON)+HidFlds(SUBGRID1,TEST1,TEST2,TEST,XIANSHU,PRO_COUNT,PRODUCTID,REMAINDER_NUM),true)
 			" pluginName="audit" type="before"/>
 		<!-- -->
-		<pluginOperation name="saveAll" oprName="保存A" hostPage="edit" tblevel="1" img="save" action="Save({},{},{SUBGRID2},{SUBGRID})+brk()"/>
+		<pluginOperation name="saveAll" oprName="保存A" hostPage="edit" tblevel="1" img="save" action="if(checkeq()=1,Save({},{},{SUBGRID2},{SUBGRID}),true)+brk()"/>
 		<pluginOperation name="audit" oprName="退货审批" hostPage="edit" tblevel="1" img="settings" action="If(Confirm({确认审批后,不可恢复,确认审批?}),Save({},{audit},{SUBGRID}),true)+brk()"/>
 		<Operation queryPageDelete="false" save="false" saveAndAdd="false" saveAndAddCopy="false"/>
 		<!-- -->

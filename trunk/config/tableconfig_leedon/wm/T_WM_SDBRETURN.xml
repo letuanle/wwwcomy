@@ -61,7 +61,7 @@
 			<listColumn noquery="true"/>
 		</field>
 		<field name="SUBGRID" javaType="string" description="实际退货明细" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,PRODUCTID,PRO_NAME,SUPP_CODE,PRO_WMCODE,PRO_WH,PRO_COUNT,BATCH,INPACK_COUNT,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_IN_PRICE,ALL_IN_COST,PRO_OUT_PRICE,ALL_OUT_COST" referenceField="HEADID" referenceTable="T_WM_INDETAIL" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,PRODUCTID,PRO_NAME,SUPP_CODE,PRO_WMCODE,PRO_WH,PRO_COUNT,BATCH,INPACK_COUNT,PRO_IN_PRICE,ALL_IN_COST,PRO_OUT_PRICE,ALL_OUT_COST" referenceField="HEADID" referenceTable="T_WM_SDBRETURNDETAIL" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
@@ -136,9 +136,7 @@
 		<field name="BILL_STATUS" javaType="string" description="单据状态">
 			<component type="dropdown" readOnly="true">
 				<option displayName="待批" value="init"/>
-				<option displayName="预入库" value="confirm"/>
-				<option displayName="入库确认" value="audit"/>
-				<option displayName="拒收退回" value="revert"/>
+				<option displayName="已审批" value="audit"/>
 			</component>
 		</field>
 		<!-- -->
@@ -172,7 +170,6 @@
 			+SetCreate(BILL_STATUS,{init},WAREHOUSE,GetUser(WAREHOUSEID),__WAREHOUSE__NAME,GetUser(WAREHOUSENAME))
 			+If(InRole(sp,wm),Set(SHIP_SUPPLIER,GetUser(SUPPLIER),__SHIP_SUPPLIER__NAME,GetUser(__SUPPLIER__NAME)),true)
 			+If(Get(BILL_STATUS)={audit},DisBtns(select,saveAll,audit)+DisFlds(SUBGRID,SUBGRID2,IN_PRE_DATE,IN_DATE,IMAGE,WHOWNER,SHIP_ORGA,SHIP_NO,SHIP_CON)+HidFlds(SUBGRID1,TEST1,TEST2,TEST,XIANSHU,PRO_COUNT,PRODUCTID,REMAINDER_NUM),true)
-			
 			+SetDesForm()
 			" pluginName="edit" type="after"/>
 		<pluginInterceptor methodName="exp" parameter="

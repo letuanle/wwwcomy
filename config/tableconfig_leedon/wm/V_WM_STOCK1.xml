@@ -4,6 +4,7 @@
 		<id name="ID" javaType="string"/>
 		<field name="HEADID" description="单头" javaType="string">
 			<component type="text" readOnly="true"/>
+			<listColumn noedit="false" noquery="false" width="130"/>
 		</field>
 		<field name="WM_DATE" description="发生时间" displayOnly="false" javaType="date" lazyLoad="false">
 			<component type="text" readOnly="true"/>
@@ -77,9 +78,11 @@
 		</field>
 		<field name="BT" javaType="bigDecimal" description="类型" displayOnly="false">
 			<component type="dropdown" readOnly="true">
-				<option displayName="入库" value="1"/>
-				<option displayName="出库" value="-1"/>
-				<option displayName="返厂" value="0"/>
+				<option displayName="入库-进货" value="1"/>
+				<option displayName="出库-订单" value="-1"/>
+				<option displayName="出库-损耗" value="-2"/>
+				<option displayName="出库-返厂" value="0"/>
+				<option displayName="入库-退货" value="2"/>
 				<option displayName="类型错误" value="-99"/>
 			</component>
 		</field>
@@ -110,7 +113,7 @@
 		</field>
 		<field name="WHOWNER" description="库主" displayOnly="false" javaType="string" lazyLoad="false" nullAllowed="false">
 			<component type="richSelect" readOnly="true" colspan="1" displayReferenceField="NAME" referenceField="ID" referenceTable="T_WM_OPERATOR"/>
-			<listColumn noedit="false" noquery="false"/>
+			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<!-- 
 		<queryFilter>
@@ -134,7 +137,8 @@
 		<pluginInterceptor methodName="initDB" pluginName="initDB" type="before"><![CDATA[
 create or replace view V_WM_STOCK1 as 
 	(
-		select 1 as BT,concat("RK",t_1.ID) as ID,(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN t_1.HEADID ELSE t_2.IN_NO END) as HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,t_1.PRO_NAME,
+		select 1 as BT,concat("RK",t_1.ID) as ID,(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN t_1.HEADID ELSE t_2.IN_NO END) as HEADID,
+		t_1.PRODUCTID,t_1.PRO_WMCODE,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,t_1.PRO_NAME,
 		t_3.SUPP_CODE,
 		t_3.IN_PRICE as PRO_IN_PRICE,t_1.PRO_COUNT,
 		t_1.PRO_COUNT*t_1.PRO_IN_PRICE as ALL_IN_COST, 0 as PRO_OUT_PRICE,0 as ALL_OUT_COST,
@@ -144,13 +148,13 @@ create or replace view V_WM_STOCK1 as
 		t_1.BATCH,
 		1 as STOCKCHANGE,0 as FINANCECHANGE
 		from (T_WM_INDETAIL t_1 left join T_WM_SDBIN t_2 on t_1.HEADID=t_2.ID) left join V_WM_SDBPRODUCT t_3 on t_3.ID=t_1.PRODUCTID
-		left join t_wm_stocktrans t_4 on t_1.headID=concat("YK",t_4.id)
+		left join T_WM_STOCKTRANS t_4 on t_1.headID=concat("YK",t_4.id)
 		where t_2.BILL_STATUS='audit' or t_1.headID=concat("YK",t_4.id)
 	)
 	union
 	(
-		select (CASE WHEN t_2.OUT_TYPE='consign' THEN -1 WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE -1 END) as BT,
-		concat("CK",t_1.ID) as ID,t_1.HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,t_1.PRO_NAME,
+		select (CASE WHEN t_2.OUT_TYPE='consign' THEN -1 WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE -2 END) as BT,concat("CK",t_1.ID) as ID,t_1.HEADID,t_1.PRODUCTID,
+		t_1.PRO_WMCODE,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,t_1.PRO_NAME,
 		t_3.SUPP_CODE,t_3.IN_PRICE as PRO_IN_PRICE,t_1.PRO_COUNT,
 		0 as ALL_IN_COST,
 		t_1.PRO_OUT_PRICE,
@@ -163,8 +167,26 @@ create or replace view V_WM_STOCK1 as
 		(CASE WHEN t_2.OUT_TYPE='consign' THEN 1 WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE 0 END) as FINANCECHANGE
 		
 		from (T_WM_OUTDETAIL t_1 left join V_WM_OUT t_2 on t_1.HEADID=t_2.ID) left join V_WM_SDBPRODUCT t_3 on t_3.ID=t_1.PRODUCTID
-		left join t_wm_stocktrans t_4 on t_1.headID=concat("YK",t_4.id)
+		left join T_WM_STOCKTRANS t_4 on t_1.headID=concat("YK",t_4.id)
 		where t_1.BILL_STATUS='audit' and t_2.BILL_STATUS<>'reject' or t_1.headID=concat("YK",t_4.id)
+	)
+	union
+	(
+		select 2 as BT,concat("TH",t_1.ID) as ID,t_2.TH_NO,t_1.PRODUCTID,
+		t_3.WMCODE as PRO_WMCODE,t_3.CAPACITYNUM as PRO_CAPACITYNUM,t_3.WEIGHTNUM as PRO_WEIGHTNUM,t_3.NAME as PRO_NAME,
+		t_3.SUPP_CODE,t_3.IN_PRICE as PRO_IN_PRICE,t_1.PRO_COUNT,
+		0 as ALL_IN_COST,
+		t_1.PRO_OUT_PRICE,
+		t_1.PRO_COUNT*t_1.PRO_OUT_PRICE*-1 as ALL_OUT_COST,
+		t_1.BILL_STATUS,t_1.PRO_WH AS WAREWHERE,t_3.WHOWNER,t_3.WAREHOUSE,t_3.SUPPLIER,
+		t_2.AUDIT_TIME as WM_DATE,
+		-1 as YK ,
+		t_1.BATCH,
+		1 as STOCKCHANGE,
+		-1 as FINANCECHANGE
+		
+		from (T_WM_SDBRETURNDETAIL t_1 left join T_WM_SDBRETURN t_2 on t_1.HEADID=t_2.ID) left join V_WM_SDBPRODUCT t_3 on t_3.ID=t_1.PRODUCTID
+		where t_2.BILL_STATUS='audit'
 	)
 		]]></pluginInterceptor>
 		<!-- where t_1.BILL_STATUS='audit' 预判断 还没确认的入库也要计算

@@ -94,10 +94,7 @@
 		]]></javascript>
 		-->
 		<!-- -->
-		<pluginInterceptor methodName="exp" parameter="
-			If(Get(BILL_STATUS)={audit},DisFlds(PRODUCTID,PRO_WH,PRO_COUNT),true)
-			" pluginName="grid" />
 		<pluginInterceptor methodName="exp" parameter="If(IsEmpty(GetPara(HEADID)),Warning({参数错误}),true)" pluginName="query" type="after"/>
-		<pluginInterceptor methodName="exp" parameter="Set(OUT_TYPE,{so})" pluginName="auditOut"/>
+		<pluginInterceptor methodName="exp" parameter="Set(BILL_STATUS,{audit})+Save()" pluginName="audit" type="before"/>
 	</table>
 </Haiyan>

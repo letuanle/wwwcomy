@@ -141,7 +141,7 @@ Hy.UIFunction.test2=function(rowIndex) {
 				, __PRODUCTID__NAME: item.get('__PRODUCTID__NAME')
 				, PRO_NAME: item.get('__PRODUCTID__NAME')
 				, SUPP_CODE: item.get('SUPP_CODE')
-				, BATCH: item.get('BATCH')
+				, BATCH: Ext.isEmpty(item.get('BATCH'))?-1:item.get('BATCH')
 				, PRO_WH: item.get('ID')
 				, __PRO_WH__CODE: item.get('CODE')
 				, PRO_COUNT: item.get('PRO_COUNT')
@@ -180,6 +180,103 @@ Hy.UIFunction.test2=function(rowIndex) {
 		Ext.getCmp('SUBGRID1').getSelectionModel().clearSelections();
 	}
 }
+
+//余数处理
+function testRem(rowIndex) {
+	var remNum=$('REMAINDER_NUM').value;
+	var numPerBox=$('PRO_PACKINGNUM').value;
+	if (!remNum || remNum<=0) {
+		alert('No REMAINDER!');
+		return;
+	}
+	remNum=parseInt(remNum);
+	$('REMAINDER_NUM').value=0;
+	var selModel=Ext.getCmp('SUBGRID1').getSelectionModel();
+	if(selModel.isSelected(rowIndex)){
+		var id=Ext.getCmp('SUBGRID1').store.getAt(rowIndex).id;
+		var item1=Ext.getCmp('SUBGRID1').getSelectionModel().selections.key(id);
+		//item1.set('__PRODUCTID__NAME', $('__PRODUCTID__NAME').value);
+		item1.set('__PRODUCTID__NAME', $('__PRODUCTID__CODE').value);
+		item1.set('PRO_COUNT', item1.get('PRO_COUNT')+remNum);
+		var PN = remNum /numPerBox;
+		var intPn = Math.floor(remNum /numPerBox);
+		item1.set('INPACK_NUM',item1.get('INPACK_NUM')+intPn+(intPn<PN?1:0));
+		item1.set('PRO_WMCODE', $('HIDDEN_WMCODE').value);
+		//item1.set('PRO_CAPACITYNUM', $('PRO_CAPACITYNUM').value);
+		//item1.set('PRO_WEIGHTNUM', $('PRO_WEIGHTNUM').value);
+		item1.set('SUPP_CODE', $('SUPP_CODE').value);
+		if(!Ext.isEmpty(item1.get('PRO_IN_PRICE')))
+			return;
+		item1.set('PRO_IN_PRICE', $('PRO_IN_PRICE').value);
+		item1.set('PRO_OUT_PRICE', $('PRO_OUT_PRICE').value);
+		return;
+	}
+	selModel.selectRow(rowIndex,true);
+	Hy.UICache['WMLIST'][Hy.UICache['WMLIST'].length]=selModel.selections.items[selModel.selections.items.length-1];
+	var item=selModel.selections.items[selModel.selections.items.length-1];
+	item.set('PRODUCTID', $('PRODUCTID').value);
+	//item.set('__PRODUCTID__NAME', $('__PRODUCTID__NAME').value);
+	item.set('__PRODUCTID__NAME', $('__PRODUCTID__CODE').value);
+	item.set('PRO_COUNT', remNum);
+	item.set('INPACK_NUM',1)
+	item.set('PRO_WMCODE', $('HIDDEN_WMCODE').value);
+	//item.set('PRO_CAPACITYNUM', $('PRO_CAPACITYNUM').value);
+	//item.set('PRO_WEIGHTNUM', $('PRO_WEIGHTNUM').value);
+	item.set('PRO_IN_PRICE', $('PRO_IN_PRICE').value);
+	item.set('PRO_OUT_PRICE', $('PRO_OUT_PRICE').value);
+	item.set('SUPP_CODE', $('SUPP_CODE').value);
+}
+
+
+Hy.UIFunction.checkeq=function() {
+	var preGridStore=Ext.getCmp('SUBGRID2').getStore();
+	Hy.UICache['CHECKLIST']=[];
+	preGridStore.each(function(item){
+		Hy.UICache['CHECKLIST'][Hy.UICache['CHECKLIST'].length]=item;
+	});
+	var g=Ext.getCmp('SUBGRID');
+	if (!g)
+		return 1;
+	var realGridStore=g.getStore();
+	Hy.UICache['PROLIST']=[];
+	realGridStore.sort('PRODUCTID','ASC');
+	var temp=0, realCount=realGridStore.getCount();
+	for(var i=0;i<realCount;i++){
+		var proID=realGridStore.getAt(i).get('PRODUCTID');
+		if(i==0){
+			Hy.UICache['PROLIST'][Hy.UICache['PROLIST'].length]=new Ext.data.Record({
+				PRODUCTID:proID
+				, PRO_COUNT:parseInt(realGridStore.getAt(i).get('PRO_COUNT'))
+			});
+		}
+		else if((i>0 && proID!=realGridStore.getAt(i-1).get('PRODUCTID'))) {
+			Hy.UICache['PROLIST'][Hy.UICache['PROLIST'].length]=new Ext.data.Record({
+				PRODUCTID:proID
+				, PRO_COUNT:parseInt(realGridStore.getAt(i).get('PRO_COUNT'))
+			});
+		} else {
+			Hy.UICache['PROLIST'][Hy.UICache['PROLIST'].length-1].data.PRO_COUNT += parseInt(realGridStore.getAt(i).get('PRO_COUNT'));
+		}
+	}
+	var a,b;
+	for(var i=0;i<Hy.UICache['PROLIST'].length;i++){
+		for(var j=0; j<Hy.UICache['CHECKLIST'].length;j++){
+			var inPID=Hy.UICache['CHECKLIST'][j].get('PRODUCTID');
+			var rPID=Hy.UICache['PROLIST'][i].get('PRODUCTID');
+			if(rPID==inPID){
+				a=Hy.UICache['PROLIST'][i].get('PRO_COUNT'),b=Hy.UICache['CHECKLIST'][j].get('RETURN_RCOUNT');
+				if(a==b)
+					break;
+				else{ // __CONTRACT_CODE__CONTRACT_CODE
+					alert("商品为:"+Hy.UICache['CHECKLIST'][j].get('__OUTPRE_CODE__OUT_CODE')+" 的 [实际退货数量"+a+"] 与 [应实退货数量"+b+"] 不符!");
+					return 0;
+				}
+			}
+		}
+	}
+	return 1;
+}
+
 Ext.onReady(function(){
 
 	var g;

@@ -26,12 +26,12 @@
 			<listColumn noedit="false" noquery="false" width="70"/>
 		</field>
 		<field name="RETURN_RCOUNT" description="实退货" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="false"/>
+			<component type="text" readOnly="false" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_RCOUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
+			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_RCOUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
 			<listColumn noedit="false" noquery="false" width="60"/>
 		</field>
 		<field name="RETURN_COUNT" description="退货数量" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="false" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
-			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
+			<component type="text" readOnly="false"/>
 			<listColumn noedit="false" noquery="false" width="65"/>
 		</field>
 		<field name="OUT_COUNT" description="销售数量" javaType="bigDecimal" defaultValue="0">
@@ -51,23 +51,23 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="EDP_RETURN_PRICE" description="EDP退货单价" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
-			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_RCOUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
+			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_RCOUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="EDP_OTHERPRICE" description="EDP其他退额" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
-			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_RCOUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
+			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_RCOUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SUP_RETURN_PRICE" description="供应商承担单价" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
-			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_RCOUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
+			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_RCOUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SUP_OTHERPRICE" description="供应商其他退额" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
-			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_COUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" action="Set(EDP_ALL_RETURNRPRICE,Get(RETURN_RCOUNT)*Get(EDP_RETURN_PRICE)+Get(EDP_OTHERPRICE))
+			+Set(SUP_ALL_RETURNRPRICE,Get(RETURN_RCOUNT)*Get(SUP_RETURN_PRICE)+Get(SUP_OTHERPRICE))"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SUP_ALL_RETURNRPRICE" description="供应商总退款额" javaType="bigDecimal" defaultValue="0">

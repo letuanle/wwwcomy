@@ -31,7 +31,7 @@
 		</field>
 		<!-- -->
 		<field name="SUBGRID2" javaType="string" description="应退货明细" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:960;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,OUTPRE_CODE,WMCODE,PRO_NAME,SUPP_CODE,RETURN_RCOUNT,RETURN_COUNT,OUT_COUNT,IN_PRICE,OUT_PRICE,OUT_ALL_PRICE,EDP_RETURN_PRICE,EDP_OTHERPRICE,SUP_RETURN_PRICE,SUP_OTHERPRICE,SUP_ALL_RETURNRPRICE,EDP_ALL_RETURNRPRICE" referenceField="HEADID" referenceTable="T_WM_SDBRETURNPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:960;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,OUT_CODE,WMCODE,PRO_NAME,SUPP_CODE,RETURN_RCOUNT,RETURN_COUNT,OUT_COUNT,IN_PRICE,OUT_PRICE,OUT_ALL_PRICE,EDP_RETURN_PRICE,EDP_OTHERPRICE,SUP_RETURN_PRICE,SUP_OTHERPRICE,SUP_ALL_RETURNRPRICE,EDP_ALL_RETURNRPRICE" referenceField="HEADID" referenceTable="T_WM_SDBRETURNPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
@@ -54,6 +54,9 @@
 		<field name="TEST2" description="明细入库" displayOnly="true" javaType="string" lazyLoad="false">
 			<component type="button" readOnly="false" colspan="6" action="test2()"/>
 			<listColumn noedit="false" noquery="true"/>
+		</field>
+		<field name="BATCHINFO" description="批次信息" displayOnly="true" javaType="string">
+			<component type="text" readOnly="true" colspan="6" style="width:320px"/>
 		</field>
 		<field name="SUBGRID1" javaType="string" description="退货预处理" displayOnly="true">
 			<component type="grid" readOnly="false" colspan="6" style="width:950;height:300;toolbar:no;treecol:CODE;leafcol:ISLEAF;pidcol:PARENTID;" displayReferenceField="ID,HEADID,PARENTID,PRODUCTID,SUPP_CODE,BATCH,CODE,PRO_WMCODE,PRO_COUNT,INPACK_NUM,IN_TIME,PRO_IN_PRICE,PRO_OUT_PRICE,REM_PRE" referenceField="HEADID" referenceTable="T_WM_SDBWAREWHERE" parameter="{&amp;PARENTID=-1}" action=""/>

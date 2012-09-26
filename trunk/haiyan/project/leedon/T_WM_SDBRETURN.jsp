@@ -20,14 +20,30 @@ try {
 	    throw new Warning(srvContext.trans(100032, "session_overtime"));
 	}
 	String productID = srvContext.getParameter("__pid");
+	String orderID = srvContext.getParameter("__orderID");
 	DBManager dbm = srvContext.getDBM();
-	String sql = "select max(BATCH) from T_WM_SDBINPRE where PRODUCTID="+PRODUCTID;
+	String sql = "select distinct(BATCH) from T_WM_OUTDETAIL where PRODUCTID="+productID+" and HEADID='"+orderID+"'";
 	String[][] rs = dbm.getResultStrArray(sql, 1, null);
-	String maxBatch = rs[0][0];
-
+	String maxBatch = "";
+	if(rs.length>0) {
+		int l = rs.length;
+		for(int i = 0; i<l;i++){
+			String tmp;
+			tmp = rs[i][0];
+			if(StringUtil.isBlankOrNull(tmp)){
+				out.clear();
+				return;
+			}
+			maxBatch = maxBatch+tmp+",";
+		}
+	}
+	if(StringUtil.isBlankOrNull(maxBatch))
+		return;
 	net.sf.json.JSONObject json = new net.sf.json.JSONObject();
 	json.put("success",true);
-	json.put("data",maxBatch);
+	json.put("data",maxBatch.substring(0, maxBatch.length() - 1));
+	out.clear();
+	out.print(json.toString());
 } catch(Throwable ex) {
 	DebugUtil.error(ex);
 	out.clear();

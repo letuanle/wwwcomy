@@ -180,7 +180,29 @@ Hy.UIFunction.test2=function(rowIndex) {
 		Ext.getCmp('SUBGRID1').getSelectionModel().clearSelections();
 	}
 }
-
+//批次信息
+Hy.UIFunction.getbatchinfo=function(){
+	Hy.setValue('BATCHINFO', "");
+	var proID = Hy.getValue('PRODUCTID');
+	if(Ext.isEmpty(proID))
+		return false;
+	var preGridStore=Ext.getCmp('SUBGRID2').getStore();
+	var orderID = "";
+	preGridStore.each(function(item){
+		if(proID===item.get("PRODUCTID"))
+			orderID=item.get("ORDER_ID");
+	});
+	if(Ext.isEmpty(orderID))
+		return false;
+	Ext.Ajax.request( {
+		url : 'project/leedon/T_WM_SDBRETURN.jsp?__opr=getBatch&__pid='+proID+'&__orderID='+orderID
+		, success : function(response) {
+			var d = Ext.decode(response.responseText);
+			if (d.success)
+				Hy.setValue('BATCHINFO', d.data);
+		}
+	});	
+}
 //余数处理
 function testRem(rowIndex) {
 	var remNum=$('REMAINDER_NUM').value;

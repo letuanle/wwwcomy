@@ -84,6 +84,7 @@ Hy.UIFunction.testprebtn=function() {
 	$('BATCH').value="";
 	$('PRO_IN_PRICE').value="";
 	$('PRO_OUT_PRICE').value="";
+	$('ORDER_ID').value="";
 	$('SUPP_CODE').value="";
 	Hy.UIExp.eval("setValue(PRO_COUNT,"+proCount+")+setValue(XIANSHU,"+xiangShu+")");
 	//这里要到应入库明细里面去查一下对应商品的出入库价格和批次
@@ -91,8 +92,8 @@ Hy.UIFunction.testprebtn=function() {
 		if(item.get("PRODUCTID")==proID){
 			var inPrice=item.get("IN_PRICE");
 			var outPrice=item.get("OUT_PRICE");
-			
-			Hy.UIExp.eval("setValue(PRO_IN_PRICE,"+inPrice+")+setValue(PRO_OUT_PRICE,"+outPrice+")");
+			var orderID=item.get("ORDER_ID");
+			Hy.UIExp.eval("setValue(PRO_IN_PRICE,"+inPrice+")+setValue(PRO_OUT_PRICE,"+outPrice+")+setValue(ORDER_ID,"+orderID+")");
 		}
 	});
 	Hy.setValue("PRODUCTID",proID,null,true,function(){
@@ -150,6 +151,7 @@ Hy.UIFunction.test2=function(rowIndex) {
 				, PRO_WMCODE: item.get('PRO_WMCODE')
 				//, PRO_CAPACITYNUM: item.get('PRO_CAPACITYNUM')
 				//, PRO_WEIGHTNUM: item.get('PRO_WEIGHTNUM') 
+				, ORDER_ID: $("ORDER_ID").value
 				, PRO_IN_PRICE: item.get('PRO_IN_PRICE') 
 				, PRO_IN_COST: '' 
 				, PRO_OUT_PRICE: item.get('PRO_OUT_PRICE') 
@@ -176,6 +178,7 @@ Hy.UIFunction.test2=function(rowIndex) {
 			});
 			Hy.UICache['WMLIST'].clear();
 		}
+		$('ORDER_ID').value="";
 		Ext.getCmp('SUBGRID2').getSelectionModel().clearSelections();
 		Ext.getCmp('SUBGRID1').getSelectionModel().clearSelections();
 	}
@@ -290,7 +293,7 @@ Hy.UIFunction.checkeq=function() {
 				if(a==b)
 					break;
 				else{ // __CONTRACT_CODE__CONTRACT_CODE
-					alert("商品为:"+Hy.UICache['CHECKLIST'][j].get('__OUTPRE_CODE__OUT_CODE')+" 的 [实际退货数量"+a+"] 与 [应实退货数量"+b+"] 不符!");
+					alert("商品为:"+Hy.UICache['CHECKLIST'][j].get('__OUT_CODE__OUT_CODE')+" 的 [实际退货数量"+a+"] 与 [应实退货数量"+b+"] 不符!");
 					return 0;
 				}
 			}

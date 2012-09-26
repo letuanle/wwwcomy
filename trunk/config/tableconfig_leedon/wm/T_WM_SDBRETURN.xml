@@ -31,7 +31,7 @@
 		</field>
 		<!-- -->
 		<field name="SUBGRID2" javaType="string" description="应退货明细" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:960;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,OUT_CODE,WMCODE,PRO_NAME,SUPP_CODE,RETURN_RCOUNT,RETURN_COUNT,OUT_COUNT,IN_PRICE,OUT_PRICE,OUT_ALL_PRICE,EDP_RETURN_PRICE,EDP_OTHERPRICE,SUP_RETURN_PRICE,SUP_OTHERPRICE,SUP_ALL_RETURNRPRICE,EDP_ALL_RETURNRPRICE" referenceField="HEADID" referenceTable="T_WM_SDBRETURNPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:960;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,OUT_CODE,ORDER_ID,WMCODE,PRO_NAME,SUPP_CODE,RETURN_RCOUNT,RETURN_COUNT,OUT_COUNT,IN_PRICE,OUT_PRICE,OUT_ALL_PRICE,EDP_RETURN_PRICE,EDP_OTHERPRICE,SUP_RETURN_PRICE,SUP_OTHERPRICE,SUP_ALL_RETURNRPRICE,EDP_ALL_RETURNRPRICE" referenceField="HEADID" referenceTable="T_WM_SDBRETURNPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
@@ -166,17 +166,6 @@
 					$$('div#__helper')[0].update('当前单据状态:'+c.getRawValue());
 				}
 			})();
-			Hy.UIFunction.getbatchinfo=function(){
-				var proID = Hy.getValue('PRODUCTID');
-				Ext.Ajax.request( {
-					url : 'project/leedon/T_WM_SDBRETURN.jsp?__opr=GetModel&__pid='+proID
-					, success : function(response) {
-						var d = Ext.decode(response.responseText);
-						if (d.success)
-							Hy.setValue('BATCHINFO', d.data)
-					}
-				});	
-			}
 		]]></javascript>
 		<pluginInterceptor methodName="exp" parameter="
 			If(IsEmpty(Get(ID)),Set(ID,GetNewID()),true)

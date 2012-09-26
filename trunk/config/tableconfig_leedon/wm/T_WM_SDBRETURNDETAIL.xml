@@ -14,6 +14,10 @@
 			<component type="combo" readOnly="false" displayReferenceField="CODE,NAME" referenceField="ID" referenceTable="V_WM_SDBPRODUCT" associatedFields="PRO_NAME,PRO_WMCODE,SUPP_CODE,PRO_IN_PRICE,PRO_OUT_PRICE" parameter="{&amp;WMINID=}&amp;If(IsEmpty(Get(HEADID)),-1,Get(HEADID))"/>
 			<listColumn noedit="false" noquery="false" width="140"/>
 		</field>
+		<field name="ORDER_ID" description="ORDER_ID出库单号" javaType="string">
+			<component type="text" readOnly="true" />
+			<listColumn noedit="false" noquery="false" width="75"/>
+		</field>
 		<field name="PRO_NAME" description="商品名称" displayOnly="true" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="NAME"/>
 			<listColumn noedit="false" noquery="false"/>

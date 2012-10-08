@@ -94,6 +94,7 @@ create or replace view V_WM_STOCKWHERE as
 		sum(t_1.PRO_COUNT*t_1.STOCKCHANGE) as PRO_COUNT, 0 as OUT_COUNT,
         t_1.WAREHOUSE, t_1.WAREWHERE, t_1.SUPPLIER, t_1.PRO_IN_PRICE,t_1.PRO_OUT_PRICE
 		from V_WM_STOCK1 t_1
+		where t_1.BT>-95
 		group by t_1.PRODUCTID,t_1.WAREHOUSE,t_1.WAREWHERE
 	)
 

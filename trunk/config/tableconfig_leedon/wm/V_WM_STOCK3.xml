@@ -74,9 +74,10 @@
 create or replace view V_WM_STOCK3 as 
 	(
 		select concat(t_1.ID,t_1.STOCKCHANGE) as ID,t_1.HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE, t_1.PRO_NAME,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,
-		sum(t_1.PRO_COUNT*t_1.STOCKCHANGE) as PRO_COUNT, SUM(t_2.NUMS) as ORDER_COUNT, 
+		sum(t_1.PRO_COUNT*t_1.STOCKCHANGE) as PRO_COUNT,"" as ORDER_COUNT, 
         t_1.WAREHOUSE, t_1.SUPPLIER
-		from V_WM_STOCK1 t_1 left join V_WM_SDBITEMCOUNT t_2 on t_1.PRODUCTID=t_2.PRODUCTID
+		from V_WM_STOCK1 t_1
+		where t_1.BT>-95
 		group by t_1.PRODUCTID,t_1.WAREHOUSE
 	)
 

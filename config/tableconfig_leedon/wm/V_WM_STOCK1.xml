@@ -83,6 +83,7 @@
 				<option displayName="出库-损耗" value="-2"/>
 				<option displayName="出库-返厂" value="0"/>
 				<option displayName="入库-退货" value="2"/>
+				<option displayName="记账-退货" value="-95"/>
 				<option displayName="类型错误" value="-99"/>
 			</component>
 		</field>
@@ -124,7 +125,7 @@
 		</queryFilter>
 		-->
 		<queryFilter>
-			<pluggedFilter methodName="exp" parameter="{ and t_1.WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{' }"/>
+			<pluggedFilter methodName="exp" parameter="{ and t_1.WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{' and t_1.BT>-95}"/>
 			<pluggedFilter methodName="exp" parameter="If(InRole(sp,wm),{ and t_1.SUPPLIER='}&amp;GetUser(SUPPLIER)&amp;{'},{})"/>
 		</queryFilter>
 		<!-- -->
@@ -186,6 +187,24 @@ create or replace view V_WM_STOCK1 as
 		-1 as FINANCECHANGE
 		
 		from (T_WM_SDBRETURNDETAIL t_1 left join T_WM_SDBRETURN t_2 on t_1.HEADID=t_2.ID) left join V_WM_SDBPRODUCT t_3 on t_3.ID=t_1.PRODUCTID
+		where t_2.BILL_STATUS='audit'
+	)
+	union
+	(
+		select -95 as BT,concat("THPRE",t_1.ID) as ID,t_2.TH_NO,t_1.PRODUCTID,
+		t_3.WMCODE as PRO_WMCODE,t_3.CAPACITYNUM as PRO_CAPACITYNUM,t_3.WEIGHTNUM as PRO_WEIGHTNUM,t_3.NAME as PRO_NAME,
+		t_3.SUPP_CODE,t_3.IN_PRICE as PRO_IN_PRICE,t_1.RETURN_RCOUNT,
+		t_1.SUP_ALL_RETURNRPRICE*-1 as ALL_IN_COST,
+		t_1.EDP_RETURN_PRICE as PRO_OUT_PRICE,
+		t_1.EDP_ALL_RETURNRPRICE*-1 as ALL_OUT_COST,
+		t_1.BILL_STATUS,-1 AS WAREWHERE,t_3.WHOWNER,t_3.WAREHOUSE,t_3.SUPPLIER,
+		t_2.AUDIT_TIME as WM_DATE,
+		-1 as YK ,
+		-99 as BATCH,
+		1 as STOCKCHANGE,
+		-1 as FINANCECHANGE
+		
+		from (T_WM_SDBRETURNPRE t_1 left join T_WM_SDBRETURN t_2 on t_1.HEADID=t_2.ID) left join V_WM_SDBPRODUCT t_3 on t_3.ID=t_1.PRODUCTID
 		where t_2.BILL_STATUS='audit'
 	)
 		]]></pluginInterceptor>

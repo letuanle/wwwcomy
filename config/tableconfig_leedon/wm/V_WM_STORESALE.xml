@@ -71,6 +71,14 @@
 		<field name="SUPPLIER" description="供应商" javaType="string">
 			<component type="combo" readOnly="true" displayReferenceField="NAME" referenceField="ID" referenceTable="T_DIC_SUPPLIER"/>
 		</field>
+		<field name="SUPP_MONTH" description="供应商月度对账表" javaType="string">
+			<component type="hidden" readOnly="true"/>
+			<listColumn noedit="false" noquery="true"/>
+		</field>
+		<field name="SUPP_PRO_MONTH" description="供应商商品月度" javaType="string">
+			<component type="hidden" readOnly="true"/>
+			<listColumn noedit="false" noquery="true"/>
+		</field>
 		<!-- -->
 		<queryFilter>
 			<pluggedFilter methodName="exp" parameter="{ and t_1.WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{' }"/>
@@ -110,7 +118,9 @@ create or replace view V_WM_STORESALE as
 		SUM( CASE WHEN BT = -1 THEN  t_1.ALL_OUT_COST WHEN BT=-95 THEN t_1.ALL_OUT_COST ELSE 0 END) as EDP_SALE_VALUE, 
 		(SUM( CASE WHEN BT = -1 THEN  t_1.ALL_OUT_COST WHEN BT=-95 THEN t_1.ALL_OUT_COST ELSE 0 END)
 		-SUM( CASE WHEN BT = -1 THEN  t_1.PRO_COUNT*t_1.PRO_IN_PRICE WHEN BT=-95 THEN t_1.ALL_IN_COST ELSE 0 END)) as PROFIT_STATISTICS,
-        t_1.WAREHOUSE, '产品详细信息' as PRO_MEMO, t_1.SUPPLIER, t_1.SUPP_CODE
+        t_1.WAREHOUSE, '产品详细信息' as PRO_MEMO, t_1.SUPPLIER, t_1.SUPP_CODE,
+        concat(t_1.SUPPLIER,'_',DATE_FORMAT(date_add(date_sub(t_1.WM_DATE,INTERVAL 20 day),INTERVAL 1 month),'%Y%m')) as SUPP_MONTH,
+        concat(t_1.SUPPLIER,'_',t_1.PRODUCTID,'_',DATE_FORMAT(date_add(date_sub(t_1.WM_DATE,INTERVAL 20 day),INTERVAL 1 month),'%Y%m')) as SUPP_PRO_MONTH
 		from V_WM_STOCK1 t_1 where YK=-1
 		and t_1.BT<2 and t_1.BT>=-95
 		group by t_1.PRODUCTID,t_1.WAREHOUSE,WM_MONTH

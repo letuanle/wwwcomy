@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Haiyan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../haiyan.xsd">
+	<table name="T_WM_ACCOUNTSTATEMENT" description="供应商月度对账单">
+		<id name="ID" description="ID" javaType="string">
+			<component type="hidden" url="#"/>
+		</id>
+		<field name="TITLE" description="供应商月度对账单" displayOnly="true" javaType="string">
+			<component type="text" readOnly="false" renderer="renderTitle" colspan="6"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="MONTH" description="月度" displayOnly="false" javaType="string">
+			<component type="text" readOnly="false" renderer="renderTitle"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="SUPPLIER" description="供应商" displayOnly="false" javaType="string">
+			<component type="combo" readOnly="false" renderer="renderSupplier" displayReferenceField="NAME" referenceField="ID" referenceTable="T_DIC_SUPPLIER"/>
+		</field>
+		<field name="BEGIN_DATE" description="起始时间" displayOnly="true" javaType="date" lazyLoad="false">
+			<component type="date" readOnly="true" renderer="renderBDate"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="END_DATE" description="结束时间" displayOnly="true" javaType="date" lazyLoad="false">
+			<component type="date" readOnly="false" renderer="renderEDate" colspan="6"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="content" description="我们未能收到贵司上月发票，请您先核对上月发票再开具本月，疑问请致电(xxx)" displayOnly="true" javaType="string" >
+			<component type="text" readOnly="false" colspan="6"/>
+			<listColumn noedit="false" noquery="false" />
+		</field>
+		<field name="SUBGRID" javaType="string" description="本月销售汇总" displayOnly="true">
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;toolbar:no;" displayReferenceField="ID,SUPP_MONTH,PRO_WMCODE,PRODUCTID,PRO_COUNT,OUT_ALL_PRICE,SUP_ALL_RETURNRPRICE,OUT_ALL_AMOUNT,WM_MONTH" referenceField="SUPP_MONTH" referenceTable="V_WM_MONTHDTL" parameter="{&amp;SUPP_MONTH=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<queryCondition type="none"/>
+			<listColumn noquery="true"/>
+		</field>
+		<field name="LAST_AMOUNT" description="上月应付金额" displayOnly="true" javaType="string">
+			<component type="text" readOnly="false" />
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="LAST_R_AMOUNT" description="上月实付金额" displayOnly="true" javaType="string">
+			<component type="text" readOnly="false" />
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="BILL_AMOUNT" description="本月开票额为" displayOnly="true" javaType="string">
+			<component type="text" readOnly="false" colspan="6"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="BILL_TIME" description="发票收到时间" displayOnly="true" javaType="date">
+			<component type="date" readOnly="false" />
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="BILL_PAY_AMOUNT" description="已支付金额" displayOnly="true" javaType="string">
+			<component type="text" readOnly="false" />
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<javascript hostPage="edit" src="project/leedon/T_WM_ACCOUNTSTATEMENT.js"><![CDATA[
+function renderTitle(value, metaData, record, rowIndex, colIndex, store, disVal, colVal, fieldName) {
+	return "<h1>供应商月度对账单</h1>";
+}
+		]]></javascript>
+		<!-- -->
+	</table>
+</Haiyan>

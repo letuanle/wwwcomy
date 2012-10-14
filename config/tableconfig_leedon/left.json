@@ -87,4 +87,12 @@
 			text : 'WM_EDP库存销售',
 			cataUrl : 'view.do?__opr_data=V_WM_STORESALE',
 			leaf : true
+		}, {
+			text : 'WM_EDP退货统计',
+			cataUrl : 'view.do?__opr_data=V_WM_STOCKRETURN',
+			leaf : true
+		}, {
+			text : 'V_WM_MONTHDTL',
+			cataUrl : 'view.do?__opr_data=V_WM_MONTHDTL',
+			leaf : true
 		}]

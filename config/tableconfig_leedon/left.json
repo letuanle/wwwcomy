@@ -95,4 +95,8 @@
 			text : 'V_WM_MONTHDTL',
 			cataUrl : 'view.do?__opr_data=V_WM_MONTHDTL',
 			leaf : true
+		}, {
+			text : 'T_WM_ACCOUNTSTATEMENT',
+			cataUrl : 'query.do?__opr_data=T_WM_ACCOUNTSTATEMENT',
+			leaf : true
 		}]

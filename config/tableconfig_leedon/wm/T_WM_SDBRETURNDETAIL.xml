@@ -65,7 +65,7 @@
 			<listColumn noedit="false" noquery="false" width="78"/>
 		</field>
 		<field name="PRO_OUT_PRICE" description="出售单价" displayOnly="false" javaType="bigDecimal" lazyLoad="false">
-			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" displayReferenceField="OUT_PRICE"/>
+			<component type="hidden" readOnly="false" maxFractionDigit="3" minFractionDigit="3" displayReferenceField="OUT_PRICE"/>
 			<listColumn noedit="false" noquery="false" width="78"/>
 		</field>
 		<field name="ALL_OUT_COST" description="出售总价" displayOnly="false" javaType="bigDecimal" lazyLoad="false">

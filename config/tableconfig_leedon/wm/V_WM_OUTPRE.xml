@@ -131,8 +131,8 @@
 		<queryFilter>
 			<pluggedFilter methodName="exp" parameter="{ and t_1.WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{' }"/>
 			<pluggedFilter methodName="exp" parameter="If(InRole(sp,wm),{ and t_1.SUPPLIER='}&amp;GetUser(SUPPLIER)&amp;{' },{})"/>
-			<!-- 退货时 实际出库数量应当大于0 -->
-			<pluggedFilter methodName="exp" parameter="If(IsEmpty(GetPara(RETURNPRE)),{},{ and t_1.OUT_COUNT>0})"/>
+			<!-- 退货时 实际出库数量应当大于0  and t_1.OUT_COUNT>0 这里有问题，EDP很多没有预出库数量-->
+			<pluggedFilter methodName="exp" parameter="If(IsEmpty(GetPara(RETURNPRE)),{},{})"/>
 			
 		</queryFilter>
 		<!-- -->

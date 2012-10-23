@@ -24,7 +24,7 @@
 			<listColumn noedit="false" noquery="false" width="70"/>
 		</field>
 		<field name="PRO_COUNT" description="库存变化" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="false" />
+			<component type="text" readOnly="true" />
 			<listColumn noedit="false" noquery="false" width="60"/>
 		</field>
 		<field name="IN_PRICE" description="供应商单价" javaType="string">

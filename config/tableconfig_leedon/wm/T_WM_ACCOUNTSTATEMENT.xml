@@ -9,22 +9,22 @@
 		</field>
 		<field name="SUPP_MONTH" description="供应商月度对账表(单头)" javaType="string">
 			<component type="hidden" readOnly="true"/>
-			<listColumn noedit="false" noquery="true"/>
+			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="MONTH" description="月度" displayOnly="false" javaType="string">
 			<component type="text" readOnly="false" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="SUPPLIER" description="供应商" displayOnly="false" javaType="string">
+		<field name="SUPPLIER" description="供应商" javaType="string">
 			<component type="combo" readOnly="false" displayReferenceField="NAME" referenceField="ID" referenceTable="T_DIC_SUPPLIER" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="BEGIN_DATE" description="起始时间" displayOnly="true" javaType="date" lazyLoad="false">
-			<component type="date" readOnly="true"/>
-			<listColumn noedit="false" noquery="false"/>
+			<component type="date" readOnly="true" colspan="6"/>
+			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="END_DATE" description="结束时间" displayOnly="true" javaType="date" lazyLoad="false">
-			<component type="date" readOnly="false" colspan="6"/>
+			<component type="hidden" readOnly="false" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="CONTENT" description="CONTENT" displayOnly="true" javaType="string" >
@@ -36,38 +36,43 @@
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
-		<field name="LAST_AMOUNT" description="上月应付金额" displayOnly="true" javaType="string">
-			<component type="text" readOnly="false" />
+		<field name="LAST_AMOUNT" description="上月应付金额" displayOnly="true" javaType="string" defaultValue="0">
+			<component type="text" readOnly="true" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="LAST_R_AMOUNT" description="上月实付金额" displayOnly="true" javaType="string">
-			<component type="text" readOnly="false" />
+		<field name="LAST_R_AMOUNT" description="上月实付金额" displayOnly="true" javaType="string" defaultValue="0">
+			<component type="text" readOnly="true" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="BILL_AMOUNT" description="本月开票额为" displayOnly="true" javaType="string">
-			<component type="text" readOnly="false" colspan="6"/>
+		<field name="BILL_AMOUNT" description="本月开票额为" displayOnly="false" javaType="string" defaultValue="0">
+			<component type="text" readOnly="true" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="BILL_TIME" description="发票收到时间" displayOnly="true" javaType="date">
+		<field name="BILL_TIME" description="发票收到时间" displayOnly="false" javaType="date">
 			<component type="date" readOnly="false" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="BILL_PAY_AMOUNT" description="已支付金额" displayOnly="true" javaType="string">
+		<field name="BILL_PAY_AMOUNT" description="已支付金额" displayOnly="false" javaType="string">
 			<component type="text" readOnly="false" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
+		
+		<role name="user sp">
+			<disComponent name="BILL_TIME BILL_PAY_AMOUNT"/>
+			<disOperation name="saveAll"/>
+		</role>
+		<role name="admin boss manager wm pe ac"/>
+		
 		<javascript hostPage="edit" src="project/leedon/T_WM_ACCOUNTSTATEMENT.js"><![CDATA[
-function renderTitle(value, metaData, record, rowIndex, colIndex, store, disVal, colVal, fieldName) {
-	return "<h1>供应商月度对账单</h1>";
-}
 		]]></javascript>
 		<pluginInterceptor methodName="exp" parameter="DisBtns(add,saveAndAdd,saveAndAddCopy);" pluginName="edit" type="after"/>
 		<pluginInterceptor methodName="exp" parameter="
 			bsh(T_WM_ACTSTMT_GEN.bsh)
 			" pluginName="bshtest" type="before"/>
 		<!-- -->
+		<pluginOperation name="saveAll" oprName="保存A" hostPage="edit" tblevel="1" img="save" action="Save({},{})+brk()"/>
 		<pluginOperation name="bshtest" oprName="测试脚本" hostPage="edit" tblevel="1" img="settings" action="
 			plugin({},{bshtest})+brk()"/>
-		<Operation queryPageDelete="false" saveAndAdd="false" saveAndAddCopy="false"/>
+		<Operation save="false" queryPageDelete="false" saveAndAdd="false" saveAndAddCopy="false"/>
 	</table>
 </Haiyan>

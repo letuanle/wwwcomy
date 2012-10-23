@@ -1,9 +1,24 @@
+String getMonth(String date){
+	return null;
+}
 void genSupplierData(){
+
+	DBManager dbm = context.getDBM();
+	String month=null; //"201211";
+	month = new java.text.SimpleDateFormat("yyyyMM").format(new java.util.Date());
+	String sql = "select count(*) from T_WM_ACCOUNTSTATEMENT where SUPP_MONTH like '%"+month+"'";
+	String[][] rs1 = dbm.getResultStrArray(sql, 1, null);
+	if(rs1.length>0) {
+		String count = rs1[0][0];
+		if(TypeConvert.toInt(count)>0){
+			throw new Warning("月份"+month+"的数据已经初始化，请检查自动任务");
+		}
+	}
+	
+	
 	String ID = form.get("ID");
 	String sql = "select ID,CODE from T_DIC_ORGA where SUPP_CODE<>''";
-	DBManager dbm = context.getDBM();
 	String[][] rs = dbm.getResultStrArray(sql, 2, null);
-	String month="201209";
 	if(rs.length>0) {
 		int l = rs.length;
 		for(int i = 0; i<l;i++){

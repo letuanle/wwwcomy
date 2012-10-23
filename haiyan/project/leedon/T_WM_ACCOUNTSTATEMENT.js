@@ -29,8 +29,9 @@ Ext.onReady(function(){
 		//this.syncSize();
 		this.doLayout();
 	}, g);
-	$("TITLE_L").innerHTML="<div style='text-align:center;font-size:40px;margin:10px 0 10px 0'>&nbsp;供应商月度对账单</div>";
+	$("TITLE_L").innerHTML="<div style='text-align:center;font-size:40px;margin:20px 0 20px 0'>&nbsp;供应商月度对账单</div>";
 	$("TITLE").parentNode.parentNode.remove()
 	$("TITLE_L").setAttribute("colspan",'4')
 	$("CONTENT").parentNode.parentNode.remove()
+	$("CONTENT_L").innerHTML="我们未能收到贵司上月发票，请您先核对上月发票再开具本月，疑问请致电(xxx)";
 });

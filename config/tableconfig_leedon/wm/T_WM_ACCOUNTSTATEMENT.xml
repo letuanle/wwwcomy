@@ -2,18 +2,22 @@
 <Haiyan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../haiyan.xsd">
 	<table name="T_WM_ACCOUNTSTATEMENT" description="供应商月度对账单">
 		<id name="ID" description="ID" javaType="string">
-			<component type="hidden" url="#"/>
 		</id>
 		<field name="TITLE" description="供应商月度对账单" defaultValue="供应商月度对账单" displayOnly="true" javaType="string">
 			<component type="text" readOnly="false" colspan="6"/>
-			<listColumn noedit="false" noquery="false"/>
+			<listColumn noedit="false" noquery="true"/>
+		</field>
+		<field name="SUPP_MONTH" description="供应商月度对账表(单头)" javaType="string">
+			<component type="hidden" readOnly="true"/>
+			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="MONTH" description="月度" displayOnly="false" javaType="string">
-			<component type="text" readOnly="false" />
+			<component type="text" readOnly="false" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SUPPLIER" description="供应商" displayOnly="false" javaType="string">
-			<component type="combo" readOnly="false" displayReferenceField="NAME" referenceField="ID" referenceTable="T_DIC_SUPPLIER"/>
+			<component type="combo" readOnly="false" displayReferenceField="NAME" referenceField="ID" referenceTable="T_DIC_SUPPLIER" colspan="6"/>
+			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="BEGIN_DATE" description="起始时间" displayOnly="true" javaType="date" lazyLoad="false">
 			<component type="date" readOnly="true"/>
@@ -23,12 +27,12 @@
 			<component type="date" readOnly="false" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="CONTENT" description="我们未能收到贵司上月发票，请您先核对上月发票再开具本月，疑问请致电(xxx)" displayOnly="true" javaType="string" >
+		<field name="CONTENT" description="CONTENT" displayOnly="true" javaType="string" >
 			<component type="text" readOnly="false" colspan="6"/>
-			<listColumn noedit="false" noquery="false" />
+			<listColumn noedit="false" noquery="true" />
 		</field>
 		<field name="SUBGRID" javaType="string" description="本月销售汇总" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;toolbar:no;" displayReferenceField="ID,SUPP_MONTH,WMCODE,PRODUCTID,PRO_COUNT,OUT_ALL_PRICE,SUP_ALL_RETURNRPRICE,OUT_ALL_AMOUNT,WM_MONTH" referenceField="SUPP_MONTH" referenceTable="V_WM_MONTHDTL" parameter="{&amp;SUPP_MONTH=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;toolbar:no;" displayReferenceField="ID,SUPP_MONTH,WMCODE,PRODUCTID,PRO_COUNT,OUT_ALL_PRICE,SUP_ALL_RETURNRPRICE,OUT_ALL_AMOUNT,WM_MONTH" referenceField="SUPP_MONTH" referenceTable="V_WM_MONTHDTL" parameter="{&amp;SUPP_MONTH=}&amp;If(IsEmpty(Get(SUPP_MONTH)),-1,Get(SUPP_MONTH))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
@@ -57,6 +61,13 @@ function renderTitle(value, metaData, record, rowIndex, colIndex, store, disVal,
 	return "<h1>供应商月度对账单</h1>";
 }
 		]]></javascript>
+		<pluginInterceptor methodName="exp" parameter="DisBtns(add,saveAndAdd,saveAndAddCopy);" pluginName="edit" type="after"/>
+		<pluginInterceptor methodName="exp" parameter="
+			bsh(T_WM_ACTSTMT_GEN.bsh)
+			" pluginName="bshtest" type="before"/>
 		<!-- -->
+		<pluginOperation name="bshtest" oprName="测试脚本" hostPage="edit" tblevel="1" img="settings" action="
+			plugin({},{bshtest})+brk()"/>
+		<Operation queryPageDelete="false" saveAndAdd="false" saveAndAddCopy="false"/>
 	</table>
 </Haiyan>

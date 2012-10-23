@@ -31,9 +31,18 @@
 			<component type="combo" readOnly="false" colspan="6" displayReferenceField="NAME" referenceField="ID" referenceTable="T_WM_OPERATOR"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
+		<field name="LOGISTICS" description="退货物流信息" displayOnly="false" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="false" />
+			<queryCondition type="blurMatching"/>
+			<listColumn noedit="false" noquery="false" width="150"/>
+		</field>
+		<field name="MEMO" description="备注" displayOnly="false" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="false" colspan="6"/>
+			<listColumn noedit="false" noquery="false" width="150"/>
+		</field>
 		<!-- -->
 		<field name="SUBGRID2" javaType="string" description="应退货明细" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:960;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,OUT_CODE,ORDER_ID,WMCODE,PRO_NAME,SUPP_CODE,RETURN_RCOUNT,RETURN_COUNT,OUT_COUNT,IN_PRICE,OUT_PRICE,OUT_ALL_PRICE,EDP_RETURN_PRICE,EDP_OTHERPRICE,SUP_RETURN_PRICE,SUP_OTHERPRICE,SUP_ALL_RETURNRPRICE,EDP_ALL_RETURNRPRICE" referenceField="HEADID" referenceTable="T_WM_SDBRETURNPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:960;height:255;plugins:undefined;view:undefined;grouping:false;" displayReferenceField="ID,HEADID,OUT_CODE,ORDER_ID,WMCODE,PRO_NAME,SUPP_CODE,SUPPLIER,RETURN_RCOUNT,RETURN_COUNT,OUT_COUNT,IN_PRICE,OUT_PRICE,OUT_ALL_PRICE,EDP_RETURN_PRICE,EDP_OTHERPRICE,SUP_RETURN_PRICE,SUP_OTHERPRICE,SUP_ALL_RETURNRPRICE,EDP_ALL_RETURNRPRICE" referenceField="HEADID" referenceTable="T_WM_SDBRETURNPRE" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get(ID)),-1,Get(ID))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
@@ -151,12 +160,11 @@
 		<!-- -->
 		<queryFilter>
 			<pluggedFilter methodName="exp" parameter="{ and t_1.WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{' }"/>
-			<pluggedFilter methodName="exp" parameter="If(InRole(sp,wm),{ and t_1.SHIP_SUPPLIER='}&amp;GetUser(SUPPLIER)&amp;{'},{})"/>
 		</queryFilter>
 		<!-- -->
 		<role name="user sp">
 			<disComponent name="SUBGRID SUBGRID1 PRODUCTID PRO_COUNT TEST1 TEST2 REMAINDER_NUM"/>
-			<readOnlyComponent name="SHIP_SUPPLIER WAREHOUSE"/>
+			<readOnlyComponent name="WAREHOUSE"/>
 			<disOperation name="audit"/>
 		</role>
 		<role name="admin boss manager wm pe ac"/>
@@ -176,14 +184,12 @@
 		<pluginInterceptor methodName="exp" parameter="
 			If(IsEmpty(Get(ID)),Set(ID,GetNewID()),true)
 			+SetCreate(BILL_STATUS,{init},WAREHOUSE,GetUser(WAREHOUSEID),__WAREHOUSE__NAME,GetUser(WAREHOUSENAME))
-			+If(InRole(sp,wm),Set(SHIP_SUPPLIER,GetUser(SUPPLIER),__SHIP_SUPPLIER__NAME,GetUser(__SUPPLIER__NAME)),true)
 			+If(Get(BILL_STATUS)={audit},DisBtns(select,saveAll,audit)+DisFlds(SUBGRID,SUBGRID2,IN_PRE_DATE,IN_DATE,IMAGE,WHOWNER,SHIP_ORGA,SHIP_NO,SHIP_CON)+HidFlds(SUBGRID1,BATCHINFO,TEST1,TEST2,TEST,XIANSHU,PRO_COUNT,PRODUCTID,REMAINDER_NUM),true)
 			" pluginName="edit" type="after"/>
 		<pluginInterceptor methodName="exp" parameter="
 			If(IsEmpty(Get(WAREHOUSE)),Warning({缺少必填项}),true)
 			+SetCreateTime(CREATE_TIME,{yyyy-MM-dd HH:mm:ss})
 			+SetCreate(CREATE_USER_ID,GetUser(ID),__CREATE_USER_ID__NAME,GetUser(NAME),TH_NO,{TH_}&amp;LeftPad(Get(ID),12),BILL_STATUS,{init})
-			+If(InRole(sp,wm),Set(SHIP_SUPPLIER,GetUser(SUPPLIER),__SHIP_SUPPLIER__NAME,GetUser(__SUPPLIER__NAME)),true)
 			" pluginName="save" type="before"/>
 		<pluginInterceptor methodName="exp" parameter="
 			bsh(RETURNCHECK.bsh)

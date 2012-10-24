@@ -108,6 +108,9 @@
 				return "<a href='#' onclick=\"Hy.showBill('query.do?PRODUCTID="+record.json.PRODUCTID+"&__opr_data=V_WM_STOCK1','产品销售明细')\">"+v+"</a>"
 		}
 		function renderID(v,metaData,record) {
+				if(Ext.isEmpty(record.json.ACTSTMTID)){
+					return "<a onclick=\"Ext.Msg.alert('Warning','ID丢失,无对应对账数据')\">"+v+"</a>"
+				}
 				return "<a href='#' onclick=\"Hy.showBill('edit.do?ID="+record.json.ACTSTMTID+"&__opr_data=T_WM_ACCOUNTSTATEMENT','对账单链接')\">"+v+"</a>"
 		}
 		]]></javascript>

@@ -36,24 +36,24 @@
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
-		<field name="LAST_AMOUNT" description="上月应付金额" displayOnly="true" javaType="string" defaultValue="0">
-			<component type="text" readOnly="true" />
+		<field name="LAST_AMOUNT" description="上月应付金额" displayOnly="false" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="LAST_R_AMOUNT" description="上月实付金额" displayOnly="true" javaType="string" defaultValue="0">
-			<component type="text" readOnly="true" />
+		<field name="LAST_R_AMOUNT" description="上月实付金额" displayOnly="false" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="BILL_AMOUNT" description="本月开票额为" displayOnly="false" javaType="string" defaultValue="0">
-			<component type="text" readOnly="true" colspan="6"/>
+		<field name="BILL_AMOUNT" description="本月开票额为" displayOnly="false" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="BILL_TIME" description="发票收到时间" displayOnly="false" javaType="date">
 			<component type="date" readOnly="false" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="BILL_PAY_AMOUNT" description="已支付金额" displayOnly="false" javaType="string">
-			<component type="text" readOnly="false" />
+		<field name="BILL_PAY_AMOUNT" description="已支付金额" displayOnly="false" javaType="bigDecimal">
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		
@@ -70,9 +70,9 @@
 			bsh(T_WM_ACTSTMT_GEN.bsh)
 			" pluginName="bshtest" type="before"/>
 		<!-- -->
-		<pluginOperation name="saveAll" oprName="保存A" hostPage="edit" tblevel="1" img="save" action="Save({},{})+brk()"/>
+		<pluginOperation name="saveAll" oprName="保存" hostPage="edit" tblevel="1" img="save" action="Save({},{})+brk()"/>
 		<pluginOperation name="bshtest" oprName="测试脚本" hostPage="edit" tblevel="1" img="settings" action="
 			plugin({},{bshtest})+brk()"/>
-		<Operation save="false" queryPageDelete="false" saveAndAdd="false" saveAndAddCopy="false"/>
+		<Operation save="false" queryPageDelete="false" queryPageAdd="false" saveAndAdd="false" saveAndAddCopy="false"/>
 	</table>
 </Haiyan>

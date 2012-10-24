@@ -34,12 +34,12 @@ Ext.onReady(function(){
 	$("TITLE_L").innerHTML="<div style='text-align:center;font-size:40px;margin:20px 0 20px 0'>&nbsp;供应商月度对账单</div>";
 	$("TITLE").parentNode.parentNode.remove();
 	$("TITLE_L").setAttribute("colspan",'4');
-	$("MONTH_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px'>月度:"+$("MONTH").value+"</div>";
+	$("MONTH_L").innerHTML="<div style='font-size:14px;margin:0px 0px 0px 15px'>月度:"+$("MONTH").value+"</div>";
 	$("MONTH").parentNode.parentNode.remove();
-	$("SUPPLIER_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px'>供应商:"+$("__SUPPLIER__NAME").value+"</div>";
+	$("SUPPLIER_L").innerHTML="<div style='font-size:14px;margin:0px 0px 0px 15px'>供应商:"+$("__SUPPLIER__NAME").value+"</div>";
 	$("__SUPPLIER__NAME").parentNode.parentNode.remove();
 	
-	$("BEGIN_DATE_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px'>日期:"+lastMonth+"21"+" 至 "+month+"20</div>";
+	$("BEGIN_DATE_L").innerHTML="<div style='font-size:14px;margin:0px 0px 0px 15px'>日期:"+lastMonth+"21"+" 至 "+month+"20</div>";
 	$("BEGIN_DATE").parentNode.parentNode.remove();
 	
 

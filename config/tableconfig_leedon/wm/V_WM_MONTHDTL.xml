@@ -36,15 +36,15 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="OUT_ALL_PRICE" description="销售总额" javaType="string">
-			<component type="text" readOnly="true"/>
+			<component type="text" readOnly="true"  maxFractionDigit="3" minFractionDigit="3" summaryType="sum" summaryRenderer="sum_COST"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SUP_ALL_RETURNRPRICE" description="供应商总退款额" javaType="bigDecimal" defaultValue="0">
-			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3"/>
+			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3" summaryType="sum" summaryRenderer="sum_COST"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="OUT_ALL_AMOUNT" description="销售合计" javaType="string">
-			<component type="text" readOnly="true"/>
+			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3" summaryType="sum" summaryRenderer="sum_COST"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SUPPLIER" description="供应商" javaType="string">
@@ -70,6 +70,9 @@
 		</role>
 		<role name="admin boss manager wm pe ac"/>
 		<javascript hostPage="query"><![CDATA[
+		function sum_COST(value, params, data, fldName) {
+				return value; // 汇总行显示
+		}
 		]]></javascript>
 		<!-- -->
 		<pluginInterceptor methodName="initDB" pluginName="initDB" type="before"><![CDATA[

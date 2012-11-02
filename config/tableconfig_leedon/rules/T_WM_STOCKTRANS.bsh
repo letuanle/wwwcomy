@@ -21,14 +21,28 @@ void checkStock() {
 				int t = 0;
 				t = Integer.valueOf(result[0][0]);
 				String proWmcode = result[0][1];
-				if(transCount>t)
-					throw new Warning("审批失败,商品 '"+proWmcode+"' 库存不足, 仓位ID:"+WHID+",批次:"+batch+" 移库数量:"+transCount+", 现有仓位库存:"+t);
+				if(transCount>t){
+					String whCode = getWarewhereCode(WHID,dbm);
+					throw new Warning("审批失败,商品 '"+proWmcode+"' 库存不足, 仓位:"+whCode+",批次:"+batch+" 移库数量:"+transCount+", 现有仓位库存:"+t);
+				}
 			}else{
-				throw new Warning("审批失败,商品无库存, 仓位ID:"+WHID+",批次:"+batch+" ,移库数量:"+transCount);
+				String whCode = getWarewhereCode(WHID,dbm);
+				throw new Warning("审批失败,商品无库存, 仓位:"+whCode+",批次:"+batch+" ,移库数量:"+transCount);
 			}
 		}
 	}
 }
+
+String getWarewhereCode(String whID,DBManager dbm){
+	String whCode=null;
+	String wareWhereSql = "select CODE from T_DIC_WAREWHERE where ID =" +whID;
+	String[][] result = dbm.getResultStrArray(wareWhereSql, 1, null);
+	if (result.length>0) {
+		whCode = result[0][0];
+	}
+	return whCode;
+}
+
 void transStock(){
 	String ID = form.get("ID");
 	String sql = "select PRO_WH,PRODUCTID,PRO_COUNT,TO_WH,BATCH from T_WM_TRANSDETAIL where HEADID='"+ID+"'";

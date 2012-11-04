@@ -9,7 +9,7 @@
 			<component type="text" readOnly="true" colspan="1"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="WM_DATE" description="发生时间" javaType="date" lazyLoad="false">
+		<field name="WM_DATE" description="退货发生时间" javaType="date" lazyLoad="false">
 			<component type="date" readOnly="true" colspan="1"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
@@ -138,8 +138,8 @@ create or replace view V_WM_STOCKRETURN as
 		sum(t_1.SUP_ALL_RETURNRPRICE) as SUP_ALL_RETURNRPRICE,
 		t_4.SUPPLIER,
 		t_2.WAREHOUSE,
-        concat(t_4.SUPPLIER,'_',t_1.PRODUCTID,'_',DATE_FORMAT(date_add(date_sub(t_3.AUDIT_TIME,INTERVAL 20 day),INTERVAL 1 month),'%Y%m')) as SUPP_MONTH,
-        concat(t_4.SUPPLIER,'_',t_1.PRODUCTID,'_',DATE_FORMAT(date_add(date_sub(t_3.AUDIT_TIME,INTERVAL 20 day),INTERVAL 1 month),'%Y%m')) as SUPP_PRO_MONTH
+        concat(t_4.SUPPLIER,'_',t_1.PRODUCTID,'_',DATE_FORMAT(date_add(date_sub(t_2.AUDIT_TIME,INTERVAL 20 day),INTERVAL 1 month),'%Y%m')) as SUPP_MONTH,
+        concat(t_4.SUPPLIER,'_',t_1.PRODUCTID,'_',DATE_FORMAT(date_add(date_sub(t_2.AUDIT_TIME,INTERVAL 20 day),INTERVAL 1 month),'%Y%m')) as SUPP_PRO_MONTH
 		from T_WM_SDBRETURNPRE t_1
 		left join T_WM_SDBRETURN t_2 on t_1.HEADID=t_2.ID 
 		left join T_WM_OUTPART t_3 on t_1.ORDER_ID=t_3.ORDER_ID

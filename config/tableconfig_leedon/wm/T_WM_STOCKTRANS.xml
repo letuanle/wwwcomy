@@ -39,16 +39,16 @@
 			<component type="combo" quickQueryConditionField="NAME" referenceTable="SYSOPERATOR_VIEW" referenceField="ID" displayReferenceField="NAME" readOnly="true"/>
 			<listColumn noquery="true" nowrap="true"/>
 		</field>
-		<field name="AUDIT_TIME" javaType="date" dataStyle="yyyy-MM-dd HH:mm:ss" description="审批时间">
-			<component type="hidden" readOnly="true"/>
-			<queryCondition type="region"/>
-			<listColumn noquery="true" nowrap="true"/>
-		</field>
 		<field name="BILL_STATUS" javaType="string" description="单据状态">
 			<component type="dropdown" readOnly="true">
 				<option displayName="待批" value="init"/>
 				<option displayName="已审核" value="audit"/>
 			</component>
+		</field>
+		<field name="AUDIT_TIME" javaType="date" dataStyle="yyyy-MM-dd HH:mm:ss" description="审批时间">
+			<component type="date" readOnly="true"/>
+			<queryCondition type="region"/>
+			<listColumn noquery="true" nowrap="true"/>
 		</field>
 		<!-- -->
 		<queryFilter>

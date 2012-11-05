@@ -126,12 +126,12 @@
 			<component type="hidden" readOnly="false" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<!-- -->
+		<!--No filter for admin { and t_1.ID in (select ORDER_ID from V_WM_OUTPRE t_2 left join V_WM_SDBPRODUCT t_3 on t_2.PRODUCTID=t_3.id where t_3.WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{') }-->
 		<queryFilter>
 			<pluggedFilter methodName="exp" parameter="
 			If(InRole(sp,wm),
 				{ and t_1.ID in (select ORDER_ID from V_WM_OUTPRE t_2 left join V_WM_SDBPRODUCT t_3 on t_2.PRODUCTID=t_3.id where t_3.SUPPLIER='}&amp;GetUser(SUPPLIER)&amp;{' and t_3.WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{') },
-				{ and t_1.ID in (select ORDER_ID from V_WM_OUTPRE t_2 left join V_WM_SDBPRODUCT t_3 on t_2.PRODUCTID=t_3.id where t_3.WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{') }
+				true
 			)"/>
 		</queryFilter>
 		<!-- -->

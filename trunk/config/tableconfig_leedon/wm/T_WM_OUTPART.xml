@@ -101,7 +101,7 @@
 			</component>
 		</field>
 		<field name="AUDIT_TIME" javaType="date" dataStyle="yyyy-MM-dd HH:mm:ss" description="审批时间">
-			<component type="hidden" readOnly="true"/>
+			<component type="date" readOnly="true"/>
 			<queryCondition type="region"/>
 			<listColumn noquery="true" nowrap="true"/>
 		</field>

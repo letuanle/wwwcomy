@@ -69,10 +69,12 @@
 		<pluginInterceptor methodName="exp" parameter="
 			bsh(T_WM_ACTSTMT_GEN.bsh)
 			" pluginName="bshtest" type="before"/>
-		<!-- -->
+		
 		<pluginOperation name="saveAll" oprName="保存" hostPage="edit" tblevel="1" img="save" action="Save({},{})+brk()"/>
+		<!--
 		<pluginOperation name="bshtest" oprName="测试脚本" hostPage="edit" tblevel="1" img="settings" action="
 			plugin({},{bshtest})+brk()"/>
+			 -->
 		<Operation save="false" queryPageDelete="false" queryPageAdd="false" saveAndAdd="false" saveAndAddCopy="false"/>
 	</table>
 </Haiyan>

@@ -38,6 +38,10 @@
 			<component type="text" readOnly="true" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
+		<field name="PRO_IN_COUNT" description="在途数量" javaType="bigDecimal">
+			<component type="text" readOnly="true" />
+			<listColumn noedit="false" noquery="false"/>
+		</field>
 		<field name="SUPPLIER" description="供应商" javaType="string">
 			<component type="combo" readOnly="true" displayReferenceField="NAME" referenceField="ID" referenceTable="T_DIC_SUPPLIER"/>
 		</field>
@@ -74,9 +78,12 @@
 create or replace view V_WM_STOCK3 as 
 	(
 		select concat(t_1.ID,t_1.STOCKCHANGE) as ID,t_1.HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE, t_1.PRO_NAME,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,
-		sum(t_1.PRO_COUNT*t_1.STOCKCHANGE) as PRO_COUNT,"" as ORDER_COUNT, 
+		sum(t_1.PRO_COUNT*t_1.STOCKCHANGE) as PRO_COUNT, t_2.NUMS as ORDER_COUNT,
+		t_3.PRO_COUNT as PRO_IN_COUNT,
         t_1.WAREHOUSE, t_1.SUPPLIER
-		from V_WM_STOCK1 t_1
+		from V_WM_STOCK1 t_1 
+		left join V_WM_SDBITEMCOUNT t_2 on t_1.PRODUCTID=t_2.PRODUCTID
+		left join V_WM_IN t_3 on t_1.PRODUCTID=t_3.PRODUCTID
 		where t_1.BT>-95
 		group by t_1.PRODUCTID,t_1.WAREHOUSE
 	)

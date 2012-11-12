@@ -99,7 +99,6 @@
 		<pluginInterceptor methodName="exp" parameter="If(IsEmpty(GetPara(HEADID)),Warning({参数错误}),true)" pluginName="query" type="after"/>
 		<pluginInterceptor methodName="bsh" parameter="T_WM_STOCKDETAIL_IN.bsh" pluginName="audit" type="after"/>
 		<!-- CheckKC()+ -->
-		<pluginInterceptor methodName="exp" parameter="Set(OUT_TYPE,{so})" pluginName="auditOut"/>
 	</table>
     <!-- -->
 	<table name="T_WM_OUTDETAIL" description="实际出库明细(HY)" colspan="6">
@@ -199,6 +198,6 @@
 			If(IsEmpty(GetPara(HEADID)),Warning({参数错误}),true)
 			" pluginName="query" type="after"/>
 		<pluginInterceptor methodName="exp" parameter="Save()" pluginName="saveView" />
-		<pluginInterceptor methodName="exp" parameter="Set(BILL_STATUS,{audit})+Save()" pluginName="auditOut" type="before"/>
+		<pluginInterceptor methodName="exp" parameter="Set(BILL_STATUS,{audit})+Save()+bsh(T_WM_STOCKDETAIL_OUT.bsh)" pluginName="auditOut" type="before"/>
 	</table>
 </Haiyan>

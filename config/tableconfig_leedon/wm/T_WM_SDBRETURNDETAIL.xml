@@ -99,6 +99,6 @@
 		-->
 		<!-- -->
 		<pluginInterceptor methodName="exp" parameter="If(IsEmpty(GetPara(HEADID)),Warning({参数错误}),true)" pluginName="query" type="after"/>
-		<pluginInterceptor methodName="exp" parameter="Set(BILL_STATUS,{audit})+Save()" pluginName="audit" type="before"/>
+		<pluginInterceptor methodName="exp" parameter="Set(BILL_STATUS,{audit})+Save()+bsh(T_WM_SDBRETURNDTL.bsh)" pluginName="audit" type="before"/>
 	</table>
 </Haiyan>

@@ -29,6 +29,11 @@ void checkStock() {
 				}
 			}else{
 				String whCode = getWarewhereCode(WHID,dbm);
+				String proSql = "select CODE from V_WM_SDBPRODUCT where ID='"+proID+"'";
+				String[][] result1 = dbm.getResultStrArray(proSql, 1, null);
+				if (result1.length>0) {
+					throw new Warning("审批出库单无此商品:"+result1[0][0]+" 批次出库记录, 仓位:"+whCode+",批次:"+batch+", 退货数量:"+transCount);
+				}
 				throw new Warning("审批出库单无此商品批次出库记录, 仓位:"+whCode+",批次:"+batch+", 退货数量:"+transCount);
 			}
 		}

@@ -37,6 +37,8 @@ void checkStock() {
 				throw new Warning("审批出库单无此商品批次出库记录, 仓位:"+whCode+",批次:"+batch+", 退货数量:"+transCount);
 			}
 		}
+	} else {
+		throw new Warning("退货明细必须有记录,请重新填写");
 	}
 }
 

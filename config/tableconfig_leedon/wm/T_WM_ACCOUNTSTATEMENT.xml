@@ -27,10 +27,6 @@
 			<component type="hidden" readOnly="false" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="CONTENT" description="CONTENT" displayOnly="true" javaType="string" >
-			<component type="text" readOnly="false" colspan="6"/>
-			<listColumn noedit="false" noquery="true" />
-		</field>
 		<field name="ALL_AMOUNT" description="本月应付金额为" displayOnly="false" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
@@ -39,6 +35,10 @@
 			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;toolbar:no;" displayReferenceField="ID,SUPP_MONTH,WMCODE,SUPP_CODE,PRODUCTID,PRO_COUNT,OUT_ALL_PRICE,SUP_ALL_RETURNRPRICE,OUT_ALL_AMOUNT,WM_MONTH" referenceField="SUPP_MONTH" referenceTable="V_WM_MONTHDTL" parameter="{&amp;SUPP_MONTH=}&amp;If(IsEmpty(Get(SUPP_MONTH)),-1,Get(SUPP_MONTH))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
+		</field>
+		<field name="CONTENT" description="CONTENT" displayOnly="true" javaType="string" >
+			<component type="text" readOnly="false" colspan="6"/>
+			<listColumn noedit="false" noquery="true" />
 		</field>
 		<field name="LAST_AMOUNT" description="上月应付金额" displayOnly="true" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3"/>

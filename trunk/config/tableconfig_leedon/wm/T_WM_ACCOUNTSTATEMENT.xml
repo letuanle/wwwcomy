@@ -36,7 +36,7 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SUBGRID" javaType="string" description="本月销售汇总" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;toolbar:no;" displayReferenceField="ID,SUPP_MONTH,WMCODE,PRODUCTID,PRO_COUNT,OUT_ALL_PRICE,SUP_ALL_RETURNRPRICE,OUT_ALL_AMOUNT,WM_MONTH" referenceField="SUPP_MONTH" referenceTable="V_WM_MONTHDTL" parameter="{&amp;SUPP_MONTH=}&amp;If(IsEmpty(Get(SUPP_MONTH)),-1,Get(SUPP_MONTH))"/>
+			<component type="grid" readOnly="false" colspan="6" style="width:950;height:255;toolbar:no;" displayReferenceField="ID,SUPP_MONTH,WMCODE,SUPP_CODE,PRODUCTID,PRO_COUNT,OUT_ALL_PRICE,SUP_ALL_RETURNRPRICE,OUT_ALL_AMOUNT,WM_MONTH" referenceField="SUPP_MONTH" referenceTable="V_WM_MONTHDTL" parameter="{&amp;SUPP_MONTH=}&amp;If(IsEmpty(Get(SUPP_MONTH)),-1,Get(SUPP_MONTH))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>

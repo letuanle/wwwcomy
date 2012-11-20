@@ -23,6 +23,8 @@ Ext.onReady(function(){
 					Hy.setValue('LAST_R_AMOUNT', d.payed); //上月实付
 					var topay = parseInt(d.topay)+parseInt(d.all)-parseInt(d.payed);
 					Hy.setValue('ALL_AMOUNT', topay); //本月应付
+					if($("BILL_AMOUNT"))
+						Hy.setValue('BILL_AMOUNT', d.topay); //本月应付
 					if(!d.getbill)
 						$("CONTENT_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px;color:red'>我们未能收到贵司上月发票，请您先核对<br>上月发票再开具本月，疑问请致电本公司</div>";
 				}

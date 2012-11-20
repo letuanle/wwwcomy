@@ -32,8 +32,8 @@ try {
 	DBManager dbm = srvContext.getDBM();
 	net.sf.json.JSONObject json = new net.sf.json.JSONObject();
 	
-	String sql = "select ALL_AMOUNT,BILL_PAY_AMOUNT from T_WM_ACCOUNTSTATEMENT where MONTH="+lastmon+" and SUPPLIER='"+suppID+"'";
-	String[][] rs = dbm.getResultStrArray(sql, 2, null);
+	String sql = "select ALL_AMOUNT,BILL_PAY_AMOUNT,BILL_TIME from T_WM_ACCOUNTSTATEMENT where MONTH="+lastmon+" and SUPPLIER='"+suppID+"'";
+	String[][] rs = dbm.getResultStrArray(sql, 3, null);
 	String amount = "";
 	if(rs.length>0) {
 		json.put("success",true);
@@ -41,6 +41,7 @@ try {
 		for(int i = 0; i<1;i++){
 			json.put("all",StringUtil.isBlankOrNull(rs[i][0])?0:rs[i][0]);
 			json.put("payed",StringUtil.isBlankOrNull(rs[i][1])?0:rs[i][1]);
+			json.put("getbill",StringUtil.isBlankOrNull(rs[i][1])?false:true);
 		}
 	}
 	String sql2="select sum(OUT_ALL_AMOUNT) from V_WM_MONTHDTL where SUPP_MONTH='"+suppID+"_"+month+"'";

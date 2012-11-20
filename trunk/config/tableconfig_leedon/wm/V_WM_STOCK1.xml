@@ -152,26 +152,28 @@ create or replace view V_WM_STOCK1 as
 		left join T_WM_STOCKTRANS t_4 on t_1.headID=concat("YK",t_4.id)
 		where t_2.BILL_STATUS='audit' or t_1.headID=concat("YK",t_4.id)
 	)
-	union
+	union all
 	(
-		select (CASE WHEN t_2.OUT_TYPE='consign' THEN -1 WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE -2 END) as BT,concat("CK",t_1.ID) as ID,t_1.HEADID,t_1.PRODUCTID,
+		select (CASE WHEN t_2.OUT_TYPE='consign' THEN -1 WHEN t_2.OUT_TYPE ='reject' THEN 0
+		 WHEN t_2.OUT_TYPE ='loss' THEN -2
+		 ELSE -1 END) as BT,concat("CK",t_1.ID) as ID,t_1.HEADID,t_1.PRODUCTID,
 		t_1.PRO_WMCODE,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,t_1.PRO_NAME,
 		t_3.SUPP_CODE,t_3.IN_PRICE as PRO_IN_PRICE,t_1.PRO_COUNT,
 		0 as ALL_IN_COST,
 		t_1.PRO_OUT_PRICE,
 		(CASE WHEN t_2.OUT_TYPE='consign' THEN t_1.PRO_COUNT*t_1.PRO_OUT_PRICE WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE  t_1.PRO_COUNT*t_1.PRO_OUT_PRICE END) as ALL_OUT_COST,
 		t_1.BILL_STATUS,t_1.PRO_WH AS WAREWHERE,t_3.WHOWNER,t_3.WAREHOUSE,t_3.SUPPLIER,
-		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN  t_4.AUDIT_TIME ELSE t_2.AUDIT_TIME END )as WM_DATE,
-		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN  1 ELSE -1 END) as YK ,
+		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN t_4.AUDIT_TIME ELSE t_2.AUDIT_TIME END )as WM_DATE,
+		(CASE WHEN t_1.headID=concat("YK",t_4.id) THEN 1 ELSE -1 END) as YK ,
 		t_1.BATCH,
 		-1 as STOCKCHANGE,
 		(CASE WHEN t_2.OUT_TYPE='consign' THEN 1 WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE 0 END) as FINANCECHANGE
 		
-		from (T_WM_OUTDETAIL t_1 left join V_WM_OUT t_2 on t_1.HEADID=t_2.ID) left join V_WM_SDBPRODUCT t_3 on t_3.ID=t_1.PRODUCTID
+		from (T_WM_OUTDETAIL t_1 left join T_WM_OUTPART t_2 on t_1.HEADID=t_2.ID) left join V_WM_SDBPRODUCT t_3 on t_3.ID=t_1.PRODUCTID
 		left join T_WM_STOCKTRANS t_4 on t_1.headID=concat("YK",t_4.id)
 		where t_1.BILL_STATUS='audit' and t_2.BILL_STATUS<>'reject' or t_1.headID=concat("YK",t_4.id)
 	)
-	union
+	union all
 	(
 		select 2 as BT,concat("TH",t_1.ID) as ID,t_2.TH_NO,t_1.PRODUCTID,
 		t_3.WMCODE as PRO_WMCODE,t_3.CAPACITYNUM as PRO_CAPACITYNUM,t_3.WEIGHTNUM as PRO_WEIGHTNUM,t_3.NAME as PRO_NAME,
@@ -189,7 +191,7 @@ create or replace view V_WM_STOCK1 as
 		from (T_WM_SDBRETURNDETAIL t_1 left join T_WM_SDBRETURN t_2 on t_1.HEADID=t_2.ID) left join V_WM_SDBPRODUCT t_3 on t_3.ID=t_1.PRODUCTID
 		where t_2.BILL_STATUS='audit'
 	)
-	union
+	union all
 	(
 		select -95 as BT,concat("THPRE",t_1.ID) as ID,t_2.TH_NO,t_1.PRODUCTID,
 		t_3.WMCODE as PRO_WMCODE,t_3.CAPACITYNUM as PRO_CAPACITYNUM,t_3.WEIGHTNUM as PRO_WEIGHTNUM,t_3.NAME as PRO_NAME,

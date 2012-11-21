@@ -75,6 +75,8 @@
 			" pluginName="bshtest" type="before"/>
 		
 		<pluginOperation name="saveAll" oprName="保存" hostPage="edit" tblevel="1" img="save" action="Save({},{})+brk()"/>
+		<pluginOperation name="printAll" oprName="打印" hostPage="edit" action="printtest()+brk()"/>
+		
 		<!--
 		<pluginOperation name="bshtest" oprName="测试脚本" hostPage="edit" tblevel="1" img="settings" action="
 			plugin({},{bshtest})+brk()"/>

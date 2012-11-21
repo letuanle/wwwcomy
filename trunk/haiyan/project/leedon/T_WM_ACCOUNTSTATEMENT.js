@@ -1,7 +1,17 @@
-﻿
+﻿Hy.UIFunction.printtest=function() {//BATCH
+	window.print();
+}
+
 Ext.onReady(function(){
-	
-	makeMove();
+	if(Ext.isIE)
+		setTimeout(wrapFunc,100);
+	else
+		wrapFunc();
+});
+
+function wrapFunc(){
+
+	makeResize();
 	
 	var month = $("MONTH").value,re=new RegExp("20(\\d\\d)01"),r;
 	var lastMonth;
@@ -34,18 +44,22 @@ Ext.onReady(function(){
 	
 	//$("ALL_AMOUNT").readOnly=true;
 	$("TITLE_L").innerHTML="<div style='text-align:center;font-size:40px;margin:20px 0 20px 0'>&nbsp;供应商月度对账单</div>";
-	$("TITLE").parentNode.parentNode.remove();
+	//$("TITLE").parentNode.parentNode.remove();
+	$("TITLE").style.display="none";
 	$("TITLE_L").setAttribute("colspan",'4');
 	$("MONTH_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px'>月度:"+$("MONTH").value+"</div>";
-	$("MONTH").style.display="none"
+	$("MONTH").style.display="none";
 
 	$("SUPPLIER_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px'>供应商:"+$("__SUPPLIER__NAME").value+"</div>";
 	$("__SUPPLIER__NAME").parentNode.parentNode.remove();
+//	$("__SUPPLIER__NAME").parentNode.style.display="none";
 	
 	$("BEGIN_DATE_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px'>日期:"+lastMonth+"21"+" 至 "+month+"20</div>";
-	$("BEGIN_DATE").parentNode.parentNode.remove();
+//	$("BEGIN_DATE").parentNode.parentNode.remove();
+	$("BEGIN_DATE").parentNode.style.display="none";
 
-	$("CONTENT").parentNode.parentNode.remove();
+//	$("CONTENT").parentNode.parentNode.remove();
+	$("CONTENT").style.display="none";
 	var d = new Date();
 	var year = d.getFullYear();
 	var month1 = add_zero(d.getMonth()+1);
@@ -54,8 +68,7 @@ Ext.onReady(function(){
 		$("BILL_AMOUNT").parentNode.parentNode.remove();
 		$("BILL_AMOUNT_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px'>待月结帐期到达后，系统将会显示开票金额</div>";
 	}
-		
-});
+}
 
 function add_zero(temp)
 {
@@ -63,7 +76,7 @@ function add_zero(temp)
 	else return temp;
 }
 
-function makeMove(){
+function makeResize(){
 	try {
 		if ($('ID')!=null && $('ID').value=='-1')
 			alert('ID lost.Not support!)');
@@ -77,13 +90,16 @@ function makeMove(){
 	g=Ext.getCmp('SUBGRID');
 	
 	var resizer = new Ext.Resizable('SUBGRID', {
-		handles: 'e' 
-		,resizeChild:true
-		,pinned: true
+//		handles: 'e',
+	    minHeight: 200,
+		wrap:true,
+		pinned: true,
+		dynamic: true
 	});
 	resizer.on('resize', function() {
 		var box = resizer.getEl().getSize();
 		this.setSize(box);
+		this.body.setHeight(box.height);
 		//this.syncSize();
 		this.doLayout();
 	}, g);

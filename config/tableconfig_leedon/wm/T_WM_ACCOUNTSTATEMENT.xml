@@ -11,6 +11,10 @@
 			<component type="hidden" readOnly="true"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
+		<field name="PRINT" description="打印" displayOnly="true" javaType="string">
+			<component type="text" readOnly="true" colspan="6"/>
+			<listColumn noedit="false" noquery="true"/>
+		</field>
 		<field name="MONTH" description="月度" displayOnly="false" javaType="string">
 			<component type="text" readOnly="false" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
@@ -49,6 +53,10 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="BILL_AMOUNT" description="本月开票额为" displayOnly="false" javaType="bigDecimal" defaultValue="0">
+			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="BILL_R_AMOUNT" description="本月实收发票额" displayOnly="false" javaType="bigDecimal" defaultValue="0">
 			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
@@ -75,7 +83,7 @@
 			" pluginName="bshtest" type="before"/>
 		
 		<pluginOperation name="saveAll" oprName="保存" hostPage="edit" tblevel="1" img="save" action="Save({},{})+brk()"/>
-		<pluginOperation name="printAll" oprName="打印" hostPage="edit" action="printtest()+brk()"/>
+		<pluginOperation name="printAll" oprName="打印预览" hostPage="edit" action="ShowBill({queryOne.do?__opr_data=T_WM_ACCOUNTSTATEMENT&amp;ID=}&amp;Get(ID)&amp;,{对账单打印},{ACTSTMT})+brk()"/>
 		
 		<!--
 		<pluginOperation name="bshtest" oprName="测试脚本" hostPage="edit" tblevel="1" img="settings" action="

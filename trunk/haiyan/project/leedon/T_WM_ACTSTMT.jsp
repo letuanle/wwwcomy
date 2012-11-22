@@ -25,7 +25,7 @@ try {
 	String lastmon = srvContext.getParameter("__lastmon");
 	int m = TypeConvert.toInt(month);
 	int lastm =  TypeConvert.toInt(lastmon);
-	if(lastm<201207){
+	if(lastm<201206){
 		out.clear();
 		out.print("{success:false}");
 	}

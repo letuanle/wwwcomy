@@ -1,5 +1,7 @@
-﻿Hy.UIFunction.printtest=function() {//BATCH
+﻿Hy.UIFunction.printtest=function() {
 	window.print();
+}
+Hy.UIFunction.showprint=function() {
 }
 
 Ext.onReady(function(){
@@ -51,8 +53,10 @@ function wrapFunc(){
 	$("MONTH").style.display="none";
 
 	$("SUPPLIER_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px'>供应商:"+$("__SUPPLIER__NAME").value+"</div>";
-	$("__SUPPLIER__NAME").parentNode.parentNode.remove();
-//	$("__SUPPLIER__NAME").parentNode.style.display="none";
+	if(!Ext.isIE)
+		$("__SUPPLIER__NAME").parentNode.parentNode.remove();
+	else
+		$("__SUPPLIER__NAME").parentNode.style.display="none";
 	
 	$("BEGIN_DATE_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px'>日期:"+lastMonth+"21"+" 至 "+month+"20</div>";
 //	$("BEGIN_DATE").parentNode.parentNode.remove();
@@ -67,6 +71,13 @@ function wrapFunc(){
 	if(""+year+month1+day<month+"20"){
 		$("BILL_AMOUNT").parentNode.parentNode.remove();
 		$("BILL_AMOUNT_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px'>待月结帐期到达后，系统将会显示开票金额</div>";
+	}
+	if(document.URL.indexOf("queryOne.do")>0){
+		$("PRINT_L").innerHTML="<button onclick=\"window.print();\">打印</button>";
+		$("PRINT").parentNode.style.display="none";
+	}else{
+		$("PRINT_L").parentNode.style.display="none";
+		$("PRINT").parentNode.style.display="none";
 	}
 }
 

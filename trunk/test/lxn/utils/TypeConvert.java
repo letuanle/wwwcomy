@@ -49,8 +49,6 @@ public class TypeConvert {
 					return true;
 			}
 			return ((String) v).equalsIgnoreCase("true");
-		} else if (v == null) {
-			return false;
 		} else if (v instanceof Double) {
 			// Double类型,只有0被转化为false,其它都被转化为true.
 			return !((Double) v == 0);
@@ -135,8 +133,6 @@ public class TypeConvert {
 				return 0.0;
 			else
 				return Double.parseDouble((String) v);
-		} else if (v == null) {
-			throw new Throwable("null不应该参于计算.");
 		} else if (v instanceof Double) {
 			return (Double) v;
 		} else if (v instanceof Float) {
@@ -171,8 +167,6 @@ public class TypeConvert {
 				return BigDecimal.ONE;
 			else
 				return new BigDecimal((String) v);
-		} else if (v == null) {
-			throw new Throwable("null不应该参于计算.");
 		} else if (v instanceof Double) {
 			return BigDecimal.valueOf((Double) v);
 		} else if (v instanceof Long) {

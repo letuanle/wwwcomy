@@ -4,7 +4,6 @@ import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
 
 import test.rmi.remote.IRemoteTimer;
-import test.rmi.remote.TestRemote;
 
 public class Client {
 	public static void main(String[] args) {

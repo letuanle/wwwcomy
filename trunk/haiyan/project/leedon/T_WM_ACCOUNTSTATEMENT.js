@@ -1,4 +1,5 @@
-﻿Hy.UIFunction.printtest=function() {
+﻿printtest=function() {
+	$('info').style.display='none';
 	window.print();
 }
 Hy.UIFunction.showprint=function() {
@@ -33,7 +34,7 @@ function wrapFunc(){
 				if (d.success){
 					Hy.setValue('LAST_AMOUNT', d.all); //上月应付
 					Hy.setValue('LAST_R_AMOUNT', d.payed); //上月实付
-					var topay = parseInt(d.topay)+parseInt(d.all)-parseInt(d.payed);
+					var topay = (parseFloat(d.topay)*1000+parseFloat(d.all)*1000-parseFloat(d.payed)*1000)/1000;
 					Hy.setValue('ALL_AMOUNT', topay); //本月应付
 					if($("BILL_AMOUNT"))
 						Hy.setValue('BILL_AMOUNT', d.topay); //本月应付
@@ -69,11 +70,16 @@ function wrapFunc(){
 	var month1 = add_zero(d.getMonth()+1);
 	var day = add_zero(d.getDate());
 	if(""+year+month1+day<month+"20"){
-		$("BILL_AMOUNT").parentNode.parentNode.remove();
+		if(!Ext.isIE)
+			$("BILL_AMOUNT").parentNode.parentNode.remove();
+		else
+			$("BILL_AMOUNT").parentNode.style.display="none";
 		$("BILL_AMOUNT_L").innerHTML="<div style='font-size:10px;margin:0px 0px 0px 15px'>待月结帐期到达后，系统将会显示开票金额</div>";
 	}
 	if(document.URL.indexOf("queryOne.do")>0){
-		$("PRINT_L").innerHTML="<button onclick=\"window.print();\">打印</button>";
+		$("PRINT_L").innerHTML="<button onclick=\"printtest();\" onmouseover=\"$('info').style.display='block';\"" +
+				"onmouseout=\"$('info').style.display='none';\""+
+				">打印</button><div id='info' style='display:none;color:red'>如打印未能全部显示列表，请调整页面布局为横向即可<div>";
 		$("PRINT").parentNode.style.display="none";
 	}else{
 		$("PRINT_L").parentNode.style.display="none";

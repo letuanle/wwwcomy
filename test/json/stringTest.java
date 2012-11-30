@@ -13,6 +13,11 @@ public class stringTest {
 	}
 
 	public static void main(String[] args) throws Exception {
+		String a= new String("a");
+		String b="a";
+		System.out.println(a==b);
+		System.out.println(a.equals(b));
+		System.out.println(a=="a");
 		// String a,b,c;
 		// Pattern pattern =
 		// Pattern.compile("^(\\d+\\.?\\d?)\\*(\\d+\\.?\\d?)\\*(\\d+\\.?\\d?).*$");
@@ -37,7 +42,7 @@ public class stringTest {
 		// System.out.println(("P_145#25").matches(".*#\\d{2}"));
 		// String a = "123,";
 		// System.out.println(a.substring(0, a.length() - 1));
-		test2();
+		// test2();
 	}
 
 	private static void test2() {

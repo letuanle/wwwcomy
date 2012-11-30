@@ -22,6 +22,8 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
 
+import test.lxn.utils.VarUtil;
+
 public class HBaseUtil {
 
 	private static Configuration conf = null;
@@ -29,25 +31,19 @@ public class HBaseUtil {
 	static {
 		Configuration HBASE_CONFIG = new Configuration();
 		// 与hbase/conf/hbase-site.xml中hbase.zookeeper.quorum配置的值相同
-		HBASE_CONFIG.set("hbase.zookeeper.quorum", "1.1.7.66");
+		HBASE_CONFIG.set("hbase.zookeeper.quorum", "1.1.2.38");
 		// 与hbase/conf/hbase-site.xml中hbase.zookeeper.property.clientPort配置的值相同
 		HBASE_CONFIG.set("hbase.zookeeper.property.clientPort", "2181");
 		conf = HBaseConfiguration.create(HBASE_CONFIG);
 	}
 
 	public static void main(String[] agrs) throws Exception {
+		getAllRecord("salary");
 		// Env env = new Env("clientid", "test");
 		// putObject("test1", "row1", env);
 		// Env env2 = (Env) getObject("test1", "row1");
 		// System.out.println(env2);
 		// Student s = testGetStudentObject("studentObj", "row2");
-
-		// System.out.println("Start output:");
-		// System.out.println("id=" + s.getId());
-		// System.out.println("name=" + s.getName());
-		// System.out.println("gender=" + s.isGender());
-		// System.out.println("Read complete");
-		// testStudentString();
 	}
 
 	public static void putObject(String tableName, String rowKey,
@@ -177,18 +173,23 @@ public class HBaseUtil {
 
 	public static void getAllRecord(String tableName) {
 		try {
+			long time = System.currentTimeMillis();
 			HTable table = new HTable(conf, tableName);
+			double a = 0.0;
 			Scan s = new Scan();
 			ResultScanner ss = table.getScanner(s);
 			for (Result r : ss) {
 				for (KeyValue kv : r.raw()) {
-					System.out.print(new String(kv.getRow()) + " ");
-					System.out.print(new String(kv.getFamily()) + ":");
-					System.out.print(new String(kv.getQualifier()) + " ");
-					System.out.print(kv.getTimestamp() + " ");
-					System.out.println(new String(kv.getValue()));
+					// System.out.print(new String(kv.getRow()) + " ");
+//					System.out.print(new String(kv.getFamily()) + ":");
+//					System.out.print(new String(kv.getQualifier()) + " ");
+					// System.out.print(kv.getTimestamp() + " ");
+					a += VarUtil.toDouble(Bytes.toDouble(kv.getValue()));
+//					System.out.println(new String(kv.getValue()));
 				}
 			}
+			System.out.println("a=" + a);
+			System.out.println("time costed:" + (System.currentTimeMillis() - time));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

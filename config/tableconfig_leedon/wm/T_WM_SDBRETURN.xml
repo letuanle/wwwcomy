@@ -166,8 +166,11 @@
 			<disComponent name="SUBGRID SUBGRID1 PRODUCTID PRO_COUNT TEST1 TEST2 REMAINDER_NUM"/>
 			<readOnlyComponent name="WAREHOUSE"/>
 			<disOperation name="audit"/>
+			<disOperation name="unaudit"/>
 		</role>
-		<role name="admin boss manager wm pe ac"/>
+		<role name="admin boss manager wm pe ac">
+			<disOperation name="unaudit"/>
+		</role>
 		<!-- 
 		-->
 		<javascript hostPage="edit" src="project/leedon/T_WM_SDBRETURN.js"><![CDATA[
@@ -197,9 +200,13 @@
 			+SetCreateTime(AUDIT_TIME,{yyyy-MM-dd HH:mm:ss})
 			+If(Get(BILL_STATUS)={audit},DisBtns(select,saveAll,audit)+DisFlds(SUBGRID,SUBGRID2,IN_PRE_DATE,IN_DATE,IMAGE,WHOWNER,SHIP_ORGA,SHIP_NO,SHIP_CON)+HidFlds(SUBGRID1,BATCHINFO,TEST1,TEST2,TEST,XIANSHU,PRO_COUNT,PRODUCTID,REMAINDER_NUM),true)
 			" pluginName="audit" type="before"/>
+		<pluginInterceptor methodName="exp" parameter="
+			Set(BILL_STATUS,{init},AUDIT_USER_ID,{})
+			" pluginName="unaudit"/>
 		<!-- -->
 		<pluginOperation name="saveAll" oprName="保存A" hostPage="edit" tblevel="1" img="save" action="if(checkeq()=1,Save({},{},{SUBGRID2},{SUBGRID}),true)+brk()"/>
 		<pluginOperation name="audit" oprName="退货审批" hostPage="edit" tblevel="1" img="settings" action="If(Confirm({确认审批后,不可恢复,确认审批?}),Save({},{audit},{SUBGRID}),true)+brk()"/>
+		<pluginOperation name="unaudit" oprName="取消审核" hostPage="edit" action="If(Confirm({请确认是否要取消审核?}),Save({},{unaudit},{SUBGRID},{SUBGRID2}),true)+brk()"/>
 		<Operation queryPageDelete="false" save="false" saveAndAdd="false" saveAndAddCopy="false"/>
 		<!-- -->
 		<doc>

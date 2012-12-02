@@ -104,7 +104,9 @@
 		
 		<pluginInterceptor methodName="exp" parameter="If(InRole(sp),HidFlds(IN_COUNT,PRO_PRE),true)" pluginName="grid" type="after"/>
 		<pluginInterceptor methodName="exp" parameter="Set(BILL_STATUS,{audit})+Save()" pluginName="audit" type="before"/>
-	
+		<pluginInterceptor methodName="exp" parameter="
+			Set(BILL_STATUS,{init},AUDIT_USER_ID,{})+Save()
+			" pluginName="unaudit" type="before"/>
 		<Operation queryPageDelete="false" saveAndAdd="false" saveAndAddCopy="false" />
 	</table>
 </Haiyan>

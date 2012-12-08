@@ -9,8 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import com.haiyan.genmis.util.DebugUtil;
-
 /**
  * This class contains basic methods for performing validations that return the
  * correctly typed class based on the validation performed.
@@ -393,8 +391,7 @@ public class GenericTypeValidator implements Serializable {
 			date = formatter.parse(value);
 		} catch (ParseException e) {
 			// Bad date so return null
-			DebugUtil.debug("Date parse failed value=[" + value + "], "
-					+ "locale=[" + locale + "] " + e);
+			e.printStackTrace();
 		}
 
 		return date;
@@ -438,9 +435,7 @@ public class GenericTypeValidator implements Serializable {
 			}
 		} catch (ParseException e) {
 			// Bad date so return null
-			DebugUtil.debug("Date parse failed value=[" + value + "], "
-					+ "pattern=[" + datePattern + "], " + "strict=[" + strict
-					+ "] " + e);
+			e.printStackTrace();
 		}
 
 		return date;

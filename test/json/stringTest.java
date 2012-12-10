@@ -14,10 +14,12 @@ public class stringTest {
 
 	public static void main(String[] args) throws Exception {
 		String a= new String("a");
+		String c= new String("a");
 		String b="a";
 		System.out.println(a==b);
 		System.out.println(a.equals(b));
 		System.out.println(a=="a");
+		System.out.println(a==c);
 		// String a,b,c;
 		// Pattern pattern =
 		// Pattern.compile("^(\\d+\\.?\\d?)\\*(\\d+\\.?\\d?)\\*(\\d+\\.?\\d?).*$");

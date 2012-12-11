@@ -70,6 +70,7 @@ public class AproiriUtil {
 	 * @param time
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static HashMap<HashSet<String>, Integer> calcNextCandidateData(
 			HashMap<HashSet<String>, Integer> lastResult, int time) {
 		HashMap<HashSet<String>, Integer> result = new HashMap<HashSet<String>, Integer>();

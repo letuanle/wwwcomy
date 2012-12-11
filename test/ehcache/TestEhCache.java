@@ -8,6 +8,7 @@ import net.sf.ehcache.Element;
 
 public class TestEhCache {
 
+	@SuppressWarnings("rawtypes")
 	public static void main(String[] args) {
 		CacheManager manager = CacheManager.create("src/test/ehcache/ehcache.xml");
 		

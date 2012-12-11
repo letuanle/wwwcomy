@@ -40,7 +40,7 @@ public class MyAproiri {
 	 */
 	private double confidence;
 
-	private ArrayList<HashMap<HashSet<String>, Integer>> candidateTmp = new ArrayList<HashMap<HashSet<String>, Integer>>();
+	//private ArrayList<HashMap<HashSet<String>, Integer>> candidateTmp = new ArrayList<HashMap<HashSet<String>, Integer>>();
 
 	/**
 	 * 记录次数
@@ -177,6 +177,7 @@ public class MyAproiri {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void genRule(HashSet<String> key) {
 		ArrayList<Set<String>> subSets = new ArrayList<Set<String>>(
 				AproiriUtil.getSubset(key));

@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import test.lxn.utils.TypeConvert;
 import test.lxn.utils.VarUtil;
 
 public class stringTest {
@@ -20,6 +19,12 @@ public class stringTest {
 		System.out.println(a.equals(b));
 		System.out.println(a=="a");
 		System.out.println(a==c);
+		
+		System.out.println("---");
+		bb b1= new bb();
+		bb c1=new bb();
+		System.out.println(b1==c1);
+		
 		// String a,b,c;
 		// Pattern pattern =
 		// Pattern.compile("^(\\d+\\.?\\d?)\\*(\\d+\\.?\\d?)\\*(\\d+\\.?\\d?).*$");

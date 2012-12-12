@@ -12,19 +12,19 @@ public class stringTest {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String a= new String("a");
-		String c= new String("a");
-		String b="a";
-		System.out.println(a==b);
-		System.out.println(a.equals(b));
-		System.out.println(a=="a");
-		System.out.println(a==c);
-		
-		System.out.println("---");
-		bb b1= new bb();
-		bb c1=new bb();
-		System.out.println(b1==c1);
-		
+		// String a= new String("a");
+		// String c= new String("a");
+		// String b="a";
+		// System.out.println(a==b);
+		// System.out.println(a.equals(b));
+		// System.out.println(a=="a");
+		// System.out.println(a==c);
+		//
+		// System.out.println("---");
+		// bb b1= new bb();
+		// bb c1=new bb();
+		// System.out.println(b1==c1);
+
 		// String a,b,c;
 		// Pattern pattern =
 		// Pattern.compile("^(\\d+\\.?\\d?)\\*(\\d+\\.?\\d?)\\*(\\d+\\.?\\d?).*$");
@@ -38,9 +38,6 @@ public class stringTest {
 		//
 		// }
 
-		// JButton bt = new JButton("test");
-		// bt.getUI();
-		// bt.getModel();
 		// int i = Integer.MIN_VALUE;
 		// if (i < 0 && Math.abs(i) == i)
 		// System.out.println(Math.abs(i) + "It is " + i);
@@ -50,6 +47,12 @@ public class stringTest {
 		// String a = "123,";
 		// System.out.println(a.substring(0, a.length() - 1));
 		// test2();
+
+		int a = -5;
+		System.out.println(Integer.toBinaryString(-a));
+		System.out.println(Integer.toBinaryString(a));
+		System.out.println(~a);
+		//System.out.println(Integer.toBinaryString(~a));
 	}
 
 	private static void test2() {
@@ -57,7 +60,7 @@ public class stringTest {
 		for (int i = 0; i < 10000; i++) {
 			for (int j = 0; j < 10000; j++) {
 				k += j / (i + Math.random());
-				if (i == 5000 && j == 7000){
+				if (i == 5000 && j == 7000) {
 					System.out.println(k);
 					return;
 				}

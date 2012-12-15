@@ -5,8 +5,6 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import org.apache.commons.lang.ObjectUtils.Null;
-
 /**
  * 类型转换之用
  * 
@@ -120,7 +118,7 @@ public class VariantConvertor {
 	 * @return
 	 */
 	public static Timestamp toTimestamp(Object value) {
-		if (StringUtil.isBlankOrNull(value) || value instanceof Null) {
+		if (StringUtil.isBlankOrNull(value)) {
 			return null;
 		}
 
@@ -149,7 +147,7 @@ public class VariantConvertor {
 	 * @return Date
 	 */
 	public static Date toDate(Object value) {
-		if (value == null || value instanceof Null) {
+		if (value == null) {
 			return null;
 		} else if (value instanceof Long) {
 			// Java Date类型Thu Jan 01 08:00:00 CST 1970的getTime == 0

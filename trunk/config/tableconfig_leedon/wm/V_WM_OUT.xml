@@ -49,6 +49,10 @@
 			<component type="text" readOnly="false" colspan="6"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
+		<field name="ORDER_MEMO" description="订单备注" displayOnly="false" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="false" colspan="6"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
 		<!-- 
 		<field name="WAREHOUSE" description="出货仓库" displayOnly="false" javaType="string" lazyLoad="false" nullAllowed="false">
 			<component type="richSelect" readOnly="true" colspan="1" displayReferenceField="NAME" referenceField="ID" referenceTable="T_DIC_WAREHOUSE_COMBO"/>
@@ -158,15 +162,15 @@
 create or replace view V_WM_OUT as 
 		(
 			select t_1.ORDER_ID as ID,t_1.ORDER_ID,t_1.MEMBER_ID,t_1.SHIP_NAME,t_1.SHIP_ADDR,t_1.SHIP_TEL,t_1.SHIP_MOBILE,t_1.FINAL_AMOUNT ,t_1.PMT_AMOUNT,t_1.COST_FREIGHT,t_1.SHIPPING,
-			t_2.AUDIT_TIME,t_2.OUT_TYPE,t_2.BILL_STATUS,t_2.WHOWNER,t_2.LOGISTICS_NAME,t_2.LOGISTICS_CODE,t_2.LOGISTICS_MEMO,t_2.HYVERSION
+			t_2.ORDER_MEMO,t_2.AUDIT_TIME,t_2.OUT_TYPE,t_2.BILL_STATUS,t_2.WHOWNER,t_2.LOGISTICS_NAME,t_2.LOGISTICS_CODE,t_2.LOGISTICS_MEMO,t_2.HYVERSION
 			
 			from SDB_ORDERS t_1 left join T_WM_OUTPART t_2 on t_1.ORDER_ID=t_2.ORDER_ID
 			where (t_1.STATUS='active' and t_1.PAY_STATUS='1' and t_1.disabled='false') or (t_1.STATUS='finish' and t_1.disabled='false') or t_2.ID>0
 		)
 		union all
 		(
-			select t_1.ID,t_1.ORDER_ID,t_1.MEMBER_ID,t_1.SHIP_NAME,t_1.SHIP_ADDR,t_1.SHIP_TEL,t_1.SHIP_MOBILE,t_1.FINAL_AMOUNT ,t_1.PMT_AMOUNT,t_1.COST_FREIGHT,t_1.SHIPPING,t_1.AUDIT_TIME,
-			t_1.OUT_TYPE,t_1.BILL_STATUS,t_1.WHOWNER,t_1.LOGISTICS_NAME,t_1.LOGISTICS_CODE,t_1.LOGISTICS_MEMO,t_1.HYVERSION
+			select t_1.ID,t_1.ORDER_ID,t_1.MEMBER_ID,t_1.SHIP_NAME,t_1.SHIP_ADDR,t_1.SHIP_TEL,t_1.SHIP_MOBILE,t_1.FINAL_AMOUNT ,t_1.PMT_AMOUNT,t_1.COST_FREIGHT,t_1.SHIPPING,t_1.ORDER_MEMO,
+			t_1.AUDIT_TIME,t_1.OUT_TYPE,t_1.BILL_STATUS,t_1.WHOWNER,t_1.LOGISTICS_NAME,t_1.LOGISTICS_CODE,t_1.LOGISTICS_MEMO,t_1.HYVERSION
 			from T_WM_OUTPART t_1 
 			where t_1.ORDER_ID like 'CK%'
 		)
@@ -188,7 +192,7 @@ create or replace view V_WM_OUT as
 			+SetCreateTime(AUDIT_TIME,{yyyy-MM-dd HH:mm:ss})
 			+Save({T_WM_OUTPART},GetForm())
 			+If(Get(BILL_STATUS)={audit},DisBtns(select,saveView,auditOut)+DisFlds(SUBGRID1)+HidFlds(SUBGRID2,TEST2),true)
-			+SendEmail(Page(SYSOPERATOR,{ and t_1.ID=1}),{smtp.126.com},{tjbio2008@126.com},{123456},{tjbio2008@126.com},
+			+SendEmail(Page(SYSOPERATOR,{ and t_1.ID=1}),{smtp.126.com},{noreply_edp@126.com},{123qwe},{noreply_edp@126.com},
 				{出库审核完成},{txt},{订单号:}&amp;Get({ORDER_ID})&amp;{的订单已经完成发货了，仓库反馈如下：
 				发货物流名称:'}&amp;Get({LOGISTICS_NAME})&amp;{'
 				发货物流单号:'}&amp;Get({LOGISTICS_CODE})&amp;{'

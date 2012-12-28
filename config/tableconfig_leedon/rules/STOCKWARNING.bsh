@@ -30,7 +30,8 @@ void stockWarning() throws Throwable {
 			String ztKC = rs2[0][0];
 			
 			System.out.println("库存预警:"+TypeConvert.toInt(zdKC)+",当前库存:"+afterKC+",在途数量:"+TypeConvert.toInt(ztKC));
-			String Exp = "SendEmail(Page(SYSOPERATOR,{ and (t_1.ID=1 or t_1.ID in (select USERID from T_DIC_SUPP_USER where SUPPLIER = "+supID+") )}),{smtp.126.com},{tjbio2008@126.com},{123456},{tjbio2008@126.com},{库存预警},{txt},{尊敬的供应商:"+supName+"  您在易得品有一款或多款产品库存数已经低于警戒数了，请尽快登录我们的业务系统查看详细情况并尽快安排补货入库。商品名称:"+proName+", 当前库存数量:"+afterKC+", 当前在途数量:"+ztKC+", 预警数量:"+zdKC+"})";
+//			String Exp = "SendEmail(Page(SYSOPERATOR,{ and (t_1.ID=1 or t_1.ID in (select USERID from T_DIC_SUPP_USER where SUPPLIER = "+supID+") )}),{smtp.126.com},{noreply_edp@126.com},{123qwe},{noreply_edp@126.com},{库存预警},{txt},{尊敬的供应商:"+supName+"  您在易得品有一款或多款产品库存数已经低于警戒数了，请尽快登录我们的业务系统查看详细情况并尽快安排补货入库。商品名称:"+proName+", 当前库存数量:"+afterKC+", 当前在途数量:"+ztKC+", 预警数量:"+zdKC+"})";
+			String Exp = "SendEmail(Page(SYSOPERATOR, {ciro.wang@yidepin.com}),{smtp.126.com},{noreply_edp@126.com},{123qwe},{noreply_edp@126.com},{库存预警},{txt},{尊敬的供应商:"+supName+"  您在易得品有一款或多款产品库存数已经低于警戒数了，请尽快登录我们的业务系统查看详细情况并尽快安排补货入库。商品名称:"+proName+", 当前库存数量:"+afterKC+", 当前在途数量:"+ztKC+", 预警数量:"+zdKC+"})";
 			if(afterKC<=TypeConvert.toInt(zdKC)){
 				//System.out.println(Exp);
 				context.getExpUtil().evalExp(Exp);

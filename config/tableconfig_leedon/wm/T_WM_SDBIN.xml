@@ -124,7 +124,7 @@
 		</field>
 		<field name="BATCH" description="hidden批次" displayOnly="true" javaType="string">
 			<component type="text" readOnly="true" />
-			<listColumn noedit="false" noquery="false"/>
+			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="PRO_PACKINGNUM" description="hidden每箱个数" displayOnly="true" javaType="bigDecimal" lazyLoad="false">
 			<component type="hidden" readOnly="false" displayReferenceField="PACKING_NUM" maxFractionDigit="3" minFractionDigit="3"/>
@@ -163,7 +163,7 @@
 		-->
 		<field name="AUDIT_USER_ID" javaType="string" description="审批人">
 			<component type="combo" quickQueryConditionField="NAME" referenceTable="SYSOPERATOR_VIEW" referenceField="ID" displayReferenceField="NAME" readOnly="true"/>
-			<listColumn noquery="true" nowrap="true"/>
+			<listColumn noquery="false" nowrap="true"/>
 		</field>
 		<field name="BILL_STATUS" javaType="string" description="单据状态">
 			<component type="dropdown" readOnly="true">

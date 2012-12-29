@@ -104,6 +104,10 @@
 				<option displayName="作废" value="reject"/>
 			</component>
 		</field>
+		<field name="AUDIT_USER_ID" javaType="string" description="审批人">
+			<component type="combo" quickQueryConditionField="NAME" referenceTable="SYSOPERATOR_VIEW" referenceField="ID" displayReferenceField="NAME" readOnly="true"/>
+			<listColumn noquery="true" nowrap="true"/>
+		</field>
 		<field name="AUDIT_TIME" javaType="date" dataStyle="yyyy-MM-dd HH:mm:ss" description="审批时间">
 			<component type="date" readOnly="true"/>
 			<queryCondition type="region"/>

@@ -37,7 +37,7 @@
 		</field>
 		<field name="AUDIT_USER_ID" javaType="string" description="审批人">
 			<component type="combo" quickQueryConditionField="NAME" referenceTable="SYSOPERATOR_VIEW" referenceField="ID" displayReferenceField="NAME" readOnly="true"/>
-			<listColumn noquery="true" nowrap="true"/>
+			<listColumn noquery="false" nowrap="true"/>
 		</field>
 		<field name="BILL_STATUS" javaType="string" description="单据状态">
 			<component type="dropdown" readOnly="true">
@@ -86,7 +86,7 @@
 			" pluginName="save" type="before"/>
 			
 		<pluginInterceptor methodName="exp" parameter="
-			Set(BILL_STATUS,{audit})
+			Set(AUDIT_USER_ID,GetUser(ID),BILL_STATUS,{audit})
 			+SetCreateTime(AUDIT_TIME,{yyyy-MM-dd HH:mm:ss})
 			+If(Get(BILL_STATUS)={audit},DisBtns(select,save,audit,saveAll)+DisFlds(SUBGRID),true)
 			+bsh(T_WM_STOCKTRANS.bsh)

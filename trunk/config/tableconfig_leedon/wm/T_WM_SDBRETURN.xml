@@ -144,7 +144,7 @@
 		</field>
 		<field name="AUDIT_USER_ID" javaType="string" description="审批人">
 			<component type="combo" quickQueryConditionField="NAME" referenceTable="SYSOPERATOR_VIEW" referenceField="ID" displayReferenceField="NAME" readOnly="true"/>
-			<listColumn noquery="true" nowrap="true"/>
+			<listColumn noquery="false" nowrap="true"/>
 		</field>
 		<field name="BILL_STATUS" javaType="string" description="单据状态">
 			<component type="dropdown" readOnly="true">

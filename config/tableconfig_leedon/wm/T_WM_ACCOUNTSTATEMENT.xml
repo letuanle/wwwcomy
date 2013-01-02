@@ -69,6 +69,10 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		
+		<queryFilter>
+			<pluggedFilter methodName="exp" parameter="If(InRole(admin),{},{ and t_1.SUPPLIER in (select SUPPLIER from T_DIC_SUPP_USER where userid='}&amp;GetUser(ID)&amp;{')})"/>
+		</queryFilter>
+		
 		<role name="user sp">
 			<disComponent name="BILL_TIME BILL_PAY_AMOUNT"/>
 			<disOperation name="saveAll"/>

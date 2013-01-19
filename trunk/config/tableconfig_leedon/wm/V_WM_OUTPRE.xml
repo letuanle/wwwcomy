@@ -145,8 +145,16 @@
 		<javascript hostPage="edit"><![CDATA[
 		]]></javascript>
 		-->
-		<!-- -->
+		<!-- 上面这句很慢 -->
 		<pluginInterceptor methodName="initDB" pluginName="initDB" type="before"><![CDATA[
+create or replace view V_SDB_ORDERS_ALL as 
+		(
+			select * from SDB_ORDERS where (STATUS='active' and PAY_STATUS='1' and DISABLED='false') or (STATUS='finish' and DISABLED='false')
+		);
+create or replace view V_SDB_ORDER_ITEMS_ALL as 
+		(
+			select * from SDB_ORDER_ITEMS where ORDER_ID in (select ORDER_ID from V_SDB_ORDERS_ALL)
+		);
 create or replace view V_WM_OUTPRE as 
 	(
 		select t_1.HYVERSION,t_1.OUT_COUNT,'' as PRE,'' as AUDIT,t_1.OUT_RCOUNT,t_1.ITEM_ID_PK,
@@ -159,7 +167,7 @@ create or replace view V_WM_OUTPRE as
 		t_2.ITEM_ID,t_2.ORDER_ID,t_2.NAME,t_2.PRICE as OUT_PRICE,t_2.NUMS as PRO_COUNT,t_2.AMOUNT as OUT_ALL_PRICE,
 		concat(CONVERT(t_2.ORDER_ID,char),':',t_3.WMCODE,'(' ,t_2.NAME,')') as OUT_CODE
 		
-		from (SDB_ORDER_ITEMS t_2 left join V_WM_SDBPRODUCT t_3 on t_2.PRODUCT_ID=t_3.SDB_PRODUCT_ID) left join T_WM_OUTPREPART t_1 on t_1.ITEM_ID_PK=t_2.ITEM_ID
+		from (V_SDB_ORDER_ITEMS_ALL t_2 left join V_WM_SDBPRODUCT t_3 on t_2.PRODUCT_ID=t_3.SDB_PRODUCT_PK) left join T_WM_OUTPREPART t_1 on t_1.ITEM_ID_PK=t_2.ITEM_ID
 	)
 	union all
 	(

@@ -22,7 +22,7 @@ void genSupplierData(){
 	String month=null;
 	String date = new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
 	month = getMonth(date);
-	//month = "201209";
+	//month = "201301";
 	String sql = "select count(*) from T_WM_ACCOUNTSTATEMENT where SUPP_MONTH like '%"+month+"'";
 	String[][] rs1 = dbm.getResultStrArray(sql, 1, null);
 	if(rs1.length>0) {
@@ -33,7 +33,7 @@ void genSupplierData(){
 	}
 	
 	
-	String ID = form.get("ID");
+	//String ID = form.get("ID");
 	String sql = "select ID,CODE,NAME from T_DIC_ORGA where SUPP_CODE<>''";
 	String[][] rs = dbm.getResultStrArray(sql, 3, null);
 	if(rs.length>0) {

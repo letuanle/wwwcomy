@@ -21,7 +21,7 @@ void checkStock() {
 			String[][] result = dbm.getResultStrArray(checkSql, 2, null);
 			if (result.length>0) {
 				int t = 0;
-				t = Integer.valueOf(result[0][0]);
+				t = TypeConvert.toInt(result[0][0]);
 				String proWmcode = result[0][1];
 				if(transCount>t){
 					String whCode = getWarewhereCode(WHID,dbm);

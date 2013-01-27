@@ -169,10 +169,11 @@
 		]]></javascript>
 		<!--where t_1.STATUS='active' and t_1.PAY_STATUS='1' and t_1.SHIP_STATUS='0' -->
 		<!--where ((t_1.STATUS='active' and t_1.SHIP_STATUS='0') or (t_1.ORDER_ID<20120618000000) and t_1.PAY_STATUS='1') or t_2.ID>0 -->
+		<!-- and (ORDER_MEMO not like '%作废%' or ORDER_MEMO is null) -->
 		<pluginInterceptor methodName="initDB" pluginName="initDB" type="before" ><![CDATA[
 create or replace view V_WM_OUTPART_INIT as 
 		(
-			select * from T_WM_OUTPART where (BILL_STATUS='init' or BILL_STATUS is null) and (ORDER_MEMO not like '%作废%' or ORDER_MEMO is null)
+			select * from T_WM_OUTPART where (BILL_STATUS='init' or BILL_STATUS is null)
 		);
 create or replace view V_WM_OUTPART_HISTORY as 
 		(

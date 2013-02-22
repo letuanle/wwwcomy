@@ -21,4 +21,28 @@ void removekc() throws Throwable {
 		//throw new Warning(filter);
 	}
 }
-removekc();
+
+// now called by auditOut in V_WM_OUT
+void newRemoveKC() throws Throwable {
+	String orderID = form.get("ORDER_ID");
+	String outType = form.get("OUT_TYPE");
+	String ID = form.get("ID");
+	
+	if(StringUtil.isBlankOrNull(orderID)||StringUtil.isBlankOrNull(outType)){
+		throw new Warning("出库ID和出库类型不能为空");
+	}
+	
+	if(orderID.startsWith("CK_")&&("reject".equals(outType)||"loss".equals(outType))){
+		DBManager dbm = context.getDBM();
+		String sql = "select PRODUCT_ID,GOODS_ID,NAME,STORE from SDB_PRODUCTS where PRODUCT_ID in (select PRODUCT_ID from V_WM_SDBPRODUCT where ID='"+form.get("PRODUCTID")+"') ";
+		//select sum(t_1.PRO_COUNT),t_1.PRODUCTID,t_3.PRODUCT_ID,t_3.NAME,t_3.STORE from T_WM_OUTDETAIL t_1 
+		//left join T_WM_PRO t_2 on t_1.PRODUCTID=t_2.ID
+		//left join SDB_PRODUCTS t_3 on t_3.PRODUCT_ID=t_2.SDB_PRODUCT_ID
+		//where HEADID = "CK_1763" group by t_1.PRODUCTID
+		
+		String[][] rs = dbm.getResultStrArray(sql,4,null);
+		
+	}
+}
+newRemoveKC();
+//removekc();

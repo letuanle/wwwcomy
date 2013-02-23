@@ -34,14 +34,24 @@ void newRemoveKC() throws Throwable {
 	
 	if(orderID.startsWith("CK_")&&("reject".equals(outType)||"loss".equals(outType))){
 		DBManager dbm = context.getDBM();
-		String sql = "select PRODUCT_ID,GOODS_ID,NAME,STORE from SDB_PRODUCTS where PRODUCT_ID in (select PRODUCT_ID from V_WM_SDBPRODUCT where ID='"+form.get("PRODUCTID")+"') ";
-		//select sum(t_1.PRO_COUNT),t_1.PRODUCTID,t_3.PRODUCT_ID,t_3.NAME,t_3.STORE from T_WM_OUTDETAIL t_1 
-		//left join T_WM_PRO t_2 on t_1.PRODUCTID=t_2.ID
-		//left join SDB_PRODUCTS t_3 on t_3.PRODUCT_ID=t_2.SDB_PRODUCT_ID
-		//where HEADID = "CK_1763" group by t_1.PRODUCTID
-		
-		String[][] rs = dbm.getResultStrArray(sql,4,null);
-		
+		String sql = "select sum(t_1.PRO_COUNT),t_1.PRODUCTID,t_3.PRODUCT_ID,t_3.GOODS_ID,t_3.NAME,t_3.STORE from T_WM_OUTDETAIL t_1 left join T_WM_PRO t_2 on t_1.PRODUCTID=t_2.ID left join SDB_PRODUCTS t_3 on t_3.PRODUCT_ID=t_2.SDB_PRODUCT_ID where HEADID ='"+ID+"' group by t_1.PRODUCTID";
+		//"select PRODUCT_ID,GOODS_ID,NAME,STORE from SDB_PRODUCTS where PRODUCT_ID in (select PRODUCT_ID from V_WM_SDBPRODUCT where ID='"+form.get("PRODUCTID")+"') ";
+		String[][] rs = dbm.getResultStrArray(sql,6,null);
+		if(rs.length>0) {
+			int l = rs.length;
+			for(int i = 0; i<l;i++){
+				if( TypeConvert.toInt(rs[i][0]) > TypeConvert.toInt(rs[i][5])){
+					throw new Warning("商品"+rs[i][4]+"在SDB中的数量不足以此次出库,请检查数据:SDB_PRODUCTS主键PRODUCT_ID"+rs[i][2]+",需要出库"+rs[i][0]+",现库存"+rs[i][5]);
+				}
+			}
+			//throw new Warning(""+rs[0][2]+rs[1][2]+rs[0][3]+rs[1][3]);
+			for(int i = 0; i<l;i++){
+				String sql1 = "update SDB_PRODUCTS set STORE=STORE-"+rs[i][0]+" where PRODUCT_ID="+rs[i][2];
+				dbm.executeUpdate(sql1,null);
+				String sql2 = "update SDB_GOODS set STORE=STORE-"+rs[i][0]+" where GOODS_ID="+rs[i][3];
+				dbm.executeUpdate(sql2,null);
+			}
+		}
 	}
 }
 newRemoveKC();

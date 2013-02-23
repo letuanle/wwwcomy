@@ -225,16 +225,22 @@ create or replace view V_WM_OUT as
 				如有任何问题，请和仓库管理员联系
 				})
 			+bsh(STOCKWARNING.bsh)
+			+bsh(T_WM_STOCKDETAIL_OUT.bsh)
 			" pluginName="auditOut" type="before"/>
-		
-		<!-- -->
+		<!-- 
+		<pluginInterceptor methodName="exp" parameter="
+			Set(BILL_STATUS,{init},AUDIT_USER_ID,{})
+			+Save({T_WM_OUTPART},GetForm())
+			" pluginName="unaudit"/>
+		-->
 		<pluginOperation name="addView" oprName="新增(V)" hostPage="query" tblevel="1" img="add" action="showBill({new.do?__opr_data=T_WM_OUTPART},{新增出库单},{T_WM_OUTPART})+brk()"/>
 		<pluginOperation name="saveView" oprName="保存(V)" hostPage="edit" tblevel="1" img="save" action="plugin({},{saveView},{SUBGRID},{SUBGRID1})+brk()"/>
 		<!--审批发送E-Mail-->
 		<pluginOperation name="auditOut" oprName="出库审批" hostPage="edit" tblevel="1" img="settings" action="
 			If(Confirm({确认审批后,不可恢复,确认审批?}),plugin({},{auditOut},{SUBGRID1})+brk(),brk())"/>
-		
-		<!-- -->
+		<!--
+		<pluginOperation name="unaudit" oprName="取消审核" hostPage="edit" action="If(Confirm({请确认是否要取消审核?}),Save({},{unaudit}),true)+brk()"/>
+		 -->
 		<Operation queryPageDelete="false" queryPageAdd="false" save="false" saveAndAdd="false" saveAndAddCopy="false"/>
 	</table>
 </Haiyan>

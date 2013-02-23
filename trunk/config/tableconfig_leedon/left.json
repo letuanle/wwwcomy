@@ -60,6 +60,10 @@
 			cataUrl : 'query.do?__opr_data=V_WM_OUT',
 			leaf : true
 		}, {
+			text : 'WM_EDP出库(已审批)',
+			cataUrl : 'query.do?__opr_data=V_WM_OUT_HISTORY',
+			leaf : true
+		}, {
 			text : 'WM_EDP移库',
 			cataUrl : 'query.do?__opr_data=T_WM_STOCKTRANS',
 			leaf : true

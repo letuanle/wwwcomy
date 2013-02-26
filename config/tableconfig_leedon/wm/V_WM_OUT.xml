@@ -216,6 +216,8 @@ create or replace view V_WM_OUT as
 			+Set(AUDIT_USER_ID,User(ID),BILL_STATUS,{audit})
 			+SetCreateTime(AUDIT_TIME,{yyyy-MM-dd HH:mm:ss})
 			+Save({T_WM_OUTPART},GetForm())
+			+bsh(STOCKWARNING.bsh)
+			+bsh(T_WM_STOCKDETAIL_OUT.bsh)
 			+If(Get(BILL_STATUS)={audit},DisBtns(select,saveView,auditOut)+DisFlds(SUBGRID1)+HidFlds(SUBGRID2,TEST2),true)
 			+SendEmail(Page(SYSOPERATOR,{ and t_1.ID=1}),{smtp.126.com},{noreply_edp@126.com},{123qwe},{noreply_edp@126.com},
 				{出库审核完成},{txt},{订单号:}&amp;Get({ORDER_ID})&amp;{的订单已经完成发货了，仓库反馈如下：
@@ -224,8 +226,6 @@ create or replace view V_WM_OUT as
 				发货情况概述:'}&amp;Get({LOGISTICS_MEMO})&amp;{'
 				如有任何问题，请和仓库管理员联系
 				})
-			+bsh(STOCKWARNING.bsh)
-			+bsh(T_WM_STOCKDETAIL_OUT.bsh)
 			" pluginName="auditOut" type="before"/>
 		<!-- 
 		<pluginInterceptor methodName="exp" parameter="

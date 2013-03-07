@@ -10,7 +10,10 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		Button b = new Button();
-		b.addListener(new ActionListener() {
+		b.addListener(/**
+		 * @author Administrator 监听实例
+		 */
+		new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				System.out.println("Button Pressed");
@@ -34,6 +37,12 @@ class Button {
 	}
 }
 
+/**
+ * 事件
+ * 
+ * @author Liuxn
+ * 
+ */
 class ActionEvent {
 	@SuppressWarnings("unused")
 	private Object src;
@@ -43,6 +52,12 @@ class ActionEvent {
 	}
 }
 
+/**
+ * 监听接口
+ * 
+ * @author Liuxn
+ * 
+ */
 interface ActionListener {
 	void actionPerformed(ActionEvent ae);
 }

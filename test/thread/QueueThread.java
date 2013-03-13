@@ -3,6 +3,12 @@ package test.thread;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 四个线程循环打出1,2,3,4
+ * 
+ * @author Liuxn
+ * 
+ */
 public class QueueThread extends Thread {
 
 	public static List<Integer> list1 = new ArrayList<Integer>(10);
@@ -44,9 +50,7 @@ public class QueueThread extends Thread {
 						continue;
 					}
 					if ((t.size() == 0 && i == this.id)
-							|| (t.size() != 0
-									&& ((t.size() + i) % 4 == this.id) || (t
-									.size() + i) % 4 == 0 && this.id == 4)) {
+							|| (t.size() != 0 && ((t.size() + i) % 4 == this.id) || (t.size() + i) % 4 == 0 && this.id == 4)) {
 						t.add(id);
 					}
 					o.notifyAll();
@@ -57,8 +61,7 @@ public class QueueThread extends Thread {
 					}
 				}
 				o.notifyAll();
-				if (list1.size() == 10 && list2.size() == 10
-						&& list3.size() == 10 && list4.size() == 10)
+				if (list1.size() == 10 && list2.size() == 10 && list3.size() == 10 && list4.size() == 10)
 					return;
 			}
 		}

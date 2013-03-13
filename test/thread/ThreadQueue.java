@@ -1,11 +1,11 @@
-package test.thread;
+Ôªøpackage test.thread;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * @author liuxn œﬂ≥Ã≤‚ ‘
+ * @author liuxn
  */
 public class ThreadQueue {
 	public static void main(String[] args) {
@@ -42,11 +42,11 @@ class FileWrapper {
 	public void write(t5 t) {
 		synchronized (o) {
 			if (this.counter < 10) {
+				FileWriter fw = null;
 				try {
 					if ((this.id == t.getId(null) && this.counter == 0)
-							|| (this.counter != 0 && (this.counter + this.id) % 4 == t
-									.getId(null))) {
-						FileWriter fw = new FileWriter(tmp, true);
+							|| (this.counter != 0 && (this.counter + this.id) % 4 == t.getId(null))) {
+						fw = new FileWriter(tmp, true);
 						fw.append(String.valueOf(t.getId(null) + 1));
 						fw.flush();
 						counter++;
@@ -60,6 +60,12 @@ class FileWrapper {
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {
+					if (fw != null)
+						try {
+							fw.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 				}
 			} else {
 				o.notifyAll();
@@ -147,8 +153,7 @@ class thread3 extends Thread {
 			synchronized (o) {
 				while (counter % 3 == id) {
 					for (int i = 0; i < 10; i++)
-						System.out.println(Thread.currentThread().getName()
-								+ "-" + i + "->" + counter);
+						System.out.println(Thread.currentThread().getName() + "-" + i + "->" + counter);
 					counter++;
 				}
 
@@ -180,8 +185,7 @@ class thread2 extends Thread {
 		while (n.getValue() < 75) {
 			synchronized (n) {
 				if (n.getValue() / 5 % 3 == id) {
-					System.out.println(Thread.currentThread().getName() + "-->"
-							+ n);
+					System.out.println(Thread.currentThread().getName() + "-->" + n);
 					n.setValue(n.getValue() + 1);
 				}
 			}
@@ -227,8 +231,7 @@ class thread1 implements Runnable {
 		synchronized (n) {
 			while (n.getValue() < 75) {
 				while (n.getValue() / 5 % 3 == id) {
-					System.out.println(Thread.currentThread().getName() + "-->"
-							+ n);
+					System.out.println(Thread.currentThread().getName() + "-->" + n);
 					n.setValue(n.getValue() + 1);
 				}
 				n.notifyAll();

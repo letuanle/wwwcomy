@@ -142,8 +142,8 @@ create or replace view V_WM_STOCKRETURN as
 		concat(t_4.SUPPLIER,'_',t_1.PRODUCTID,'_',DATE_FORMAT(date_add(date_sub(t_2.AUDIT_TIME,INTERVAL 20 day),INTERVAL 1 month),'%Y%m')) as SUPP_PRO_MONTH
 		from T_WM_SDBRETURNPRE t_1
 		left join T_WM_SDBRETURN t_2 on t_1.HEADID=t_2.ID 
-		left join T_WM_OUTPART t_3 on t_1.ORDER_ID=t_3.ORDER_ID
-		left join V_WM_SDBPRODUCT t_4 on t_1.PRODUCTID=t_4.ID
+		left join T_WM_OUTPART t_3 on t_1.ORDER_ID=t_3.ID
+		left join T_WM_PRO t_4 on t_1.PRODUCTID=t_4.ID
 		where t_2.BILL_STATUS='audit'
 		group by t_1.PRODUCTID,WM_MONTH,SUPP_MONTH,SUPPLIER
 	)

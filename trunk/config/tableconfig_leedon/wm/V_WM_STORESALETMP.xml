@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Haiyan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../haiyan.xsd">
-	<table name="V_WM_STORESALE" description="库存销售情况">
+	<table name="V_WM_STORESALETMP" description="库存销售情况TMP">
 		<id name="ID" javaType="string"/>
 		<field name="HEADID" description="单头" javaType="string">
 			<component type="hidden"/>
@@ -79,10 +79,6 @@
 			<component type="hidden" readOnly="true"/>
 			<listColumn noedit="false" noquery="true"/>
 		</field>
-		<field name="ACTSTMTID" description="ACTSTMTID对应ID,链接用" javaType="string" lazyLoad="false">
-			<component type="hidden" readOnly="true"/>
-			<listColumn noedit="false" noquery="false"/>
-		</field>
 		<!-- -->
 		<queryFilter>
 			<pluggedFilter methodName="exp" parameter="{ and t_1.WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{' }"/>
@@ -105,34 +101,29 @@
 		function renderSaleValue(v,metaData,record) {
 				//return "<a href='#' onclick=\"showNavDetailFrame('query','','V_WM_SDBPRODUCT')\">"+v+"</a>"
 				
-				return "<a href='#' onclick=\"Hy.showBill('query.do?PRODUCTID="+record.json.PRODUCTID+"&__opr_data=V_WM_STOCK1','产品销售明细')\">"+v+"</a>"
-		}
-		function renderID(v,metaData,record) {
-				if(Ext.isEmpty(record.json.ACTSTMTID)){
-					return "<a onclick=\"Ext.Msg.alert('Warning','ID丢失,无对应对账数据')\">"+v+"</a>"
-				}
-				return "<a href='#' onclick=\"Hy.showBill('edit.do?ID="+record.json.ACTSTMTID+"&__opr_data=T_WM_ACCOUNTSTATEMENT','对账单链接')\">"+v+"</a>"
-		}
+				
 		]]></javascript>
 		<!-- -->
 		<pluginInterceptor methodName="initDB" pluginName="initDB" type="before"><![CDATA[
-create or replace view V_WM_STORESALE as 
+create or replace view V_WM_STORESALETMP as 
 	(
-		select t_1.ID,t_1.HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE,t_1.WMCODE,
-		t_1.PRO_COUNT,
-		t_1.PRO_VALUE,
-		t_1.WM_MONTH,
-		t_1.SALE_COUNT,
-		t_1.SALE_VALUE,
+		select concat(t_1.ID,t_1.BT) as ID,t_1.HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE,t_1.PRO_WMCODE as WMCODE,
+		sum(t_1.PRO_COUNT*t_1.STOCKCHANGE) as PRO_COUNT,
+		sum(t_1.PRO_COUNT*t_1.STOCKCHANGE*t_1.PRO_IN_PRICE) as PRO_VALUE,
+		DATE_FORMAT(date_add(date_sub(t_1.WM_DATE,INTERVAL 20 day),INTERVAL 1 month),'%Y%m') as WM_MONTH,
+		SUM( CASE WHEN BT = -1 THEN  t_1.PRO_COUNT WHEN BT=-95 THEN t_1.PRO_COUNT*-1 ELSE 0 END) as SALE_COUNT,
+		SUM( CASE WHEN BT = -1 THEN  t_1.PRO_COUNT*t_1.PRO_IN_PRICE WHEN BT=-95 THEN t_1.ALL_IN_COST ELSE 0 END) as SALE_VALUE,
 		
-		t_1.EDP_SALE_VALUE, 
-		t_1.PROFIT_STATISTICS,
-        t_1.WAREHOUSE, t_1.PRO_MEMO, t_1.SUPPLIER, t_1.SUPP_CODE,
-        t_1.SUPP_MONTH,
-        t_1.SUPP_PRO_MONTH,
-        t_2.ID as ACTSTMTID
-		from V_WM_STORESALETMP t_1 
-		left join T_WM_ACCOUNTSTATEMENT t_2 on t_1.SUPP_MONTH=t_2.SUPP_MONTH
+		SUM( CASE WHEN BT = -1 THEN  t_1.ALL_OUT_COST WHEN BT=-95 THEN t_1.ALL_OUT_COST ELSE 0 END) as EDP_SALE_VALUE, 
+		(SUM( CASE WHEN BT = -1 THEN  t_1.ALL_OUT_COST WHEN BT=-95 THEN t_1.ALL_OUT_COST ELSE 0 END)
+		-SUM( CASE WHEN BT = -1 THEN  t_1.PRO_COUNT*t_1.PRO_IN_PRICE WHEN BT=-95 THEN t_1.ALL_IN_COST ELSE 0 END)) as PROFIT_STATISTICS,
+        t_1.WAREHOUSE, '产品详细信息' as PRO_MEMO, t_1.SUPPLIER, t_1.SUPP_CODE,
+        concat(t_1.SUPPLIER,'_',DATE_FORMAT(date_add(date_sub(t_1.WM_DATE,INTERVAL 20 day),INTERVAL 1 month),'%Y%m')) as SUPP_MONTH,
+        concat(t_1.SUPPLIER,'_',t_1.PRODUCTID,'_',DATE_FORMAT(date_add(date_sub(t_1.WM_DATE,INTERVAL 20 day),INTERVAL 1 month),'%Y%m')) as SUPP_PRO_MONTH
+		from V_WM_STOCK1 t_1 
+		where YK=-1
+		and t_1.BT<2 and t_1.BT>=-95
+		group by t_1.PRODUCTID,t_1.WAREHOUSE,WM_MONTH
 	)
 		]]></pluginInterceptor>
 		<!-- where t_1.BILL_STATUS='audit' 预判断 还没确认的入库也要计算 -->

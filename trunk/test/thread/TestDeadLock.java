@@ -1,5 +1,11 @@
 package test.thread;
 
+/**
+ * 测试死锁
+ * 
+ * @author Liuxn
+ * 
+ */
 public class TestDeadLock implements Runnable {
 
 	int flag = 0;
@@ -13,7 +19,8 @@ public class TestDeadLock implements Runnable {
 	@Override
 	public void run() {
 		if (flag == 0) {
-			synchronized (o1) {
+			// TestDeadLock.class实际上是对每个类所拥有的一个静态对象，所以和o1,o2的作用是一样的
+			synchronized (TestDeadLock.class) {
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
@@ -30,11 +37,10 @@ public class TestDeadLock implements Runnable {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				synchronized (o1) {
+				synchronized (TestDeadLock.class) {
 					System.out.println("22");
 				}
 			}
-
 		}
 	}
 

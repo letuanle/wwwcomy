@@ -1,11 +1,14 @@
-package test.servlet;
+package test.servlet.smack;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import org.jivesoftware.smack.packet.Message;
 
 public class WebClient {
 
 	private static ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<String, Object>();
-	private static ConcurrentHashMap<String, Object> msgMap = new ConcurrentHashMap<String, Object>();
+	private static ConcurrentHashMap<String, ConcurrentLinkedQueue<Message>> msgMap = new ConcurrentHashMap<String, ConcurrentLinkedQueue<Message>>();
 
 	static {
 		map.put("a", new Object());
@@ -20,11 +23,11 @@ public class WebClient {
 		WebClient.map = map;
 	}
 
-	public static ConcurrentHashMap<String, Object> getMsgMap() {
+	public static ConcurrentHashMap<String, ConcurrentLinkedQueue<Message>> getMsgMap() {
 		return msgMap;
 	}
 
-	public static void setMsgMap(ConcurrentHashMap<String, Object> msgMap) {
+	public static void setMsgMap(ConcurrentHashMap<String, ConcurrentLinkedQueue<Message>> msgMap) {
 		WebClient.msgMap = msgMap;
 	}
 }

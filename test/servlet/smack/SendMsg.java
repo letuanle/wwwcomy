@@ -1,7 +1,8 @@
-package test.servlet;
+package test.servlet.smack;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +22,6 @@ import org.jivesoftware.smack.filter.PacketFilter;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
-
 import test.lxn.utils.StringUtil;
 
 public class SendMsg extends HttpServlet {
@@ -82,7 +82,11 @@ public class SendMsg extends HttpServlet {
 		PacketListener myListener = new PacketListener() {
 			public void processPacket(Packet packet) {
 				System.out.println("From: " + packet.getFrom() + "\n");
-				WebClient.getMsgMap().put("a", (Message) packet);
+				ConcurrentLinkedQueue<Message> queue = WebClient.getMsgMap().get("a");
+				if (queue == null)
+					queue = new ConcurrentLinkedQueue<Message>();
+				queue.add((Message) packet);
+				WebClient.getMsgMap().put("a", queue);
 				Object lock = WebClient.getMap().get("a");
 				synchronized (lock) {
 					try {
@@ -92,7 +96,6 @@ public class SendMsg extends HttpServlet {
 					}
 				}
 				System.out.println("Body: " + ((Message) packet).getBody());
-
 			}
 		};
 		// register the listener to the connection

@@ -1,5 +1,9 @@
 package test.lxn.utils;
 
+/**
+ * @author Liuxn
+ *
+ */
 public class BooleanUtil {
 
 	public static boolean shallowCheckVariable(Object o, boolean dealNullTrue) {

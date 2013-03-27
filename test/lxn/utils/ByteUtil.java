@@ -13,7 +13,7 @@ import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @author zhouxw
+ * @author Liuxn
  * 
  */
 public class ByteUtil {

@@ -24,16 +24,9 @@
 			<artifactId>ant</artifactId>
 			<version>1.7.1</version>
 		</dependency>
-		<dependency>
-			<groupId>antlr</groupId>
-			<artifactId>antlr</artifactId>
-			<version>1.4.2_06</version>
-		</dependency>
-		<dependency>
-			<groupId>castor</groupId>
-			<artifactId>castor-xml</artifactId>
-			<version>1.2</version>
-		</dependency>
+		<!-- <dependency> <groupId>antlr</groupId> <artifactId>antlr</artifactId> 
+			<version>1.4.2_06</version> </dependency> <dependency> <groupId>castor</groupId> 
+			<artifactId>castor-xml</artifactId> <version>1.2</version> </dependency> -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
@@ -101,9 +94,9 @@
 			<version>3.1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>quartz-schedule</groupId>
-			<artifactId>quartz-all</artifactId>
-			<version>2.0.1</version>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.1.7</version>
 		</dependency>
 		<dependency>
 			<groupId>openjms</groupId>

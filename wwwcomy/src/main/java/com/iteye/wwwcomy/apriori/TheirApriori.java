@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
+@SuppressWarnings({ "unchecked", "unused", "rawtypes" })
 public class TheirApriori {
 	double minsup = 0.6;// 最小支持度
 	double minconf = 0.8;// 最小置信度
@@ -13,11 +14,12 @@ public class TheirApriori {
 	HashMap rule = new HashMap();
 	// String trans_set[] = { "abc", "abc", "acde", "bcdf", "abcd", "abcdf" };//
 	// 事务集
-	
-	 String trans_set[] = { "kadb", "daceb", "cabe", "bad"};
 
-//	String trans_set[] = { "125", "24", "23", "124", "13", "23", "13", "1235",
-//			"123" };// 事务集
+	String trans_set[] = { "kadb", "daceb", "cabe", "bad" };
+
+	// String trans_set[] = { "125", "24", "23", "124", "13", "23", "13",
+	// "1235",
+	// "123" };// 事务集
 	TreeSet[] frequent_set = new TreeSet[10];// 频繁项集数组，[0]:代表1频繁集...
 	TreeSet max_frequent = new TreeSet();// 最大频繁集
 	TreeSet item1_canditate = new TreeSet();// 1候选集

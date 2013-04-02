@@ -15,6 +15,7 @@ public class foo {
 			FileWriter fw = new FileWriter(a);
 			fw.append("1");
 			fw.flush();
+			fw.close();
 		}
 	}
 }

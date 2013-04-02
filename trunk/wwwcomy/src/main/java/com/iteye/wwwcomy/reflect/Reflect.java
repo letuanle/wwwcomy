@@ -45,11 +45,11 @@ public class Reflect {
 	public static Car getCar() throws Throwable {
 
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
-		Class<?> clazz = cl.loadClass("test.reflect.Car");
-		Constructor<?> cs = clazz.getDeclaredConstructor(null);
+		Class<?> clazz = cl.loadClass("com.iteye.wwwcomy.reflect.Car");
+		Constructor<?> cs = clazz.getDeclaredConstructor();
 		Car car2 = (Car) cs.newInstance();
-		Method m1 = clazz.getMethod("getBrand", null);
-		System.out.println(m1.invoke(car2, null));
+		Method m1 = clazz.getMethod("getBrand");
+		System.out.println(m1.invoke(car2));
 		return car2;
 	}
 

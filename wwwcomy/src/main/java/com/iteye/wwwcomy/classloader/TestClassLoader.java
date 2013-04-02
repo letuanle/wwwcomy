@@ -44,6 +44,13 @@ public class TestClassLoader extends ClassLoader {
 			data = baos.toByteArray();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			if (fis != null)
+				try {
+					fis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 		}
 		return data;
 	}

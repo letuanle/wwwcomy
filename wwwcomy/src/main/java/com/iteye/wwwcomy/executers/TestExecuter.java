@@ -12,7 +12,6 @@ public class TestExecuter {
 			pool.execute(new A(i));
 		}
 	}
-
 }
 
 class A implements Runnable {

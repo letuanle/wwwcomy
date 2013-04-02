@@ -11,8 +11,13 @@ import java.util.List;
  * @author Liuxn
  */
 public final class ThreadPool {
+	
+	private static class HOLDER{
+		private static final ThreadPool instance = new ThreadPool();
+	}
+	
 	/* 单例 */
-	private static ThreadPool instance = ThreadPool.getInstance();
+	private static ThreadPool instance = HOLDER.instance;
 
 	public static final int SYSTEM_BUSY_TASK_COUNT = 150;
 	/* 默认池中线程数 */
@@ -41,9 +46,7 @@ public final class ThreadPool {
 		}
 	}
 
-	public static synchronized ThreadPool getInstance() {
-		if (instance == null)
-			return new ThreadPool();
+	public static ThreadPool getInstance() {
 		return instance;
 	}
 
@@ -120,7 +123,6 @@ public final class ThreadPool {
 	/**
 	 * 池中工作线程
 	 * 
-	 * @author obullxl
 	 */
 	private class PoolWorker extends Thread {
 		private int index = -1;

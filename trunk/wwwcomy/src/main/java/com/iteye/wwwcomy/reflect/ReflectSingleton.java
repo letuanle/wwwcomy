@@ -12,8 +12,7 @@ public class ReflectSingleton {
 
 	/**
 	 * @param args
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
+	 * @throws Throwable
 	 */
 	public static void main(String[] args) throws Throwable {
 		Class<?> singletonClass = Singleton.class;

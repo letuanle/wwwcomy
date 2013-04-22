@@ -9,7 +9,7 @@ public class TestRejectedExecutionException {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < Integer.MAX_VALUE; i++) {
 			final int tmpint = i;
 			exec(tmpint);
 		}

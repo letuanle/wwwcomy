@@ -6,8 +6,14 @@ import java.util.Date;
 
 import com.iteye.wwwcomy.lxn.utils.VarUtil;
 
+/**
+ * @author Lxn
+ * 
+ */
 public class stringTest {
 	static {
+		// 静态块在静态变量初始化之后执行
+		// 静态块在其他任何类调用本类之前执行
 		System.out.println(234);
 	}
 
@@ -52,7 +58,7 @@ public class stringTest {
 		System.out.println(Integer.toBinaryString(-a));
 		System.out.println(Integer.toBinaryString(a));
 		System.out.println(~a);
-		//System.out.println(Integer.toBinaryString(~a));
+		// System.out.println(Integer.toBinaryString(~a));
 	}
 
 	private static void test2() {

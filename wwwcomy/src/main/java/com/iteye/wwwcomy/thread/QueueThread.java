@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * 四个线程循环打出1,2,3,4
+ * 这里要注意，Integer对象经过操作，比如++之后就会变成另外一个对象，所以对Integer对象加锁是不对的。
  * 
  * @author Liuxn
  * 

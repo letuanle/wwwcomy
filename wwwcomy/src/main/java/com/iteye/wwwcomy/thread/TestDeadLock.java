@@ -9,8 +9,8 @@ package com.iteye.wwwcomy.thread;
 public class TestDeadLock implements Runnable {
 
 	int flag = 0;
-	static Object o1 = new Object();;
-	static Object o2 = new Object();;
+	static Object o1 = new Object();
+	static Object o2 = new Object();
 
 	public TestDeadLock(int i) {
 		this.flag = i;

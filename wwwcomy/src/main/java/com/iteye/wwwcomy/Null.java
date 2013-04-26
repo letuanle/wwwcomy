@@ -12,9 +12,7 @@ public class Null {
 		System.out.println("Hello World");
 	}
 
-	/**
-	 * @param args
-	 */
+	@SuppressWarnings("static-access")
 	public static void main(String[] args) {
 		((Null) null).greet();
 	}

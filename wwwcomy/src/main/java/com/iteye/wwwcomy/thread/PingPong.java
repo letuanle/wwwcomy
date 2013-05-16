@@ -20,4 +20,12 @@ public class PingPong {
 	static synchronized void pong() {
 		System.out.print("Pong");
 	}
+
+	static void test() {
+		int j = 0;
+		for (int i = 0; i < 100; i++) {
+			j = j++;
+		}
+		System.out.println(j);
+	}
 }

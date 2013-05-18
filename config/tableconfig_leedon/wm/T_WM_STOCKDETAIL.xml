@@ -160,6 +160,10 @@
 			<component type="text" readOnly="false" maxFractionDigit="3" minFractionDigit="3" displayReferenceField="IN_PRICE"/>
 			<listColumn noedit="false" noquery="false" width="78"/>
 		</field>
+		<field name="PRO_CALC_PRICE" description="计算用的合同有效单价" displayOnly="false" javaType="bigDecimal" lazyLoad="false">
+			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3"/>
+			<listColumn noedit="true" noquery="true"/>
+		</field>
 		<field name="ALL_IN_COST" description="进货总价" displayOnly="false" javaType="bigDecimal" lazyLoad="false">
 			<component type="hidden" readOnly="true" summaryType="sum" maxFractionDigit="3" minFractionDigit="3"/>
 			<listColumn noedit="false" noquery="false" width="78"/>

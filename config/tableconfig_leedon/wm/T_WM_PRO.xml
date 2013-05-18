@@ -72,16 +72,16 @@
 			<component type="text" readOnly="false" maxFractionDigit="2" minFractionDigit="2"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="STATUS" description="状态" displayOnly="false" javaType="string" lazyLoad="false">
+		<field name="CONTRA_INPRICE" description="合同有效进价" javaType="bigDecimal" defaultValue="-1">
+			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3"/>
+			<listColumn noedit="true" noquery="true"/>
+		</field>
+		<field name="STATUS" description="状态" javaType="string" lazyLoad="false">
 			<component type="dropdown">
 				<option displayName="生效" value="0"/>
 				<option displayName="失效" value="1"/>
 				<option displayName="即将过期" value="2"/>
 			</component>
-		</field>
-		<field name="CONTRA_INPRICE" description="合同有效进价" displayOnly="false" javaType="bigDecimal" defaultValue="-1">
-			<component type="hidden" readOnly="false"/>
-			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<!--
 		<queryFilter>

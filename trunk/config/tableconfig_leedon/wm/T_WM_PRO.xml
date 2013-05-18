@@ -79,7 +79,7 @@
 				<option displayName="即将过期" value="2"/>
 			</component>
 		</field>
-		<field name="CONTRA_INPRICE" description="合同有效进价" displayOnly="false" javaType="bigDecimal">
+		<field name="CONTRA_INPRICE" description="合同有效进价" displayOnly="false" javaType="bigDecimal" defaultValue="-1">
 			<component type="hidden" readOnly="false"/>
 			<listColumn noedit="false" noquery="true"/>
 		</field>

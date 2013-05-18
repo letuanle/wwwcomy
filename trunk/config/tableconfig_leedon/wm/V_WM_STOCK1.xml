@@ -82,8 +82,8 @@
 				<option displayName="出库-订单" value="-1"/>
 				<option displayName="出库-损耗" value="-2"/>
 				<option displayName="出库-返厂" value="0"/>
-				<option displayName="入库-退货" value="2"/>
-				<option displayName="记账-退货" value="-95"/>
+				<option displayName="计量-入库-退货" value="2"/>
+				<option displayName="记账-入库-退货" value="-95"/>
 				<option displayName="类型错误" value="-99"/>
 			</component>
 		</field>
@@ -158,7 +158,7 @@ create or replace view V_WM_STOCK1 as
 		 WHEN t_2.OUT_TYPE ='loss' THEN -2
 		 ELSE -1 END) as BT,concat("CK",t_1.ID) as ID,t_1.HEADID,t_1.PRODUCTID,
 		t_1.PRO_WMCODE,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,t_1.PRO_NAME,
-		t_3.SUPP_CODE,t_3.IN_PRICE as PRO_IN_PRICE,t_1.PRO_COUNT,
+		t_3.SUPP_CODE,t_1.PRO_CALC_PRICE as PRO_IN_PRICE,t_1.PRO_COUNT,
 		0 as ALL_IN_COST,
 		t_1.PRO_OUT_PRICE,
 		(CASE WHEN t_2.OUT_TYPE='consign' THEN t_1.PRO_COUNT*t_1.PRO_OUT_PRICE WHEN t_2.OUT_TYPE ='reject' THEN 0 ELSE  t_1.PRO_COUNT*t_1.PRO_OUT_PRICE END) as ALL_OUT_COST,

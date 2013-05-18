@@ -148,20 +148,20 @@
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="STATUS" description="状态" displayOnly="false" javaType="string" lazyLoad="false">
-			<component type="dropdown" readOnly="true" colspan="8">
+			<component type="dropdown" readOnly="true">
 				<option displayName="生效" value="0"/>
 				<option displayName="失效" value="1"/>
 				<option displayName="即将过期" value="2"/>
 			</component>
 		</field>
+		<field name="CONTRA_INPRICE" description="合同有效进价" displayOnly="false" javaType="bigDecimal">
+			<component type="text" readOnly="true" maxFractionDigit="3" minFractionDigit="3" colspan="8"/>
+			<listColumn noedit="false" noquery="true"/>
+		</field>
 		<field name="MEMO" description="备注" displayOnly="false" javaType="string" lazyLoad="false">
 			<component type="fckeditor" readOnly="true" style="width:90%;height:480px;" colspan="7"/>
 			<queryCondition type="none"/>
 			<listColumn noedit="false" noquery="true" nowrap="true" />
-		</field>
-		<field name="CONTRA_INPRICE" description="合同有效进价" displayOnly="false" javaType="bigDecimal">
-			<component type="hidden" readOnly="false"/>
-			<listColumn noedit="false" noquery="true"/>
 		</field>
 		<field name="HYVERSION" description="HYVERSION" javaType="string">
 			<component type="hidden" readOnly="false"/>

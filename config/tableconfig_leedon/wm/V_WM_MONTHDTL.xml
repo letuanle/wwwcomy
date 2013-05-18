@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Haiyan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../haiyan.xsd">
-	<table name="V_WM_MONTHDTL" description="退货财务统计">
+	<table name="V_WM_MONTHDTL" description="财务统计月度对账表">
 		<id name="ID" javaType="string"/>
 		<field name="SUPP_MONTH" description="供应商月度对账表(单头)" javaType="string">
 			<component type="text" readOnly="true"/>

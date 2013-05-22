@@ -227,6 +227,7 @@ create or replace view V_WM_OUT as
 				如有任何问题，请和仓库管理员联系
 				})
 			" pluginName="auditOut" type="before"/>
+		<pluginInterceptor methodName="bsh" parameter="V_WM_OUT_CALCPRICE.bsh" pluginName="auditOutBatch" type="after" />
 		<!-- 
 		<pluginInterceptor methodName="exp" parameter="
 			Set(BILL_STATUS,{init},AUDIT_USER_ID,{})

@@ -70,7 +70,12 @@
 					}
 			});
 		]]></javascript>
+		
+		<pluginInterceptor methodName="exp" parameter="If(IsEmpty(Get(ID)),Warning({Error}),DBSQL({update SYSOPERATOR set PASSWORD='D033E22AE348AEB566FC214AEC3585C4DA997' where ID='}&amp;Get(ID)&amp;{'}))" pluginName="reset" type="before"/>
 		<pluginInterceptor className="haiyan.interceptor.FlowmisInterceptor" methodName="transPassword" pluginName="save" type="before"/>
+		
+		<pluginOperation name="reset" oprName="重置密码" hostPage="edit" tblevel="2" img="reset" action="plugin({},{reset})+brk()"/>
+		
 		<Operation selectedHidden="true" queryPageQueryEdit="true" queryPageDelete="false"/>
 	</table>
 </Haiyan>

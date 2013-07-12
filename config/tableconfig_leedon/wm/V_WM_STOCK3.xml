@@ -18,6 +18,10 @@
 			<component type="hidden" readOnly="true" colspan="1" displayReferenceField="CODE"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
+		<field name="SUPP_CODE" description="供应商自有货号" displayOnly="false" javaType="string" lazyLoad="false">
+			<component type="text" readOnly="true" colspan="1" displayReferenceField="CODE"/>
+			<listColumn noedit="false" noquery="false"/>
+		</field>
 		<field name="PRO_CAPACITYNUM" description="单位体积" displayOnly="false" javaType="bigDecimal" lazyLoad="false">
 			<component type="text" readOnly="true" displayReferenceField="CAPACITYNUM" maxFractionDigit="3" minFractionDigit="3"/>
 			<listColumn noedit="false" noquery="true"/>
@@ -34,11 +38,19 @@
 			<component type="text" readOnly="true" numberGrouping="true"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="ORDER_COUNT" description="订单占用数" javaType="bigDecimal">
+		<field name="ORDER_COUNT" description="订单总占用数" javaType="bigDecimal">
 			<component type="text" readOnly="true" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="PRO_IN_COUNT" description="在途数量" javaType="bigDecimal">
+		<field name="XD_ORDER_COUNT" description="新导占用数" javaType="bigDecimal">
+			<component type="text" readOnly="true" />
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="OTHER_ORDER_COUNT" description="付款占用数" javaType="bigDecimal">
+			<component type="text" readOnly="true" />
+			<listColumn noedit="false" noquery="false"/>
+		</field>
+		<field name="PRO_IN_SUM" description="在途数量" javaType="bigDecimal">
 			<component type="text" readOnly="true" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
@@ -77,9 +89,9 @@
 		<pluginInterceptor methodName="initDB" pluginName="initDB" type="before"><![CDATA[
 create or replace view V_WM_STOCK3 as 
 	(
-		select concat(t_1.ID,t_1.STOCKCHANGE) as ID,t_1.HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE, t_1.PRO_NAME,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,
-		sum(t_1.PRO_COUNT*t_1.STOCKCHANGE) as PRO_COUNT, t_2.NUMS as ORDER_COUNT,
-		t_3.PRO_COUNT as PRO_IN_COUNT,
+		select concat(t_1.ID,t_1.STOCKCHANGE) as ID,t_1.HEADID,t_1.PRODUCTID,t_1.PRO_WMCODE, t_1.PRO_NAME,t_3.supp_code as supp_code,t_1.PRO_CAPACITYNUM,t_1.PRO_WEIGHTNUM,
+		sum(t_1.PRO_COUNT*t_1.STOCKCHANGE) as PRO_COUNT, t_2.NUMS as ORDER_COUNT,t_2.XD_nums AS XD_ORDER_COUNT,t_2.other_nums AS OTHER_ORDER_COUNT,
+		t_3.PRO_IN_SUM as PRO_IN_SUM,
         t_1.WAREHOUSE, t_1.SUPPLIER
 		from V_WM_STOCK1 t_1 
 		left join V_WM_SDBITEMCOUNT t_2 on t_1.PRODUCTID=t_2.PRODUCTID

@@ -43,7 +43,7 @@ void check() throws Throwable {
 	if(compare(VALIDATE_END,now)==-1 && compare(now,VALIDATE_DAY)==-1) {
 		Qbq3Form form1 = context.getDBM().findByPK("T_WM_PRO", PRODUCTID, context);
 		form1.set("STATUS","0");
-		form1.set("SUPP_CODE",form.get("SUPP_CODE"));//更新供应商自有货号
+		//form1.set("SUPP_CODE",form.get("SUPP_CODE"));//更新供应商自有货号
 		form1.set("ZDKC",form.get("ZDKC"));
 		context.getDBM().update("T_WM_PRO",form1,context);
 		//String sql1 = "update T_WM_PRO set STATUS=0, ZDKC="+form.get("ZDKC")+" where ID="+form.get("PRODUCTID");

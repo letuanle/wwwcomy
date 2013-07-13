@@ -15,8 +15,9 @@
 			<!--  one2oneField="NAME" one2oneTable="TEST_ONE2ONE" -->
 			<component type="text" readOnly="false"/>
 			<queryCondition type="equal"/>
+			<listColumn style="remoteSort:true;sortName:t_1.NAME"/>
 		</field>
-		<field name="ORGA_ID" description="1to1单选" displayOnly="false" javaType="string" lazyLoad="false" >
+		<field name="ORGA_ID" description="1to1单选" displayOnly="false" javaType="string" lazyLoad="false">
 			<!-- one2oneField="ORGA_ID" one2oneTable="TEST_ONE2ONE" -->
 			<component type="richSelect" readOnly="false" displayReferenceField="NAME" referenceField="ID" referenceTable="SYSORGA" quickQueryConditionField="NAME" action="SetValue(OPER_IDS,{})+SetValue(__OPER_IDS__NAME,{})"/>
 			<queryCondition type="equal"/>
@@ -90,8 +91,7 @@ create or replace view V_TEST_DBM as
 		]]></pluginInterceptor>
 		-->
 		<pluginInterceptor methodName="exp" pluginName="save" parameter="If(IsEmpty(Get(WFBILLID)),true,DBSQL({update SYSWFBILL set BILLID='}&amp;Get(ID)&amp;{' where ID='}&amp;Get(WFBILLID)&amp;{'}))" type="after"/>
-		
-		<pluginInterceptor methodName="exp" pluginName="edit" parameter="if(inrole(admin),true,disbtns(testSQL))" type="before" />
+		<pluginInterceptor methodName="exp" pluginName="edit" parameter="if(inrole(admin),true,disbtns(testSQL))" type="before"/>
 		<!-- -->
 		<pluginOperation name="testOne" oprName="查看一对一表单" hostPage="edit" tblevel="1" className="haiyan.plugin.BshPlugin" action="openWin({edit.do?__opr_data=TEST_ONE2ONE&amp;ID=}&amp;Get(ID))+break()"><![CDATA[
 		]]></pluginOperation>
@@ -150,13 +150,43 @@ create or replace view V_TEST_DBM as
 			<component type="text" readOnly="false"/>
 			<queryCondition type="equal"/>
 		</field>
+		<field name="WFBILLID" javaType="string" description="WFBILLID">
+			<component type="hidden"/>
+			<queryCondition type="none"/>
+			<listColumn noquery="true"/>
+		</field>
+		<!-- 
+		<querySQL><![CDATA[
+			(select t1.ID, t1.CODE, t1.NAME, t1.WFBILLID, t1.HYVERSION
+				from TEST_DBM2 t1
+				where t1.CODE is not null)
+		]]></querySQL>
+		-->
+		<querySQL methodName="exp"><![CDATA[
+			{(select ID, CODE, NAME, WFBILLID, HYVERSION
+				from TEST_DBM2
+				where CODE not like '}&SQLSafe(GetPara(TEST))&{%')}
+		]]></querySQL>
+		<!--
+		<queryFilter>
+			<pluggedFilter methodName="exp" parameter="
+			If(InRole(sp,wm),
+				{ and t_1.ID in (select ORDER_ID from V_WM_OUTPRE  where PRODUCTID in (select ID from V_WM_SDBPRODUCT where SUPPLIER='}&amp;GetUser(SUPPLIER)&amp;{' and WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{')) },
+				{ and t_1.ID in (select ORDER_ID from V_WM_OUTPRE  where PRODUCTID in (select ID from V_WM_SDBPRODUCT where WAREHOUSE='}&amp;GetUser(WAREHOUSEID)&amp;{')) }
+			)"/>
+		</queryFilter>
+		-->
+		<!--
+		<isSelectable className="" methodName="" parameter=""/>
+		-->
+		<isShowable className="" methodName="isShowable" parameter=""/>
 		<!-- -->
-		<pluginInterceptor methodName="bsh" pluginName="test" parameter="TEST_DBM.bsh" type="before" />
-		<pluginInterceptor methodName="bsh" pluginName="test2" parameter="TEST_DBM2.bsh" type="before" />
+		<pluginInterceptor methodName="bsh" pluginName="test" parameter="TEST_DBM.bsh" type="before"/>
+		<pluginInterceptor methodName="bsh" pluginName="test2" parameter="TEST_DBM2.bsh" type="before"/>
 		<!-- -->
-		<pluginOperation name="test" oprName="test" hostPage="query" tblevel="1" ><![CDATA[
+		<pluginOperation name="test" oprName="test" hostPage="query" tblevel="1"><![CDATA[
 		]]></pluginOperation>
-		<pluginOperation name="test2" oprName="test2" hostPage="query" tblevel="1" ><![CDATA[
+		<pluginOperation name="test2" oprName="test2" hostPage="query" tblevel="1"><![CDATA[
 		]]></pluginOperation>
 	</table>
 </Haiyan>

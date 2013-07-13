@@ -73,7 +73,7 @@
 		<field name="PRO_MEMO" description="备注" javaType="string">
 			<component type="text"/>
 		</field>
-		<field name="TRANS_FROM_WH" description="移库来源仓位" javaType="string">
+		<field name="TRANS_FROM_WH" description="移库来源仓位" javaType="string" lazyLoad="false">
 			<component type="richSelect" readOnly="false" displayReferenceField="CODE" referenceField="ID" referenceTable="T_DIC_WAREWHERE" parameter="{&amp;GRID=1}"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>

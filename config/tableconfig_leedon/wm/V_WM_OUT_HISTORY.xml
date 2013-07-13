@@ -12,9 +12,11 @@
 				<option displayName="返厂" value="reject"/>
 				<option displayName="损耗" value="loss"/>
 			</component>
+			<queryCondition type="none" />
 		</field>
 		<field name="MEMBER_ID" description="收货客户ID" displayOnly="false" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="true" colspan="1"/>
+			<queryCondition type="none" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SHIP_NAME" description="收货客户名" displayOnly="false" javaType="string" lazyLoad="false">
@@ -27,22 +29,27 @@
 		</field>
 		<field name="SHIP_TEL" description="收货客户固话" displayOnly="false" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="false" />
+			<queryCondition type="none" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SHIP_MOBILE" description="收货客户手机" displayOnly="false" javaType="string" lazyLoad="false">
 			<component type="text" readOnly="false" />
+			<queryCondition type="none" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="PMT_AMOUNT" description="订单优惠金额" displayOnly="false" javaType="bigDecimal" lazyLoad="false">
 			<component type="text" readOnly="false"/>
+			<queryCondition type="none" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="FINAL_AMOUNT" description="订单总金额" displayOnly="false" javaType="bigDecimal" lazyLoad="false">
 			<component type="text" readOnly="false"/>
+			<queryCondition type="none" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="COST_FREIGHT" description="订单运费" displayOnly="false" javaType="bigDecimal" lazyLoad="false">
 			<component type="text" readOnly="false"/>
+			<queryCondition type="none" />
 			<listColumn noedit="false" noquery="false"/>
 		</field>
 		<field name="SHIPPING" description="选择发货物流" displayOnly="false" javaType="string" lazyLoad="false">
@@ -69,16 +76,17 @@
 			</component>
 		</field>
 		-->
-		<field name="SUBGRID" javaType="string" description="应出库明细" displayOnly="true">
+		<field name="SUBGRID" javaType="string" description="----------------------------------------------------------------应出库明细----------------------------------------------------------------" displayOnly="true">
 			<component type="grid" readOnly="false" colspan="6" style="width:950;height:260;grouping:false;toolbar:no;" displayReferenceField="ITEM_ID,ORDER_ID,PRODUCTID,PRO_CODE,SUPP_CODE,PRE,AUDIT,UNAUDIT,OUT_RCOUNT,OUT_COUNT,NAME,WMCODE,PACKING_NUM,CAPACITYNUM,WEIGHTNUM,IN_PRICE,OUT_PRICE,PRO_COUNT,OUT_ALL_PRICE,All_CAPACITYNUM,All_WEIGHTNUM,LOGISTICS_NAME,LOGISTICS_CODE,LOGISTICS_MEMO,BILL_STATUS" referenceField="ORDER_ID" referenceTable="V_WM_OUTPRE" parameter="{&amp;ORDER_ID=}&amp;If(IsEmpty(Get({ID})),-1,Get({ID}))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
 		<field name="TMP_OUTPRICE" description="临时出库价格存储" displayOnly="true" javaType="bigDecimal" lazyLoad="false">
 			<component type="text" readOnly="false" colspan="6" maxFractionDigit="3" minFractionDigit="3"/>
+			<queryCondition type="none"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="SUBGRID2" javaType="string" description="出库预处理" displayOnly="true">
+		<field name="SUBGRID2" javaType="string" description="----------------------------------------------------------------出库预处理----------------------------------------------------------------" displayOnly="true">
 			<component type="grid" readOnly="false" colspan="6" style="width:950;height:300;toolbar:no;" displayReferenceField="ID,HEADID,PRODUCTID,PRO_NAME,PRO_WMCODE,SUPP_CODE,BATCH,WAREWHERE,WAREHOUSE,PRO_COUNT,OUT_COUNT,PRO_IN_PRICE,PRO_OUT_PRICE" referenceTable="V_WM_STOCKWHEREBATCH" parameter="{GRID=1}"/>
 			<!--parameter="{&amp;filter=}&amp;getproid()" -->
 			<queryCondition type="none"/>
@@ -88,8 +96,8 @@
 			<component type="button" readOnly="false" colspan="6" style="width:500px;" action="testOut()"/>
 			<listColumn noedit="false" noquery="true"/>
 		</field>
-		<field name="SUBGRID1" javaType="string" description="实际出库明细" displayOnly="true">
-			<component type="grid" readOnly="false" colspan="6" style="width:950;height:320;grouping:false;" displayReferenceField="ID,HEADID,PRODUCTID,PRO_NAME,SUPP_CODE,BATCH,PRO_WMCODE,PRO_WH,PRO_COUNT,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_OUT_PRICE,BILL_STATUS" referenceField="HEADID" referenceTable="T_WM_OUTDETAIL" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get({ID})),-1,Get({ID}))"/>
+		<field name="SUBGRID1" javaType="string" description="----------------------------------------------------------------实际出库明细(保存后只显示前20条)-------------------------------------------" displayOnly="true">
+			<component type="grid" readOnly="false" colspan="6" style="pageSize:20;width:950;height:320;grouping:false;" displayReferenceField="ID,HEADID,PRODUCTID,PRO_NAME,SUPP_CODE,BATCH,PRO_WMCODE,PRO_WH,PRO_COUNT,PRO_CAPACITYNUM,PRO_WEIGHTNUM,PRO_OUT_PRICE,BILL_STATUS" referenceField="HEADID" referenceTable="T_WM_OUTDETAIL" parameter="{&amp;HEADID=}&amp;If(IsEmpty(Get({ID})),-1,Get({ID}))"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
@@ -106,16 +114,18 @@
 			<component type="text" readOnly="false"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="WAREHOUSE" description="当前仓库" displayOnly="true" javaType="string" lazyLoad="false" nullAllowed="false">
-			<component type="richSelect" readOnly="true" colspan="1" displayReferenceField="NAME" referenceField="ID" referenceTable="T_DIC_WAREHOUSE_COMBO"/>
+		<field name="WAREHOUSE" description="当前仓库" displayOnly="true" javaType="string" lazyLoad="true" loadType="cache" nullAllowed="false">
+			<component type="combo" readOnly="true" colspan="1" displayReferenceField="NAME" referenceField="ID" referenceTable="T_DIC_WAREHOUSE_COMBO"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="WHOWNER" description="库主" displayOnly="false" javaType="string" lazyLoad="false">
+		<field name="WHOWNER" description="库主" displayOnly="false" javaType="string" lazyLoad="true" loadType="cache">
 			<component type="combo" readOnly="false" colspan="6" displayReferenceField="NAME" referenceField="ID" referenceTable="T_WM_OPERATOR"/>
+			<queryCondition type="none"/>
 			<listColumn noedit="false" noquery="false"/>
 		</field>
-		<field name="AUDIT_USER_ID" javaType="string" description="审批人">
+		<field name="AUDIT_USER_ID" javaType="string" description="审批人" lazyLoad="true" loadType="cache">
 			<component type="combo" quickQueryConditionField="NAME" referenceTable="SYSOPERATOR_VIEW" referenceField="ID" displayReferenceField="NAME" readOnly="true"/>
+			<queryCondition type="none"/>
 			<listColumn noquery="false" nowrap="true"/>
 		</field>
 		<field name="BILL_STATUS" javaType="string" description="单据状态" defaultValue="init">
@@ -124,10 +134,11 @@
 				<option displayName="审批确认" value="audit"/>
 				<option displayName="作废" value="reject"/>
 			</component>
+			<queryCondition type="none"/>
 		</field>
 		<field name="AUDIT_TIME" javaType="date" dataStyle="yyyy-MM-dd HH:mm:ss" description="审批时间">
 			<component type="date" readOnly="true"/>
-			<queryCondition type="region"/>
+			<queryCondition type="none"/>
 			<listColumn noquery="true" nowrap="true"/>
 		</field>
 		<field name="HYVERSION" description="HYVERSION" javaType="string">

@@ -10,17 +10,19 @@
 			<component type="text"/>
 		</field>
 		<!-- -->
-		<field name="BRAND" javaType="string" description="经营品牌" style="color:#990000;size:12;font-weight:bold;" lazyLoad="true">
+		<field name="BRAND" javaType="string" description="经营品牌" style="color:#990000;size:12;font-weight:bold;" lazyLoad="true" loadType="cache">
 			<component type="richSelect" referenceTable="T_DIC_COMMON_PINPAI" referenceField="ID" 
 				displayReferenceField="NAME" multipleSelect="true"/>
 			<queryCondition type="none"/>
 		</field>
 		<!-- className="haiyan.component.PagingLovFieldComponent" -->
-		<field name="TEST_LOVFLD" javaType="string" description="LOV" style="color:#990000;size:12;font-weight:bold;" lazyLoad="true">
+		<field name="TEST_LOVFLD" javaType="string" description="LOV" style="color:#990000;size:12;font-weight:bold;" lazyLoad="true" loadType="cache">
 			<component type="richSelect"  referenceTable="T_DIC_COMMON_PINPAI" referenceField="ID" 
 				displayReferenceField="NAME" quickQueryConditionField="NAME,CODE" multipleSelect="true"/>
 			<queryCondition type="none"/>
 		</field>
+		
+		
 		<!-- className="haiyan.component.PagingComboboxComponent" -->
 		<field name="TEST_PGCOMBO" javaType="string" description="PGC" style="color:#990000;size:12;font-weight:bold;">
 			<component type="richSelect" referenceTable="T_DIC_COMMON_PINPAI" referenceField="ID" 
@@ -44,32 +46,34 @@
 				displayReferenceField="NAME" quickQueryConditionField="NAME"/>
 			<queryCondition type="none"/>
 		</field>
-		<field name="BRAND_ID_LAZY" javaType="string" description="延迟单选" lazyLoad="true">
+		
+		
+		<field name="BRAND_ID_LAZY" javaType="string" description="延迟单选" lazyLoad="true" loadType="cache">
 			<component type="richSelect" referenceTable="T_DIC_COMMON_PINPAI" referenceField="ID" 
 				displayReferenceField="NAME" quickQueryConditionField="NAME"/>
 			<queryCondition type="none"/>
 		</field>
-		<field name="BRAND_IDS_LAZY" javaType="string" description="延迟多选" lazyLoad="true">
+		<field name="BRAND_IDS_LAZY" javaType="string" description="延迟多选" lazyLoad="true" loadType="cache">
 			<component type="richSelect" referenceTable="T_DIC_COMMON_PINPAI" referenceField="ID" 
 				displayReferenceField="NAME" multipleSelect="true"/>
 			<queryCondition type="none"/>
 		</field>
-		<!-- displayOnly="true" one2oneTable="TEST_ONE2ONE" one2oneField="BRAND_ID" lazyLoad="true" -->
+		<!-- displayOnly="true" one2oneTable="TEST_ONE2ONE" one2oneField="BRAND_ID" lazyLoad="true" loadType="cache" -->
 		<field name="TEST2_ONE_TEXT" javaType="string" description="1to1输入" displayOnly="true" 
-			one2oneTable="TEST_ONE2ONE" one2oneField="NAME" lazyLoad="true">
+			one2oneTable="TEST_ONE2ONE" one2oneField="NAME" lazyLoad="true" loadType="cache">
 			<component type="text"/>
 			<queryCondition type="none"/>
 			<listColumn noquery="true"/>
 		</field>
 		<!--
 			<field name="TEST2_ONE_LAZY" javaType="string" description="1to1单选" displayOnly="true" 
-				one2oneTable="TEST_ONE2ONE" one2oneField="BRAND_ID" lazyLoad="true">
+				one2oneTable="TEST_ONE2ONE" one2oneField="BRAND_ID" lazyLoad="true" loadType="cache">
 				<component type="richSelect" referenceTable="T_DIC_COMMON_PINPAI" referenceField="ID" displayReferenceField="NAME" quickQueryConditionField="NAME"/>
 				<queryCondition type="none"/>
 				<listColumn noquery="true"/>
 			</field>
 			<field name="TEST2_ONE_MUL_LAZY" javaType="string" description="1to1多选" displayOnly="true" 
-				one2oneTable="TEST_ONE2ONE" one2oneField="BRAND_IDS" lazyLoad="true">
+				one2oneTable="TEST_ONE2ONE" one2oneField="BRAND_IDS" lazyLoad="true" loadType="cache">
 				<component type="richSelect" referenceTable="T_DIC_COMMON_PINPAI" referenceField="ID" 
 				displayReferenceField="NAME" multipleSelect="true"/>
 				<queryCondition type="none"/>

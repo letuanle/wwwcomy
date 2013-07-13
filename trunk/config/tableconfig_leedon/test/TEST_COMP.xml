@@ -23,13 +23,13 @@
 			<!-- associatedFields="PROVINCE_NAME,COUNTRY_NAME" -->
 			<listColumn noquery="false"/>
 		</field>
-		<field name="DEPT" javaType="string" description="部门(多选树可选根)" style="color:#990000;size:12;font-weight:bold;" lazyLoad="true" nullAllowed="true">
-			<component type="treePComb" action="debugJs(getValue(&quot;__DEPT__NAME&quot;));" referenceTable="SYSORGA_VIEW" referenceField="ID" displayReferenceField="NAME" quickQueryConditionField="NAME" multipleSelect="true" style=""/>
+		<field name="CITY" javaType="string" description="部门(多选树不可选根)" style="color:#990000;size:12;font-weight:bold;" lazyLoad="true" nullAllowed="true">
+			<component type="treeComb" action="debugJs(getValue(&quot;__CITY__NAME&quot;));" referenceTable="SYSORGA_VIEW" referenceField="ID" displayReferenceField="NAME" quickQueryConditionField="NAME" multipleSelect="true" style=""/>
 			<!-- associatedFields="PROVINCE_NAME,COUNTRY_NAME" -->
 			<listColumn noquery="false"/>
 		</field>
-		<field name="CITY" javaType="string" description="部门(多选树不可选根)" style="color:#990000;size:12;font-weight:bold;" lazyLoad="true" nullAllowed="true">
-			<component type="treeComb" action="debugJs(getValue(&quot;__CITY__NAME&quot;));" referenceTable="SYSORGA_VIEW" referenceField="ID" displayReferenceField="NAME" quickQueryConditionField="NAME" multipleSelect="true" style=""/>
+		<field name="DEPT" javaType="string" description="部门(多选树可选根)" style="color:#990000;size:12;font-weight:bold;" lazyLoad="true" nullAllowed="true">
+			<component type="treePComb" action="debugJs(getValue(&quot;__DEPT__NAME&quot;));" referenceTable="SYSORGA_VIEW" referenceField="ID" displayReferenceField="NAME" quickQueryConditionField="NAME" multipleSelect="true" style=""/>
 			<!-- associatedFields="PROVINCE_NAME,COUNTRY_NAME" -->
 			<listColumn noquery="false"/>
 		</field>
@@ -177,7 +177,8 @@
 			<listColumn noquery="true"/>
 		</field>
 		<field name="TEST_DROP" javaType="string" description="dropdown测试" defaultValue="0">
-			<component type="dropdown" style="tpl:&lt;tpl for=&quot;.&quot;&gt;&lt;div  class=&quot;x-combo-list-item&quot;&gt;{__disV} 测试&lt;/div&gt;&lt;/tpl&gt;">
+			<component type="dropdown" >
+			<!-- style="tpl:&lt;tpl for=&quot;.&quot;&gt;&lt;div  class=&quot;x-combo-list-item&quot;&gt;{__disV} 测试&lt;/div&gt;&lt;/tpl&gt;" -->
 				<option displayName="编制" value="0"/>
 				<option displayName="人事审批" value="1"/>
 				<option displayName="总经理审批" value="2"/>
